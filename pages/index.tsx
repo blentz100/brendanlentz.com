@@ -114,7 +114,7 @@ const Index = () => {
   return (
     <>
       <H1>
-        Hi there! I'm Jake. <Wave>👋</Wave>
+        Hi there! I'm Brendan. <Wave>👋</Wave>
       </H1>
 
       <H2>
