@@ -114,11 +114,7 @@ const Index = () => {
   return (
     <>
       <H1>
-        Hi there! I'm Brendan. <Wave>👋</Wave>
-      </H1>
-
-      <H2>
-        I'm a frontend web developer based in the{" "}
+        I'm a frontend web developer based in the{""}
         <ColorfulLink
           href="https://www.youtube-nocookie.com/embed/rLwbzGyC6t4?hl=en&amp;fs=1&amp;showinfo=1&amp;rel=0&amp;iv_load_policy=3"
           title='"Boston Accent Trailer - Late Night with Seth Meyers" on YouTube'
@@ -128,7 +124,8 @@ const Index = () => {
           Boston
         </ColorfulLink>{" "}
         area.
-      </H2>
+      </H1>
+      <H2>I'm a frontend web developer based in the Phoenix area.</H2>
 
       <Paragraph>
         I specialize in{" "}
