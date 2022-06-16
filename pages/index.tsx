@@ -70,7 +70,7 @@ const Paragraph = styled("p", {
 const Wave = styled("span", {
   display: "inline-block",
   marginLeft: "0.1em",
-  fontSize: "1.2em",
+  fontSize: "1.0em", // reduced from 1.2em
 
   "@media (prefers-reduced-motion: no-preference)": {
     animation: `${keyframes({
@@ -113,7 +113,9 @@ const EasterEgg = styled(ColorfulLink, {
 const Index = () => {
   return (
     <>
-      <H1>Hi there, I'm Brendan</H1>
+      <H1>
+        Hi there, I'm Brendan <Wave>👋</Wave>
+      </H1>
       <H2>
         I'm a frontend web developer based in the{" "}
         <ColorfulLink
@@ -127,6 +129,21 @@ const Index = () => {
         area.
       </H2>
 
+      <Paragraph>
+        I have a degree in{" "}
+        <ColorfulLink
+          href="https://www.wm.edu/as/computerscience/"
+          title="W&M Computer Science Department"
+          lightColor="#1091b3"
+          darkColor="#6fcbe3"
+        >
+          Computer Science
+        </ColorfulLink>{" "}
+        from{" "}
+        <ColorfulLink href="https://www.wm.edu/" title="William and Mary" lightColor="#115740" darkColor="#115740">
+          The College of William and Mary in Virginia.
+        </ColorfulLink>
+      </Paragraph>
       <Paragraph>
         I specialize in{" "}
         <ColorfulLink
