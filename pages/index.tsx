@@ -113,19 +113,19 @@ const EasterEgg = styled(ColorfulLink, {
 const Index = () => {
   return (
     <>
-      <H1>
+      <H1>Hi there, I'm Brendan</H1>
+      <H2>
         I'm a frontend web developer based in the{" "}
         <ColorfulLink
-          href="https://www.youtube-nocookie.com/embed/rLwbzGyC6t4?hl=en&amp;fs=1&amp;showinfo=1&amp;rel=0&amp;iv_load_policy=3"
-          title='"Boston Accent Trailer - Late Night with Seth Meyers" on YouTube'
+          href="https://www.youtube.com/watch?v=WWw6ym1Wpgs"
+          title='"Spectacular Phoenix Arizona in 4K"'
           lightColor="#fb4d42"
           darkColor="#ff5146"
         >
           Phoenix
         </ColorfulLink>{" "}
         area.
-      </H1>
-      <H2>I'm a frontend web developer based in the Phoenix area.</H2>
+      </H2>
 
       <Paragraph>
         I specialize in{" "}
