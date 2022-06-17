@@ -119,8 +119,8 @@ const Index = () => {
       <H2>
         I'm a frontend web developer based in the{" "}
         <ColorfulLink
-          href="https://www.youtube.com/watch?v=WWw6ym1Wpgs"
-          title='"Spectacular Phoenix Arizona in 4K"'
+          href="https://phxbrief.com/briefs"
+          title='"The PHX Brief"'
           lightColor="#fb4d42"
           darkColor="#ff5146"
         >
@@ -140,12 +140,13 @@ const Index = () => {
           Computer Science
         </ColorfulLink>{" "}
         from{" "}
-        <ColorfulLink href="https://www.wm.edu/" title="William and Mary" lightColor="#115740" darkColor="#115740">
-          The College of William and Mary in Virginia.
+        <ColorfulLink href="https://www.wm.edu/" title="William and Mary" lightColor="#6fbc4e" darkColor="#84d95f">
+          The College of William and Mary in Virginia
         </ColorfulLink>
+        .
       </Paragraph>
       <Paragraph>
-        I specialize in{" "}
+        I focus on{" "}
         <ColorfulLink
           href="https://reactjs.org/"
           title="React Official Website"
@@ -156,167 +157,57 @@ const Index = () => {
         </ColorfulLink>{" "}
         and{" "}
         <ColorfulLink
-          href="https://timkadlec.com/remembers/2020-04-21-the-cost-of-javascript-frameworks/"
-          title='"The Cost of Javascript Frameworks" by Tim Kadlec'
+          href="https://sive.rs/learn-js"
+          title="How to Learn JavaScript by Derek Sivers"
           lightColor="#f48024"
           darkColor="#e18431"
         >
-          vanilla JavaScript
+          plain JavaScript
         </ColorfulLink>{" "}
-        to make nifty{" "}
-        <ColorfulLink href="https://jamstack.wtf/" title="WTF is Jamstack?" lightColor="#04a699" darkColor="#08bbac">
-          Jamstack sites
-        </ColorfulLink>{" "}
-        with dynamic{" "}
+        in my job at
         <ColorfulLink
-          href="https://nodejs.org/en/"
-          title="Node.js Official Website"
-          lightColor="#6fbc4e"
-          darkColor="#84d95f"
+          href="https://aztechbeat.com/2021/07/27/edtech-startup-promineo-tech-raises-900000-in-seed-funding/"
+          title="EdTech startup Promineo Tech raises $900,000 in seed funding"
+          lightColor="#fb4d42"
+          darkColor="#ff5146"
         >
-          Node.js
-        </ColorfulLink>{" "}
-        services. But I still know my way around less buzzwordy stacks like{" "}
-        <ColorfulLink
-          href="https://www.jetbrains.com/lp/php-25/"
-          title="25 Years of PHP History"
-          lightColor="#8892bf"
-          darkColor="#a4afe3"
-        >
-          LAMP
+          {" "}
+          Promineo Tech{" "}
         </ColorfulLink>
-        , too.
+        . We provide affordable bootcamps in Front End Wed Development, Back End Web Development and Data Engineering to
+        30+ colleges across the US.
       </Paragraph>
 
       <Paragraph>
-        Whenever possible, I also apply my experience in{" "}
+        Every week I host{" "}
         <ColorfulLink
-          href="https://bugcrowd.com/jakejarvis"
-          title="Jake Jarvis on Bugcrowd"
+          href="https://gist.github.com/blentz100"
+          title="Github Gists"
           lightColor="#00b81a"
           darkColor="#57f06d"
         >
-          application security
+          live coding challenges
+        </ColorfulLink>{" "}
+        to help our students prepare for
+        <ColorfulLink
+          href="https://www.youtube.com/watch?v=8gaM0uSANiM&t=2667s"
+          title="Get Better at Interviewing - Tips from a Tech Lead"
+          lightColor="#f48024"
+          darkColor="#e18431"
+        >
+          {" "}
+          technical interviews
         </ColorfulLink>
-        ,{" "}
-        <ColorfulLink
-          href="https://www.cloudflare.com/learning/serverless/what-is-serverless/"
-          title='"What is serverless computing?" on Cloudflare'
-          lightColor="#0098ec"
-          darkColor="#43b9fb"
-        >
-          serverless stacks
-        </ColorfulLink>
-        , and{" "}
-        <ColorfulLink
-          href="https://xkcd.com/1319/"
-          title='"Automation" on xkcd'
-          lightColor="#ff6200"
-          darkColor="#f46c16"
-        >
-          DevOps automation
-        </ColorfulLink>
-        .
-      </Paragraph>
-
-      <Paragraph>
-        I fell in love with{" "}
-        <ColorfulLink
-          href="/previously/"
-          title="My Terrible, Horrible, No Good, Very Bad First Websites"
-          lightColor="#4169e1"
-          darkColor="#8ca9ff"
-        >
-          frontend web design
-        </ColorfulLink>{" "}
-        and{" "}
-        <ColorfulLink
-          href="/notes/my-first-code/"
-          title="Jake's Bulletin Board, circa 2003"
-          lightColor="#9932cc"
-          darkColor="#d588fb"
-        >
-          backend programming
-        </ColorfulLink>{" "}
-        back when my only source of income was{" "}
-        <EasterEgg
-          href="/birthday/"
-          title="🎉 Cranky Birthday Boy on VHS Tape 📼"
-          lightColor="#e40088"
-          darkColor="#fd40b1"
-        >
-          the Tooth Fairy
-        </EasterEgg>
-        . <Quiet>I've improved a bit since then, I think? 🤷</Quiet>
-      </Paragraph>
-
-      <Paragraph>
-        Over the years, some of my side projects{" "}
-        <ColorfulLink
-          href="/leo/"
-          title="Powncer segment on The Lab with Leo Laporte (G4techTV)"
-          lightColor="#ff1b1b"
-          darkColor="#f06060"
-        >
-          have
-        </ColorfulLink>{" "}
-        <ColorfulLink
-          href="https://tuftsdaily.com/news/2012/04/06/student-designs-iphone-joeytracker-app/"
-          title='"Student designs iPhone JoeyTracker app" on The Tufts Daily'
-          lightColor="#f78200"
-          darkColor="#fd992a"
-        >
-          been
-        </ColorfulLink>{" "}
-        <ColorfulLink
-          href="https://www.google.com/books/edition/The_Facebook_Effect/RRUkLhyGZVgC?hl=en&gbpv=1&dq=%22jake%20jarvis%22&pg=PA226&printsec=frontcover&bsq=%22jake%20jarvis%22"
-          title='"The Facebook Effect" by David Kirkpatrick (Google Books)'
-          lightColor="#f2b702"
-          darkColor="#ffcc2e"
-        >
-          featured
-        </ColorfulLink>{" "}
-        <ColorfulLink
-          href="https://money.cnn.com/2007/06/01/technology/facebookplatform.fortune/index.htm"
-          title='"The new Facebook is on a roll" on CNN Money'
-          lightColor="#5ebd3e"
-          darkColor="#78df55"
-        >
-          by
-        </ColorfulLink>{" "}
-        <ColorfulLink
-          href="https://www.wired.com/2007/04/our-web-servers/"
-          title='"Middio: A YouTube Scraper for Major Label Music Videos" on Wired'
-          lightColor="#009cdf"
-          darkColor="#29bfff"
-        >
-          various
-        </ColorfulLink>{" "}
-        <ColorfulLink
-          href="https://gigaom.com/2009/10/06/fresh-faces-in-tech-10-kid-entrepreneurs-to-watch/6/"
-          title='"Fresh Faces in Tech: 10 Kid Entrepreneurs to Watch" on Gigaom'
-          lightColor="#3e49bb"
-          darkColor="#7b87ff"
-        >
-          media
-        </ColorfulLink>{" "}
-        <ColorfulLink
-          href="https://adage.com/article/small-agency-diary/client-ceo-s-son/116723/"
-          title='"Your Next Client? The CEO&#39;s Son" on Advertising Age'
-          lightColor="#973999"
-          darkColor="#db60dd"
-        >
-          outlets
-        </ColorfulLink>
-        .
+        . I love helping build a rapidly growing startup and supporting people who are transforming their lives through
+        education.
       </Paragraph>
 
       <Paragraph>
         You can find more of my work on{" "}
         <ColorfulLink
-          href="https://github.com/jakejarvis"
+          href="https://github.com/blentz100"
           rel="me"
-          title="Jake Jarvis on GitHub"
+          title="Brendan Lentz on GitHub"
           lightColor="#8d4eff"
           darkColor="#a379f0"
         >
@@ -324,51 +215,15 @@ const Index = () => {
         </ColorfulLink>{" "}
         and{" "}
         <ColorfulLink
-          href="https://www.linkedin.com/in/jakejarvis/"
+          href="https://www.linkedin.com/in/brendanlentz/"
           rel="me"
-          title="Jake Jarvis on LinkedIn"
+          title="Brendan Lentz on LinkedIn"
           lightColor="#0073b1"
           darkColor="#3b9dd2"
         >
           LinkedIn
         </ColorfulLink>
-        . I'm always available to connect over{" "}
-        <ColorfulLink href="/contact/" title="Send an email" lightColor="#de0c0c" darkColor="#ff5050">
-          email
-        </ColorfulLink>{" "}
-        <Sup>
-          <ColorfulLink
-            href="/pubkey.asc"
-            rel="pgpkey authn"
-            title="My Public Key"
-            lightColor="#757575"
-            darkColor="#959595"
-            underline={false}
-            openInNewTab
-          >
-            🔐 <PGPKey>2B0C 9CF2 51E6 9A39</PGPKey>
-          </ColorfulLink>
-        </Sup>
-        ,{" "}
-        <ColorfulLink
-          href="https://twitter.com/jakejarvis"
-          rel="me"
-          title="Jake Jarvis on Twitter"
-          lightColor="#00acee"
-          darkColor="#3bc9ff"
-        >
-          Twitter
-        </ColorfulLink>
-        , or{" "}
-        <ColorfulLink
-          href="sms:+1-617-917-3737"
-          title="Send SMS to +1 (617) 917-3737"
-          lightColor="#6fcc01"
-          darkColor="#8edb34"
-        >
-          SMS
-        </ColorfulLink>{" "}
-        as well!
+        .
       </Paragraph>
     </>
   );
