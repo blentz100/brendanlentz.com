@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import { HeartIcon, NextjsLogo } from "../Icons";
+import { ForkOcticon, HeartIcon, NextjsLogo } from "../Icons";
 import { keyframes, styled } from "../../lib/styles/stitches.config";
 import * as config from "../../lib/config";
 import type { ComponentProps } from "react";
@@ -101,8 +101,8 @@ const Footer = ({ ...rest }: FooterProps) => {
 
         <div>
           Made with{" "}
-          <Heart title="Love">
-            <Icon as={HeartIcon} />
+          <Heart title="Fork">
+            <Icon as={ForkOcticon} />
           </Heart>{" "}
           and{" "}
           <NextjsLink

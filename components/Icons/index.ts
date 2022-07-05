@@ -22,7 +22,6 @@ export { default as MarkdownIcon } from "@primer/octicons/build/svg/markdown-16.
 export { default as OctocatOcticon } from "@primer/octicons/build/svg/mark-github-16.svg";
 export { default as StarOcticon } from "@primer/octicons/build/svg/star-16.svg";
 export { default as XOcticon } from "@primer/octicons/build/svg/x-16.svg";
-
 // simple icons: https://simpleicons.org/
 export { default as FathomLogo } from "simple-icons/icons/fathom.svg";
 export { default as NextjsLogo } from "simple-icons/icons/nextdotjs.svg";
