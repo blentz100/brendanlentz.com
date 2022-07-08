@@ -172,7 +172,7 @@ const Index = () => {
           darkColor="#ff5146"
         >
           {" "}
-          Promineo Tech{" "}
+          Promineo Tech
         </ColorfulLink>
         . We provide affordable bootcamps in Front End Wed Development, Back End Web Development and Data Engineering to
         30+ colleges across the US.
