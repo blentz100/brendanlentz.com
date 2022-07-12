@@ -10,14 +10,6 @@ tags:
 image: "/public/static/images/notes/learning-git-tricks/git-logo.png"
 ---
 
-My very first commit to Github.com was on May 27th, 2020. Github technically
-counts it as a commit, but it was done via Github's file upload feature. At that
-time I wasn't comfortable enough with running git on the command line. Since
-then, I've pushed over 900 commits to GitHub. I've learned a few tricks over
-that many repetitions and I'd like to share one of my favorites.
-
-Add a resources section at the bottom.
-
 <Image
   src="/public/static/images/notes/learning-git-tricks/git-logo.png"
   width="400"
@@ -25,6 +17,10 @@ Add a resources section at the bottom.
   alt="git logo"
   priority
 />
+My very first commit to Github.com was on May 27th, 2020. Github technically counts it as a commit, but it was done via Github's
+file upload feature. At that time I wasn't comfortable enough with running git on the command line. Since then, I've pushed
+over 900 commits to GitHub. I've learned a few tricks over that many repetitions and I'd like to share one of my favorites.
+
 <Image
   src="/public/static/images/notes/learning-git-tricks/instructions.png"
   width="1676"
@@ -33,9 +29,13 @@ Add a resources section at the bottom.
   priority
 />
 
-## Step 1
+When you create a new repo, GitHub offers some helper commands to get you
+started but it doesn't explain what each command does. I want to explain a bit
+more what each of the commands above does and offer some ways to verify each step.
 
-```
+## Step 1 - Create a new file
+
+```bash session
 ➜  TestRepo ls -al
 total 0
 drwxr-xr-x   2 blentz  staff   64 Jul  8 16:01 .
@@ -49,7 +49,19 @@ drwxr-xr-x@ 20 blentz  staff  640 Jul  8 14:52 ..
 ➜  TestRepo
 ```
 
-## Step 2
+`echo` is a command line utility that will take some string as input and output
+it somewhere else. You are combining the `echo` command with the
+the redirect `>>` shell operator. In this case you are redirecting the string `# Test-Repository` to a file named `README.md` The reasoning behind this is so that
+you have some file to work with in your repository when you are just starting.
+You'll need a file in place in order for the rest of the commands to make any
+sense, and this one command is kind of a quick shortcut to ensure you have a
+file to work with.
+
+If you are new to working on the command line, don't worry too much about things
+like the `echo` command and the `>>` redirect operator. You'll have time later
+to learn more about those, for now stick with git. Onto step 2...
+
+## Step 2 - Initialize a git repo
 
 ```
 ➜  TestRepo git init
@@ -63,7 +75,7 @@ drwxr-xr-x   9 blentz  staff  288 Jul  9 18:10 .git
 ➜  TestRepo git:(main) ✗
 ```
 
-## Step 3
+## Step 3 - Stage files for a commit
 
 ```
 ➜  TestRepo git:(main) ✗ git add README.md
@@ -79,7 +91,7 @@ Changes to be committed:
 ➜  TestRepo git:(main) ✗
 ```
 
-## Step 4
+## Step 4 - Execute the commit
 
 ```
 ➜  TestRepo git:(main) ✗ git commit -m "first commit"
@@ -92,18 +104,7 @@ nothing to commit, working tree clean
 ➜  TestRepo git:(main)
 ```
 
-## Step 5
-
-```
-➜  TestRepo git:(main) git status
-On branch main
-Your branch is up to date with 'origin/main'.
-
-nothing to commit, working tree clean
-➜  TestRepo git:(main)
-```
-
-## Step 6
+## Step 5 - Set your branch
 
 ```
 ➜  TestRepo git:(main) git branch -M main
@@ -113,7 +114,7 @@ nothing to commit, working tree clean
 ➜  TestRepo git:(main)
 ```
 
-## Step 7
+## Step 6 - Connect to your remote
 
 ```
 ➜  TestRepo git:(main) git remote
@@ -122,4 +123,7 @@ nothing to commit, working tree clean
 origin  https://github.com/blentz100/Test-Repository.git (fetch)
 origin  https://github.com/blentz100/Test-Repository.git (push)
 ➜  TestRepo git:(main)
+
 ```
+
+## Step 7
