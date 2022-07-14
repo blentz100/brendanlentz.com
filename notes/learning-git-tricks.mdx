@@ -18,9 +18,13 @@ image: "/public/static/images/notes/learning-git-tricks/git-logo.png"
   priority
 />
 My very [first commit](https://github.com/blentz100/MyImages/commit/e6429af14fe6ff181e1cbcd64fe81b60502c0816) to Github.com
-was on May 27th, 2020. Github technically counts it as a commit, but it was done via Github's file upload feature. At that
-time I wasn't comfortable enough with running git on the command line. Since then, I've pushed over 900 commits to GitHub.
-I've learned a few tricks over that many repetitions and I'd like to share one of my favorites.
+was on May 27th, 2020. GitHub technically counts it as a commit, but I used the GitHub file upload feature so does that really count? 
+Since then, I've pushed over 900 (mostly command line) commits to GitHub.
+I've learned a few tricks over that many repetitions and I'd like to share some here.
+
+When you create a new repo, GitHub offers some helper commands to get you
+started:
+
 
 <Image
   src="/public/static/images/notes/learning-git-tricks/instructions.png"
@@ -30,12 +34,12 @@ I've learned a few tricks over that many repetitions and I'd like to share one o
   priority
 />
 
-When you create a new repo, GitHub offers some helper commands to get you
-started but it doesn't explain what each command does. I want to explain a bit
-more what each of the commands above does and offer some ways to verify each step.
+But it doesn't explain what each command does. 
+Let's examine each step in more detail to get a better understanding of how git works.
 
-## Step 1 - Create a new file
 
+## Step 1 - Create a new file with echo
+### `echo "# Test-Repository" >> README.md`
 ```bash session
 ➜  TestRepo ls -al
 total 0
@@ -52,17 +56,15 @@ drwxr-xr-x@ 20 blentz  staff  640 Jul  8 14:52 ..
 
 `echo` is a command line utility that will take some string as input and output
 it somewhere else. You are combining the `echo` command with the
-the redirect `>>` shell operator. In this case you are redirecting the string `# Test-Repository` to a file named `README.md` The reasoning behind this is so that
-you have some file to work with in your repository when you are just starting.
-You'll need a file in place in order for the rest of the commands to make any
-sense, and this one command is kind of a quick shortcut to ensure you have a
-file to work with.
+the redirect `>>` shell operator. In this case you are redirecting the string `# Test-Repository` to a file named `README.md` 
+This gives you some file to work with when you are just starting.
 
 If you are new to working on the command line, don't worry too much about things
 like the `echo` command and the `>>` redirect operator. You'll have time later
 to learn more about those, for now stick with git. Onto step 2...
 
 ## Step 2 - Initialize a git repo
+### `git init`
 
 ```bash session
 ➜  TestRepo git init
@@ -76,10 +78,16 @@ drwxr-xr-x   9 blentz  staff  288 Jul  9 18:10 .git
 ➜  TestRepo git:(main) ✗
 ```
 
-The next step is to initialize the local git repo. When you run `git commit`, git creates a hidden folder called `.git` in your current directory. This folder containts all the settings and history that git needs to track changes to your project. Without this folder, running any `git` commands will not have any effect.
+The next step is to initialize the local git repo. When you run `git commit`,
+git creates a hidden folder called `.git` in your current directory. This
+folder containts all the settings and history that git needs to track changes
+to your project. Without this folder, running any `git` commands will not have
+any effect. For now you don't need to go in there for basic git usages, but if
+you want to come back later and do a deep dive check out out: [what's in your
+git directory](https://gitready.com/advanced/2009/03/23/whats-inside-your-git-directory.html)
 
 ## Step 3 - Stage files for a commit
-
+### `git add README.md`
 ```bash session
 ➜  TestRepo git:(main) ✗ git add README.md
 ➜  TestRepo git:(main) ✗ git status
@@ -94,8 +102,20 @@ Changes to be committed:
 ➜  TestRepo git:(main) ✗
 ```
 
-## Step 4 - Execute the commit
+Next up you choose which files you want to get ready for a commit, or a snapshot
+of your project at a specific point in time. In this example, you just have the
+`README.md` file in your project, so you run `git add README.md`. 
 
+If you are new to the command line, you should know that many commands you input
+will not give you any feedback at all if they were successful. So notice above
+when I ran `git add README.md` there was no feedback. For that reason, I
+recommend you run the command `git status` after every single git command. It
+will give you some better context as to the state of the git repo, and in many
+cases it will give you a suggestion of what to do next. So run `git status`
+early and often!
+
+## Step 4 - Execute the commit
+### `git commit -m "first commit"`
 ```bash session
 ➜  TestRepo git:(main) ✗ git commit -m "first commit"
 [main (root-commit) 14690ab] first commit
@@ -107,8 +127,14 @@ nothing to commit, working tree clean
 ➜  TestRepo git:(main)
 ```
 
-## Step 5 - Set your branch
+Now that you have staged `README.md`, you are ready to commit it. Every commit
+must have a description. This message can be about a new feature you added or a
+bug you fixed. In this case it's our very first commit of the project, so we
+give it a message of "first commit" using the `-m flag`. Further reading on this
+topic: [A note about Git Commit Messages](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
 
+## Step 5 - Set your branch
+### `git branch -M main`
 ```bash session
 ➜  TestRepo git:(main) git branch -M main
 ➜  TestRepo git:(main) git status
@@ -117,17 +143,32 @@ nothing to commit, working tree clean
 ➜  TestRepo git:(main)
 ```
 
-## Step 6 - Connect to your remote
+Branches in git allow for multiple developers to work on different parts of the
+same code base at the same time, and then merge the changes together later. For
+now you probably are only working with one branch, and the popular convention is
+to name that branch `main`. Github.com uses `main` as the default branch, and
+Git uses `master` as the default branch name, This step makes sure both branches
+are in sync. Run `git status` again to confirm your change took effect. 
 
+I have instructions 
+[here](https://github.com/blentz100/Resources-for-Bootcamp-Students) on how to make this a global setting so you don't have
+to run it each time.
+## Step 6 - Connect to your remote
+### `git remote add origin https://github.com/blentz100/Test-Repository.git`
+ 
 ```bash session
-➜  TestRepo git:(main) git remote
+➜  TestRepo git:(main) git remote -v
 ➜  TestRepo git:(main) git remote add origin https://github.com/blentz100/Test-Repository.git
 ➜  TestRepo git:(main) git remote -v
 origin  https://github.com/blentz100/Test-Repository.git (fetch)
 origin  https://github.com/blentz100/Test-Repository.git (push)
 ➜  TestRepo git:(main)
-
 ```
+Your remote is where you want to push your local changes to. In this case we
+want our remote to be Github.com. Running `git remote -v` this first time shows
+there are no remotes, and the second time it shows we've successfully added the
+remote.
+
 
 ## Step 7 Push to Github
 
