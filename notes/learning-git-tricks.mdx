@@ -180,8 +180,23 @@ want our remote to be Github.com. Running `git remote -v` this first time shows
 there are no remotes, and the second time it shows we've successfully added the
 remote.
 
-## Step 7 Push to Github
+## Step 7 - Push to Github
+
+### `git push -u origin main`
 
 ```bash session
+➜  Test-Repository git:(main) git push -u origin main
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 250 bytes | 250.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/blentz100/Test-Repository.git
+ * [new branch]      main -> main
+Branch 'main' set up to track remote branch 'main' from 'origin'.
+➜  Test-Repository git:(main) git status
+On branch main
+Your branch is up to date with 'origin/main'.
 
+nothing to commit, working tree clean
+➜  Test-Repository git:(main)
 ```
