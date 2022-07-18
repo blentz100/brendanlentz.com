@@ -22,7 +22,7 @@ module.exports = {
         // normal .prettierrc config:
         singleQuote: false,
         tabWidth: 2,
-        printWidth: 120,
+        printWidth: 80,
       },
     ],
   },
@@ -38,7 +38,7 @@ module.exports = {
             // normal .prettierrc config:
             singleQuote: false,
             tabWidth: 2,
-            printWidth: 120,
+            printWidth: 80,
           },
         ],
       },
