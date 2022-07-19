@@ -1,7 +1,7 @@
 ---
-title: "Learning Git Tricks"
+title: "Getting Started with git and GitHub.com"
 date: 2022-07-06 10:31:02-0400
-description: "Learning git is hard, but there are some practices you can add to your routine to make it slightly less hard."
+description: "Learning git and GitHub.com can be challenging. Here are some insights to make it a little easier."
 tags:
   - git
   - github
@@ -19,9 +19,9 @@ image: "/public/static/images/notes/learning-git-tricks/git-logo.png"
 />
 My very [first commit](https://github.com/blentz100/MyImages/commit/e6429af14fe6ff181e1cbcd64fe81b60502c0816)
 to Github.com was on May 27th, 2020. GitHub technically counts it as a commit, but
-I used the GitHub file upload feature so does that really count? Since then, I've
-pushed over 900 (mostly command line) commits to GitHub. I've learned a few tricks
-over that many repetitions and I'd like to share some here.
+I was using the GitHub file upload feature so wasn't really learning the fundamentals
+of git. Since then, I've pushed over 900 (mostly command line) commits to GitHub.
+I've had a few insights over all those commits and wanted to share a few here.
 
 When you create a new repo, GitHub offers some helper commands to get you
 started:
@@ -34,8 +34,15 @@ started:
   priority
 />
 
-But it doesn't explain what each command does.
-Let's examine each step in more detail to get a better understanding of how git works.
+But it doesn't explain what each command does. Let's examine each step in more
+detail. At each step I'll show you the real output on my own terminal of each
+command. If you are new to the command line, one important thing to note is that
+when you run a command and it works successfully, you won't always get a
+response back telling you it worked or was successful. When you are learning,
+it's helpful in those cases to know some other commands you can run to verify
+that the prior command worked as intended. In some spots below, I'm showing some
+optional commands you can and should run to get a better understanding of what's
+happening.
 
 ## Step 1 - Create a new file with echo
 
@@ -180,6 +187,13 @@ want our remote to be Github.com. Running `git remote -v` this first time shows
 there are no remotes, and the second time it shows we've successfully added the
 remote.
 
+I've been asked before why this step is necessary. Shouldn't git just know
+automatically that we want to connect our local repo with our repo on
+GitHub.com? It might be helpful to know that git has been around long before
+there was a GitHub.com. There are many other alternatives to GitHub.com you
+could use. Another use case is you might just want a local repository on your
+own machine to track changes for yourself.
+
 ## Step 7 - Push to Github
 
 ### `git push -u origin main`
@@ -200,3 +214,14 @@ Your branch is up to date with 'origin/main'.
 nothing to commit, working tree clean
 ➜  Test-Repository git:(main)
 ```
+
+This last step takes takes the changes you committed locally and pushes them to
+your repo on your remote (your repo on GitHub.com). You configured this remote
+in step 6. The output you see here is similar to the output anytime you
+successfully push your latest commit. If you do a push and don't see the
+familiar `Enumerating objects`, `Counting Objects`, `Writing Objects` then
+something probably went wrong.
+
+The `-u origin main` option only needs to be included the first time you run
+this command. From here on out, git knows that your local branch `main` should
+track with your remote branch `main`.
