@@ -11,19 +11,43 @@ import { useState } from "react";
 
 const React = () => {
   const [name, setName] = useState("");
+  const useStateSnippet = `
+    const React = () => {
+      const [name, setName] = useState("");
+      return (
+        <>
+          <H2>basic useState hooks example</H2>
+          Whatever gets input here :
+          <input onChange={(e) => { setName(e.target.value) }} />
+          <br />
+          Should also show up here: <span>{name}</span>
+        </>
+      )};
+  `;
 
   return (
     <>
-      <H2>basic useState hooks example</H2>
-      Whatever gets input here :
-      <input
-        onChange={(e) => {
-          setName(e.target.value);
-          console.log("s");
-        }}
-      />
-      <br />
-      Should also show up here: <span>{name}</span>
+      <div>
+        <div>
+          <H2>basic useState hooks example</H2>
+          Whatever gets input here :
+          <input
+            maxLength={18}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+          <br />
+          Should also show up here: <span>{name}</span>
+        </div>
+        <div>
+          <pre>
+            <code>
+              <CodeBlock>{useStateSnippet}</CodeBlock>
+            </code>
+          </pre>
+        </div>
+      </div>
     </>
   );
 };
