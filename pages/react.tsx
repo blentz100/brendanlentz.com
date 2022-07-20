@@ -32,7 +32,7 @@ const React = () => {
           <H2>basic useState hooks example</H2>
           Whatever gets input here :
           <input
-            maxLength={18}
+            maxLength={17}
             onChange={(e) => {
               setName(e.target.value);
             }}
