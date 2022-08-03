@@ -130,7 +130,7 @@ const Index = () => {
       </H2>
 
       <Paragraph>
-        I have a degree in{" "}
+        I have a bachelor's degree in{" "}
         <ColorfulLink
           href="https://www.wm.edu/as/computerscience/"
           title="W&M Computer Science Department"
@@ -140,7 +140,12 @@ const Index = () => {
           Computer Science
         </ColorfulLink>{" "}
         from{" "}
-        <ColorfulLink href="https://www.wm.edu/" title="William and Mary" lightColor="#6fbc4e" darkColor="#84d95f">
+        <ColorfulLink
+          href="https://www.wm.edu/"
+          title="William and Mary"
+          lightColor="#6fbc4e"
+          darkColor="#84d95f"
+        >
           The College of William and Mary in Virginia
         </ColorfulLink>
         .
@@ -163,23 +168,14 @@ const Index = () => {
           darkColor="#e18431"
         >
           plain JavaScript
-        </ColorfulLink>{" "}
-        in my job at
-        <ColorfulLink
-          href="https://aztechbeat.com/2021/07/27/edtech-startup-promineo-tech-raises-900000-in-seed-funding/"
-          title="EdTech startup Promineo Tech raises $900,000 in seed funding"
-          lightColor="#fb4d42"
-          darkColor="#ff5146"
-        >
-          {" "}
-          Promineo Tech
         </ColorfulLink>
-        . We provide affordable bootcamps in Front End Wed Development, Back End Web Development and Data Engineering to
-        30+ colleges across the US.
+        . I love learning new technologies like Typescript, contributing to open
+        source projects and listening to tech podcasts (shoutout to Syntax and
+        JS Party)
       </Paragraph>
 
       <Paragraph>
-        Every week I host{" "}
+        In my previous role at a coding bootcamp I hosted weekly{" "}
         <ColorfulLink
           href="https://gist.github.com/blentz100"
           title="Github Gists"
@@ -198,8 +194,8 @@ const Index = () => {
           {" "}
           technical interviews
         </ColorfulLink>
-        . I love helping build a rapidly growing startup and supporting people who are transforming their lives through
-        education.
+        . I helped to grow our startup from 3 people to over 20, and built the
+        mentor team that supported over a 100 new students every month.{" "}
       </Paragraph>
 
       <Paragraph>
