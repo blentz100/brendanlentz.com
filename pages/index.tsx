@@ -130,27 +130,6 @@ const Index = () => {
       </H2>
 
       <Paragraph>
-        I have a bachelor's degree in{" "}
-        <ColorfulLink
-          href="https://www.wm.edu/as/computerscience/"
-          title="W&M Computer Science Department"
-          lightColor="#1091b3"
-          darkColor="#6fcbe3"
-        >
-          Computer Science
-        </ColorfulLink>{" "}
-        from{" "}
-        <ColorfulLink
-          href="https://www.wm.edu/"
-          title="William and Mary"
-          lightColor="#6fbc4e"
-          darkColor="#84d95f"
-        >
-          The College of William and Mary in Virginia
-        </ColorfulLink>
-        .
-      </Paragraph>
-      <Paragraph>
         I focus on{" "}
         <ColorfulLink
           href="https://reactjs.org/"
@@ -167,11 +146,11 @@ const Index = () => {
           lightColor="#f48024"
           darkColor="#e18431"
         >
-          plain JavaScript
+          JavaScript
         </ColorfulLink>
         . I love learning new technologies like Typescript, contributing to open
         source projects and listening to tech podcasts (shoutout to Syntax and
-        JS Party)
+        JS Party.)
       </Paragraph>
 
       <Paragraph>
@@ -197,7 +176,27 @@ const Index = () => {
         . I helped to grow our startup from 3 people to over 20, and built the
         mentor team that supported over a 100 new students every month.{" "}
       </Paragraph>
-
+      <Paragraph>
+        I have a bachelor's degree in{" "}
+        <ColorfulLink
+          href="https://www.wm.edu/as/computerscience/"
+          title="W&M Computer Science Department"
+          lightColor="#1091b3"
+          darkColor="#6fcbe3"
+        >
+          Computer Science
+        </ColorfulLink>{" "}
+        from{" "}
+        <ColorfulLink
+          href="https://www.wm.edu/"
+          title="William and Mary"
+          lightColor="#6fbc4e"
+          darkColor="#84d95f"
+        >
+          The College of William and Mary in Virginia
+        </ColorfulLink>
+        .
+      </Paragraph>
       <Paragraph>
         You can find more of my work on{" "}
         <ColorfulLink
