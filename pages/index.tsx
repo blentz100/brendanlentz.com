@@ -130,6 +130,15 @@ const Index = () => {
       </H2>
 
       <Paragraph>
+        In my current role as a developer at{" "}
+        <ColorfulLink
+          href="https://www.operationalsystems.com/"
+          title="Operational Systems Inc Homepage"
+          lightColor="#1091b3"
+          darkColor="#6fcbe3"
+        >
+          Operational Systems Inc,
+        </ColorfulLink>{" "}
         I focus on{" "}
         <ColorfulLink
           href="https://reactjs.org/"
