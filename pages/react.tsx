@@ -1,4 +1,4 @@
-import { nextseo } from "next-seo";
+import { NextSeo } from "next-seo";
 import Content from "../components/Content";
 import PageTitle from "../components/PageTitle";
 import Link from "../components/Link";
