@@ -148,9 +148,8 @@ const Index = () => {
         >
           JavaScript
         </ColorfulLink>
-        . I love learning new technologies like Typescript, contributing to open
-        source projects and listening to tech podcasts (shoutout to Syntax and
-        JS Party.)
+        . I love learning new technologies like Typescript, contributing to open source projects and listening to tech
+        podcasts (shoutout to Syntax and JS Party.)
       </Paragraph>
 
       <Paragraph>
@@ -173,8 +172,8 @@ const Index = () => {
           {" "}
           technical interviews
         </ColorfulLink>
-        . I helped to grow our startup from 3 people to over 20, and built the
-        mentor team that supported over a 100 new students every month.{" "}
+        . I helped to grow our startup from 3 people to over 20, and built the mentor team that supported over a 100 new
+        students every month.{" "}
       </Paragraph>
       <Paragraph>
         I have a bachelor's degree in{" "}
@@ -187,12 +186,7 @@ const Index = () => {
           Computer Science
         </ColorfulLink>{" "}
         from{" "}
-        <ColorfulLink
-          href="https://www.wm.edu/"
-          title="William and Mary"
-          lightColor="#6fbc4e"
-          darkColor="#84d95f"
-        >
+        <ColorfulLink href="https://www.wm.edu/" title="William and Mary" lightColor="#6fbc4e" darkColor="#84d95f">
           The College of William and Mary in Virginia
         </ColorfulLink>
         .
