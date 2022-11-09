@@ -25,7 +25,6 @@ export const MyApp: React.FC<unknown> = () => {
           <div>Celsius: {initialValues.fahrenheit} </div>
         </Form>
       </Formik>
-      <DisplayConversion {...initialValues} />
     </div>
   );
 };
