@@ -23,7 +23,7 @@
     "@fontsource/roboto-mono": "4.5.7",
     "@giscus/react": "^2.0.5",
     "@hcaptcha/react-hcaptcha": "^1.3.1",
-    "@novnc/novnc": "github:novnc/novnc#cdfb33665195eb9a73fb00feb6ebaccd1068cd50",
+    "@novnc/novnc": "1.4.0",
     "@octokit/graphql": "^4.8.0",
     "@primer/octicons": "^17.3.0",
     "@react-spring/web": "^9.4.5",
