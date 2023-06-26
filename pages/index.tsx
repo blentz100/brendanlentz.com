@@ -117,7 +117,7 @@ const Index = () => {
         Hi there, I'm Brendan... <Wave>👋</Wave>
       </H1>
       <H2>
-        I'm a frontend web developer based in the{" "}
+        I'm a frontend developer based in the{" "}
         <ColorfulLink
           href="https://phxbrief.com/briefs"
           title='"The PHX Brief"'
