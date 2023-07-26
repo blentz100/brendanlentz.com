@@ -1,0 +1,45 @@
+---
+title: "Naming Strategy for Test Data"
+date: 2023-07-26 10:31:02-0400
+description: "Learning git and GitHub.com can be challenging. Here are some insights to make it a little easier."
+tags:
+  - software development
+  - testing
+  - QA
+  - naming conventions
+---
+
+When you are in the testing/development cycle how often are you filling out the same
+data over and over just to run your test? You can go the route of typing in a bunch of random letters
+and numbers. There is a good chance you'll actually type the same
+random string for more than one test. And now you have a collision or duplicate test data.
+
+```
+First Name: asdf
+
+First Name: asdfjkl
+
+First Name: asdf
+
+First Name: asdlkfj
+
+...
+```
+
+Instead of random characters, start off with the current time. This way you
+won't have collisions and if you are comparing a bunch of data you can tell which tests were run when.
+No confusion, no collisions, and no wasting time trying to come up with a unique name.
+
+```
+First Name: 314pmtest
+
+First Name: 316pmtestwithFlagA
+
+First Name: 317pmtestwithFeature234
+
+First Name: 330pmtestwithNoFlags
+
+...
+```
+
+Let me know what you think and if you have your own strategy for test data.
