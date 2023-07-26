@@ -1,4 +1,4 @@
 {
-  "origins": ["http://localhost:3000"],
-  "originsRegex": ["http://localhost:[0-9]+"]
+  "origins": ["http://localhost:3000", "https://www.brendanlentz.com"],
+  "originsRegex": ["http://localhost:[0-9]+","https://www.brendanlentz.com" ]
 }
