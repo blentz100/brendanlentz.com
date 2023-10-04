@@ -92,11 +92,8 @@ const Footer = ({ ...rest }: FooterProps) => {
           <Link href="/license/" prefetch={false} title="Creative Commons Attribution 4.0 International">
             licensed under CC-BY-4.0
           </Link>
-          ,{" "}
-          <Link href="/previously/" prefetch={false} title="Previously on...">
-            2001
-          </Link>{" "}
-          – {new Date(process.env.NEXT_PUBLIC_RELEASE_DATE || Date.now()).getUTCFullYear()}.
+          ,{""}
+          {new Date(process.env.NEXT_PUBLIC_RELEASE_DATE || Date.now()).getUTCFullYear()}.
         </div>
 
         <div>
