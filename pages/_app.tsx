@@ -11,6 +11,7 @@ import { globalStyles } from "../lib/styles/stitches.config";
 import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps as NextAppProps } from "next/app";
+import { MantineProvider } from "@mantine/core";
 
 // https://nextjs.org/docs/basic-features/layouts#with-typescript
 export type AppProps = NextAppProps & {
@@ -74,8 +75,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         dangerouslySetAllPagesToNoFollow={process.env.NEXT_PUBLIC_VERCEL_ENV !== "production"}
       />
       <SocialProfileJsonLd {...socialProfileJsonLd} />
-
-      <ThemeProvider classNames={themeClassNames}>{getLayout(<Component {...pageProps} />)}</ThemeProvider>
+      <MantineProvider>
+        <ThemeProvider classNames={themeClassNames}>{getLayout(<Component {...pageProps} />)}</ThemeProvider>
+      </MantineProvider>
     </>
   );
 };
