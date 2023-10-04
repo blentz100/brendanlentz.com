@@ -3,7 +3,19 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { RecordType } from "../index";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const auth = await google.auth.getClient({ scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"] });
+  // new Google Auth Method
+  const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
+
+  const { privateKey } = JSON.parse(process.env.GOOGLE_PRIVATE_KEY || "{ privateKey: null }");
+  const auth = new google.auth.GoogleAuth({
+    scopes: SCOPES,
+    projectId: process.env.GOOGLE_PROJECTID,
+    credentials: {
+      private_key: privateKey,
+      client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    },
+  });
+
   const sheets = google.sheets({ version: "v4", auth });
   const range = `Habits!A8:G372`; // the habit data
   const range2 = `Habits!K1`; // last edited field
