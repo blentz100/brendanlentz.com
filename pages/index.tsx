@@ -268,7 +268,7 @@ export function HabitTrackerTable() {
     <article>
       <H2>Habit Tracker</H2>
       <Paragraph>
-        One of my 2023 goals is to do 10,000 pushups. I created a habit tracker to track my pushups and some other
+        One of my 2023 goals is to do 10,000 pushups. I created a habit tracker to track this goal and some other
         exercises. Updated in realtime.
       </Paragraph>
       <Container mt={20} ml={-15}>
