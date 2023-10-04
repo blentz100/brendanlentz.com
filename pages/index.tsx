@@ -1,5 +1,20 @@
 import Link, { LinkProps } from "../components/Link";
 import { styled, keyframes, darkTheme } from "../lib/styles/stitches.config";
+import { sortBy } from "lodash";
+import { useEffect, useState } from "react";
+import { Badge, Container } from "@mantine/core";
+import { DataTable, DataTableSortStatus } from "mantine-datatable";
+
+export interface RecordType {
+  date: string;
+  dateAsNumber: number;
+  jacks: number;
+  meditation: number;
+  pullups: number;
+  pushups: number;
+  situps: number;
+  stairs: number;
+}
 
 const ColorfulLink = ({
   lightColor,
@@ -223,8 +238,113 @@ const Index = () => {
         </ColorfulLink>
         .
       </Paragraph>
+      <HabitTrackerTable />
     </>
   );
 };
+export function HabitTrackerTable() {
+  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({ columnAccessor: "", direction: "asc" });
+  const [records, setRecords] = useState<RecordType[]>();
+
+  useEffect(() => {
+    fetch("/api/sheets/")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success === true) {
+          setRecords(data.dataArrayFiltered);
+        } else {
+          throw new Error(data.message);
+        }
+      });
+  }, []);
+
+  // sort functionality
+  useEffect(() => {
+    const data = sortBy(records, sortStatus.columnAccessor);
+    setRecords(sortStatus.direction === "desc" ? data.reverse() : data);
+  }, [sortStatus]);
+
+  return (
+    <article>
+      <H2>Habit Tracker</H2>
+      <Paragraph>
+        One of my 2023 goals is to do 10,000 pushups. I created a habit tracker to track my pushups and some other
+        exercises. Updated in realtime.
+      </Paragraph>
+      <Container mt={20} ml={-15}>
+        <DataTable
+          columns={[
+            {
+              accessor: "dateAsNumber",
+              sortable: true,
+              footer: `YTD Totals`,
+              render: (item) => (
+                <div>
+                  {item.date}
+                  {item.date === new Date().toLocaleDateString() ? <Badge color="blue"> Today </Badge> : null}
+                </div>
+              ),
+            },
+            {
+              accessor: "pushups",
+              sortable: true,
+              footer: records
+                ?.reduce((accumulator, currentValue) => {
+                  return accumulator + currentValue.pushups;
+                }, 0)
+                .toLocaleString(),
+            },
+            {
+              accessor: "situps",
+              sortable: true,
+              footer: records
+                ?.reduce((accumulator, currentValue) => {
+                  return accumulator + currentValue.situps;
+                }, 0)
+                .toLocaleString(),
+            },
+            {
+              accessor: "jacks",
+              sortable: true,
+              footer: records
+                ?.reduce((accumulator, currentValue) => {
+                  return accumulator + currentValue.jacks;
+                }, 0)
+                .toLocaleString(),
+            },
+            {
+              accessor: "stairs",
+              sortable: true,
+              footer: records
+                ?.reduce((accumulator, currentValue) => {
+                  return accumulator + currentValue.stairs;
+                }, 0)
+                .toLocaleString(),
+            },
+            {
+              accessor: "pullups",
+              sortable: true,
+              footer: records
+                ?.reduce((accumulator, currentValue) => {
+                  return accumulator + currentValue.pullups;
+                }, 0)
+                .toLocaleString(),
+            },
+          ]}
+          records={records}
+          withBorder
+          striped
+          height={500}
+          highlightOnHover
+          scrollAreaProps={{ type: "always" }}
+          sortStatus={sortStatus}
+          onSortStatusChange={setSortStatus}
+          idAccessor={"date"}
+        />
+        {/* <figcaption><i>updated: {lastEditedDate}</i></figcaption> */}
+      </Container>
+    </article>
+  );
+}
 
 export default Index;
