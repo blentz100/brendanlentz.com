@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import { ForkOcticon, HeartIcon, NextjsLogo } from "../Icons";
+import { ForkOcticon, NextjsLogo } from "../Icons";
 import { keyframes, styled } from "../../lib/styles/stitches.config";
 import * as config from "../../lib/config";
 import type { ComponentProps } from "react";
