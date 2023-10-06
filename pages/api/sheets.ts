@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
   });
   // filter out future dates from the spreadsheet and reverse it
-  const dataArrayFiltered = dataArray?.filter((item) => new Date(item.date) < new Date()).reverse();
+  const dataArrayFiltered = dataArray?.filter((item) => new Date(item.date).getTime() < new Date().getTime()).reverse();
 
   return res.status(200).json({ dataArrayFiltered, success: true });
 }
