@@ -276,6 +276,7 @@ export function HabitTrackerTable() {
           columns={[
             {
               accessor: "dateAsNumber",
+              title: "Date",
               sortable: true,
               footer: `YTD Totals`,
               render: (item) => (
