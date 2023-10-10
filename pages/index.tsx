@@ -243,7 +243,7 @@ const Index = () => {
   );
 };
 export function HabitTrackerTable() {
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({ columnAccessor: "", direction: "asc" });
+  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({ columnAccessor: "", direction: "desc" });
   const [records, setRecords] = useState<RecordType[]>();
 
   useEffect(() => {
