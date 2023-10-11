@@ -4,6 +4,8 @@ import { sortBy } from "lodash";
 import { useEffect, useState } from "react";
 import { Badge, Container } from "@mantine/core";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
+import { returnTotal, returnTotalPercentage } from "../lib/helpers/data-table";
+import { TableFooter } from "../components/TableFooter/TableFooter";
 
 export interface RecordType {
   date: string;
@@ -278,7 +280,7 @@ export function HabitTrackerTable() {
               accessor: "dateAsNumber",
               title: "Date",
               sortable: true,
-              footer: `YTD Totals`,
+              footer: <>Progress</>,
               render: (item) => (
                 <div>
                   {item.date}
@@ -289,47 +291,67 @@ export function HabitTrackerTable() {
             {
               accessor: "pushups",
               sortable: true,
-              footer: records
-                ?.reduce((accumulator, currentValue) => {
-                  return accumulator + currentValue.pushups;
-                }, 0)
-                .toLocaleString(),
+              textAlignment: "center",
+              footer: (
+                <TableFooter
+                  total={returnTotal(records, "pushups")}
+                  habit="pushups"
+                  goal={10000}
+                  totalPercentage={returnTotalPercentage(records, "pushups", 10000)}
+                />
+              ),
             },
             {
               accessor: "situps",
               sortable: true,
-              footer: records
-                ?.reduce((accumulator, currentValue) => {
-                  return accumulator + currentValue.situps;
-                }, 0)
-                .toLocaleString(),
+              textAlignment: "center",
+              footer: (
+                <TableFooter
+                  total={returnTotal(records, "situps")}
+                  habit="situps"
+                  goal={3000}
+                  totalPercentage={returnTotalPercentage(records, "situps", 3000)}
+                />
+              ),
             },
             {
               accessor: "jacks",
               sortable: true,
-              footer: records
-                ?.reduce((accumulator, currentValue) => {
-                  return accumulator + currentValue.jacks;
-                }, 0)
-                .toLocaleString(),
+              textAlignment: "center",
+              footer: (
+                <TableFooter
+                  total={returnTotal(records, "jacks")}
+                  habit="jacks"
+                  goal={6000}
+                  totalPercentage={returnTotalPercentage(records, "jacks", 6000)}
+                />
+              ),
             },
             {
               accessor: "stairs",
               sortable: true,
-              footer: records
-                ?.reduce((accumulator, currentValue) => {
-                  return accumulator + currentValue.stairs;
-                }, 0)
-                .toLocaleString(),
+              textAlignment: "center",
+              footer: (
+                <TableFooter
+                  total={returnTotal(records, "stairs")}
+                  habit="stairs"
+                  goal={200}
+                  totalPercentage={returnTotalPercentage(records, "stairs", 200)}
+                />
+              ),
             },
             {
               accessor: "pullups",
               sortable: true,
-              footer: records
-                ?.reduce((accumulator, currentValue) => {
-                  return accumulator + currentValue.pullups;
-                }, 0)
-                .toLocaleString(),
+              textAlignment: "center",
+              footer: (
+                <TableFooter
+                  total={returnTotal(records, "pullups")}
+                  habit="pullups"
+                  goal={400}
+                  totalPercentage={returnTotalPercentage(records, "pullups", 400)}
+                />
+              ),
             },
           ]}
           records={records}
