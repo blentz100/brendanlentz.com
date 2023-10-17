@@ -271,7 +271,7 @@ export async function getStaticProps() {
 }
 export function HabitTrackerTable({ staticRecords }: HabitTrackerProps) {
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
-    columnAccessor: "",
+    columnAccessor: "dateAsNumber",
     direction: "desc",
   });
   const [records, setRecords] = useState<RecordType[]>(staticRecords);
