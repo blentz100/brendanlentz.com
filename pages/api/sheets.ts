@@ -20,10 +20,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const range = `Habits!A8:G372`; // the habit data
   // last edited field
 
+  // Start time
+  const startTime = performance.now();
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
     range,
   });
+  // End time
+  const endTime = performance.now();
+  // Calculate and display the time taken
+  const timeTaken = endTime - startTime;
+  console.log(`Function executed in: ${timeTaken.toFixed(2)}ms`);
 
   // transform data into an array of objects
   const dataArray = response.data.values?.map<RecordType>((item) => {

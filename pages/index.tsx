@@ -127,7 +127,12 @@ const EasterEgg = styled(ColorfulLink, {
   },
 });
 
-const Index = () => {
+interface IndexProps {
+  staticRecords: RecordType[];
+}
+
+const Index = ({ staticRecords }: IndexProps) => {
+  // @ts-ignore
   return (
     <>
       <H1>
@@ -240,25 +245,57 @@ const Index = () => {
         </ColorfulLink>
         .
       </Paragraph>
-      <HabitTrackerTable />
+
+      <HabitTrackerTable staticRecords={staticRecords} />
     </>
   );
 };
-export function HabitTrackerTable() {
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({ columnAccessor: "", direction: "desc" });
-  const [records, setRecords] = useState<RecordType[]>();
 
-  useEffect(() => {
-    fetch("/api/sheets/")
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success === true) {
-          setRecords(data.dataArrayFiltered);
-        } else {
-          throw new Error(data.message);
-        }
-      });
-  }, []);
+export async function getStaticProps() {
+  console.log("Hello World, Im in the backend");
+  const response = await fetch("http://localhost:3000/api/sheets/");
+  const responseData = await response.json();
+  if (!responseData.success) {
+    throw new Error(responseData.message);
+  }
+  const records = responseData.dataArrayFiltered;
+  // .then((response) => response.json())
+  // .then((data) => {
+  //   if (data.success === true) {
+  //     setRecords(data.dataArrayFiltered);
+  //   } else {
+  //     throw new Error(data.message);
+  //   }
+  // });
+  return {
+    props: {
+      staticRecords: records,
+    },
+    revalidate: 300,
+  };
+}
+export function HabitTrackerTable(staticRecords: RecordType[]) {
+  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
+    columnAccessor: "",
+    direction: "desc",
+  });
+  // @ts-ignore
+  const [records, setRecords] = useState<RecordType[]>(staticRecords.staticRecords);
+
+  console.log("staticRecords", staticRecords);
+
+  //
+  // useEffect(() => {
+  //   fetch("/api/sheets/")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       if (data.success === true) {
+  //         setRecords(data.dataArrayFiltered);
+  //       } else {
+  //         throw new Error(data.message);
+  //       }
+  //     });
+  // }, []);
 
   // sort functionality
   useEffect(() => {
@@ -266,6 +303,7 @@ export function HabitTrackerTable() {
     setRecords(sortStatus.direction === "desc" ? data.reverse() : data);
   }, [sortStatus]);
 
+  // @ts-ignore
   return (
     <article>
       <H2>Habit Tracker</H2>
