@@ -253,7 +253,10 @@ const Index = ({ staticRecords }: IndexProps) => {
 
 export async function getStaticProps() {
   console.log("Hello World, Im in the backend");
-  const response = await fetch("http://localhost:3000/api/sheets/");
+  const dev = process.env.NODE_ENV !== "production";
+  const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
+
+  const response = await fetch(`${server}/api/sheets`);
   const responseData = await response.json();
   if (!responseData.success) {
     throw new Error(responseData.message);
