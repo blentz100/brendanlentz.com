@@ -130,9 +130,11 @@ const EasterEgg = styled(ColorfulLink, {
 interface IndexProps {
   staticRecords: RecordType[];
 }
+interface HabitTrackerProps {
+  staticRecords: RecordType[];
+}
 
 const Index = ({ staticRecords }: IndexProps) => {
-  // @ts-ignore
   return (
     <>
       <H1>
@@ -262,6 +264,7 @@ export async function getStaticProps() {
     throw new Error(responseData.message);
   }
   const records = responseData.dataArrayFiltered;
+  console.log("*records is: ", records);
   // .then((response) => response.json())
   // .then((data) => {
   //   if (data.success === true) {
@@ -277,13 +280,12 @@ export async function getStaticProps() {
     revalidate: 300,
   };
 }
-export function HabitTrackerTable(staticRecords: RecordType[]) {
+export function HabitTrackerTable({ staticRecords }: HabitTrackerProps) {
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
     columnAccessor: "",
     direction: "desc",
   });
-  // @ts-ignore
-  const [records, setRecords] = useState<RecordType[]>(staticRecords.staticRecords);
+  const [records, setRecords] = useState<RecordType[]>(staticRecords);
 
   console.log("staticRecords", staticRecords);
 
@@ -306,7 +308,6 @@ export function HabitTrackerTable(staticRecords: RecordType[]) {
     setRecords(sortStatus.direction === "desc" ? data.reverse() : data);
   }, [sortStatus]);
 
-  // @ts-ignore
   return (
     <article>
       <H2>Habit Tracker</H2>
