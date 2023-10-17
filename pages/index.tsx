@@ -254,25 +254,14 @@ const Index = ({ staticRecords }: IndexProps) => {
 };
 
 export async function getStaticProps() {
-  console.log("Hello World, Im in the backend");
   const dev = process.env.NODE_ENV !== "production";
   const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
-
   const response = await fetch(`${server}/api/sheets`);
   const responseData = await response.json();
   if (!responseData.success) {
     throw new Error(responseData.message);
   }
   const records = responseData.dataArrayFiltered;
-  console.log("*records is: ", records);
-  // .then((response) => response.json())
-  // .then((data) => {
-  //   if (data.success === true) {
-  //     setRecords(data.dataArrayFiltered);
-  //   } else {
-  //     throw new Error(data.message);
-  //   }
-  // });
   return {
     props: {
       staticRecords: records,
@@ -286,21 +275,6 @@ export function HabitTrackerTable({ staticRecords }: HabitTrackerProps) {
     direction: "desc",
   });
   const [records, setRecords] = useState<RecordType[]>(staticRecords);
-
-  console.log("staticRecords", staticRecords);
-
-  //
-  // useEffect(() => {
-  //   fetch("/api/sheets/")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.success === true) {
-  //         setRecords(data.dataArrayFiltered);
-  //       } else {
-  //         throw new Error(data.message);
-  //       }
-  //     });
-  // }, []);
 
   // sort functionality
   useEffect(() => {
