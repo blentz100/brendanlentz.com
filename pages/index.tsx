@@ -334,6 +334,7 @@ export function HabitTrackerTable({ staticRecords }: HabitTrackerProps) {
               accessor: "jacks",
               sortable: true,
               textAlignment: "center",
+              title: "Jumping Jacks",
               footer: (
                 <TableFooter
                   total={returnTotal(records, "jacks")}
