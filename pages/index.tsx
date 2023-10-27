@@ -6,6 +6,7 @@ import { Badge, Container } from "@mantine/core";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import { returnTotal, returnTotalPercentage } from "../lib/helpers/data-table";
 import { TableFooter } from "../components/TableFooter/TableFooter";
+import { Temporal } from "@js-temporal/polyfill";
 
 export interface RecordType {
   date: string;
@@ -134,6 +135,11 @@ interface HabitTrackerProps {
   staticRecords: RecordType[];
 }
 
+console.log("Client Side");
+console.log("Temporal.Now.instant()", Temporal.Now.instant());
+console.log("Temporal.Now.timeZoneId()", Temporal.Now.timeZoneId());
+console.log("Temporal.Now.zonedDateTimeISO()", Temporal.Now.zonedDateTimeISO());
+console.log("Temporal.Now.zonedDateTimeISO().dayOfYear", Temporal.Now.zonedDateTimeISO("Etc/GMT+8").dayOfYear);
 const Index = ({ staticRecords }: IndexProps) => {
   return (
     <>
