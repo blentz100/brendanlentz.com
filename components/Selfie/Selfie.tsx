@@ -4,7 +4,7 @@ import { styled } from "../../lib/styles/stitches.config";
 import { authorName } from "../../lib/config";
 import type { ComponentProps } from "react";
 
-import selfieJpg from "../../public/static/images/selfie.jpg";
+import selfieJpg from "../../public/static/images/me.jpg";
 
 const Image = styled(NextImage, {
   display: "block",

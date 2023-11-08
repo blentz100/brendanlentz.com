@@ -26,10 +26,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
 
   console.log("Server Side:");
-  console.log("Temporal.Now.instant()", Temporal.Now.instant());
-  console.log("Temporal.Now.timeZoneId()", Temporal.Now.timeZoneId());
-  console.log("Temporal.Now.zonedDateTimeISO()", Temporal.Now.zonedDateTimeISO());
-  console.log("Temporal.Now.zonedDateTimeISO().dayOfYear", Temporal.Now.zonedDateTimeISO("Etc/GMT+8").dayOfYear);
+  const instant = Temporal.Instant.from(Temporal.Now.instant());
+  console.log("instant is: ", instant);
+
+  const localTimeZoneID = Temporal.TimeZone.from(Temporal.Now.timeZoneId());
+  console.log("localTimeZoneID is: ", localTimeZoneID);
+
+  const computedTime = instant.toZonedDateTimeISO(localTimeZoneID);
+  console.log("computedTime", computedTime);
+
+  console.log("computedTime.toPlainTime().hour: ", computedTime.toPlainTime().hour);
+  console.log("computedTime.toPlainTime().minute: ", computedTime.toPlainTime().minute);
 
   // transform data into an array of objects
   const dataArray = response.data.values?.map<RecordType>((item) => {
