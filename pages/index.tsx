@@ -299,8 +299,7 @@ export function HabitTrackerTable({ staticRecords }: HabitTrackerProps) {
     <article>
       <H2>Habit Tracker</H2>
       <Paragraph>
-        One of my 2023 goals is to do 10,000 pushups. I created a habit tracker to track this goal and some other
-        exercises. Updated in realtime.
+        I created a habit tracker to track my fitness goal and some other exercises. Updated in realtime.
       </Paragraph>
       <Container mt={20} ml={-15}>
         <DataTable
