@@ -127,7 +127,7 @@ interface IndexProps {
   staticRecords2023: RecordType[];
 }
 
-const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
+const Index = ({ staticRecords2024 }: IndexProps) => {
   return (
     <>
       <H1>
@@ -245,7 +245,7 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
         I created a habit tracker to track my fitness goal and some other exercises. Updated in realtime.
       </Paragraph>
       <br />
-      <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
+      <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2024} />
     </>
   );
 };
