@@ -245,7 +245,7 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
         I created a habit tracker to track my fitness goal and some other exercises. Updated in realtime.
       </Paragraph>
       <br />
-      <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2024} />
+      <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
     </>
   );
 };
@@ -255,7 +255,7 @@ export async function getStaticProps() {
   const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
 
   // get the 2024 data
-  const response2024 = await fetch(`${server}/api/sheets`);
+  const response2024 = await fetch(`${server}/api/sheets?year=2024`);
   const responseData2024 = await response2024.json();
   if (!responseData2024.success) {
     throw new Error(responseData2024.message);
@@ -263,18 +263,17 @@ export async function getStaticProps() {
   const records2024 = responseData2024.dataArrayFiltered;
 
   // get the 2023 data
-  // const response2023 = await fetch(`${server}/api/sheets2023/`);
-  // const responseData2023 = await response2023.json();
-  // console.log("responseData2023", responseData2023);
-  // if (!responseData2023.success) {
-  //   throw new Error(responseData2023.message);
-  // }
-  // const records2023 = responseData2023.dataArrayFiltered;
+  const response2023 = await fetch(`${server}/api/sheets?year=2023`);
+  const responseData2023 = await response2023.json();
+  if (!responseData2023.success) {
+    throw new Error(responseData2023.message);
+  }
+  const records2023 = responseData2023.dataArrayFiltered;
 
   return {
     props: {
       staticRecords2024: records2024,
-      // staticRecords2023: records2023,
+      staticRecords2023: records2023,
     },
     revalidate: 300,
   };
