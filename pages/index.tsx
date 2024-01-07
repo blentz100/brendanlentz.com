@@ -124,7 +124,8 @@ const EasterEgg = styled(ColorfulLink, {
 });
 
 interface IndexProps {
-  staticRecords: RecordType[];
+  staticRecords2024: RecordType[];
+  staticRecords2023: RecordType[];
 }
 
 console.log("Client Side");
@@ -139,7 +140,7 @@ console.log("computedTime", computedTime);
 
 console.log("computedTime.toPlainTime(): ", computedTime.toPlainTime());
 
-const Index = ({ staticRecords }: IndexProps) => {
+const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
   return (
     <>
       <H1>
@@ -256,7 +257,7 @@ const Index = ({ staticRecords }: IndexProps) => {
       <Paragraph>
         I created a habit tracker to track my fitness goal and some other exercises. Updated in realtime.
       </Paragraph>
-      <HabitTrackerTable staticRecords={staticRecords} />
+      <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
     </>
   );
 };
@@ -264,15 +265,28 @@ const Index = ({ staticRecords }: IndexProps) => {
 export async function getStaticProps() {
   const dev = process.env.NODE_ENV !== "production";
   const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
-  const response = await fetch(`${server}/api/sheets`);
-  const responseData = await response.json();
-  if (!responseData.success) {
-    throw new Error(responseData.message);
+
+  // get the 2024 data
+  const response2024 = await fetch(`${server}/api/sheets2024/`);
+  const responseData2024 = await response2024.json();
+  if (!responseData2024.success) {
+    throw new Error(responseData2024.message);
   }
-  const records = responseData.dataArrayFiltered;
+  const records2024 = responseData2024.dataArrayFiltered;
+
+  // get the 2023 data
+  const response2023 = await fetch(`${server}/api/sheets2023/`);
+  const responseData2023 = await response2023.json();
+  console.log("responseData2023", responseData2023);
+  if (!responseData2023.success) {
+    throw new Error(responseData2023.message);
+  }
+  const records2023 = responseData2023.dataArrayFiltered;
+
   return {
     props: {
-      staticRecords: records,
+      staticRecords2024: records2024,
+      staticRecords2023: records2023,
     },
     revalidate: 300,
   };
