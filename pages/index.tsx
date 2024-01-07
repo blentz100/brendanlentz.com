@@ -255,7 +255,7 @@ export async function getStaticProps() {
   const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
 
   // get the 2024 data
-  const response2024 = await fetch(`${server}/api/sheets2024`);
+  const response2024 = await fetch(`${server}/api/sheets`);
   const responseData2024 = await response2024.json();
   if (!responseData2024.success) {
     throw new Error(responseData2024.message);
