@@ -1,7 +1,6 @@
 import { google } from "googleapis";
 import { NextApiRequest, NextApiResponse } from "next";
 import { RecordType } from "../index";
-import { Temporal } from "@js-temporal/polyfill";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // new Google Auth Method
@@ -24,19 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     spreadsheetId: process.env.SHEET_ID,
     range,
   });
-
-  console.log("Server Side:");
-  const instant = Temporal.Instant.from(Temporal.Now.instant());
-  console.log("instant is: ", instant);
-
-  const localTimeZoneID = Temporal.TimeZone.from(Temporal.Now.timeZoneId());
-  console.log("localTimeZoneID is: ", localTimeZoneID);
-
-  const computedTime = instant.toZonedDateTimeISO(localTimeZoneID);
-  console.log("computedTime", computedTime);
-
-  console.log("computedTime.toPlainTime().hour: ", computedTime.toPlainTime().hour);
-  console.log("computedTime.toPlainTime().minute: ", computedTime.toPlainTime().minute);
 
   // transform data into an array of objects
   const dataArray = response.data.values?.map<RecordType>((item) => {
