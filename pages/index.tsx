@@ -257,6 +257,7 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
       <Paragraph>
         I created a habit tracker to track my fitness goal and some other exercises. Updated in realtime.
       </Paragraph>
+      <br />
       <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
     </>
   );
