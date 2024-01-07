@@ -1,6 +1,5 @@
 import Link, { LinkProps } from "../components/Link";
 import { styled, keyframes, darkTheme } from "../lib/styles/stitches.config";
-import { Temporal } from "@js-temporal/polyfill";
 import { HabitTrackerTable } from "../components/DataTable";
 
 export interface RecordType {
@@ -127,18 +126,6 @@ interface IndexProps {
   staticRecords2024: RecordType[];
   staticRecords2023: RecordType[];
 }
-
-console.log("Client Side");
-const instant = Temporal.Instant.from(Temporal.Now.instant());
-console.log("instant is: ", instant);
-
-const localTimeZoneID = Temporal.TimeZone.from(Temporal.Now.timeZoneId());
-console.log("localTimeZoneID is: ", localTimeZoneID);
-
-const computedTime = instant.toZonedDateTimeISO(localTimeZoneID);
-console.log("computedTime", computedTime);
-
-console.log("computedTime.toPlainTime(): ", computedTime.toPlainTime());
 
 const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
   return (
