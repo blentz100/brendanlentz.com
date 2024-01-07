@@ -135,18 +135,6 @@ interface HabitTrackerProps {
   staticRecords: RecordType[];
 }
 
-console.log("Client Side");
-const instant = Temporal.Instant.from(Temporal.Now.instant());
-console.log("instant is: ", instant);
-
-const localTimeZoneID = Temporal.TimeZone.from(Temporal.Now.timeZoneId());
-console.log("localTimeZoneID is: ", localTimeZoneID);
-
-const computedTime = instant.toZonedDateTimeISO(localTimeZoneID);
-console.log("computedTime", computedTime);
-
-console.log("computedTime.toPlainTime(): ", computedTime.toPlainTime());
-
 const Index = ({ staticRecords }: IndexProps) => {
   return (
     <>
