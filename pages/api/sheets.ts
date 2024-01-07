@@ -4,7 +4,7 @@ import { RecordType } from "../index";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // grab the year from query params
-  const { year } = req.query;
+  const year = "2024";
   // new Google Auth Method
   const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 
