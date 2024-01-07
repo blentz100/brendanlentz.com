@@ -263,17 +263,17 @@ export async function getStaticProps() {
   const records2024 = responseData2024.dataArrayFiltered;
 
   // get the 2023 data
-  const response2023 = await fetch(`${server}/api/sheets?year=2023`);
-  const responseData2023 = await response2023.json();
-  if (!responseData2023.success) {
-    throw new Error(responseData2023.message);
-  }
-  const records2023 = responseData2023.dataArrayFiltered;
+  // const response2023 = await fetch(`${server}/api/sheets?year=2023`);
+  // const responseData2023 = await response2023.json();
+  // if (!responseData2023.success) {
+  //   throw new Error(responseData2023.message);
+  // }
+  // const records2023 = responseData2023.dataArrayFiltered;
 
   return {
     props: {
       staticRecords2024: records2024,
-      staticRecords2023: records2023,
+      // staticRecords2023: records2023,
     },
     revalidate: 300,
   };
