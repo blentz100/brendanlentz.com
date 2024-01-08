@@ -127,7 +127,7 @@ interface IndexProps {
   staticRecords2023: RecordType[];
 }
 
-const Index = ({ staticRecords2024 }: IndexProps) => {
+const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
   return (
     <>
       <H1>

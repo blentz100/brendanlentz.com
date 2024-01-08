@@ -3,8 +3,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { RecordType } from "../index";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // grab the year from query params
-  const year = "2024";
   // new Google Auth Method
   const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 
@@ -19,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
 
   const sheets = google.sheets({ version: "v4", auth });
-  const range = `${year}!A8:G372`; // the habit data
+  const range = `Habits!A8:G372`; // the habit data
 
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
