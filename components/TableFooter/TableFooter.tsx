@@ -8,6 +8,9 @@ interface Props {
 }
 
 export const TableFooter: React.FC<Props> = ({ total, totalPercentage, habit, goal }) => {
+  console.log("habit, totalPercentage ", habit, " ", totalPercentage);
+
+  // @ts-ignore
   return (
     <>
       <Table>

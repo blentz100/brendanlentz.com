@@ -263,8 +263,9 @@ export async function getStaticProps() {
   const records2024 = responseData2024.dataArrayFiltered;
 
   // get the 2023 data
-  // const response2023 = await fetch(`${server}/api/sheets?year=2023`);
+  // const response2023 = await fetch(`${server}/api/sheets2023/`);
   // const responseData2023 = await response2023.json();
+  // console.log("responseData2023", responseData2023);
   // if (!responseData2023.success) {
   //   throw new Error(responseData2023.message);
   // }
