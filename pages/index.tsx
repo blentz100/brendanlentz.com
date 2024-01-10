@@ -264,7 +264,7 @@ export async function getStaticProps() {
   console.log("server is: ", server);
 
   // get the 2024 data
-  const response2024 = await fetch(`${server}/api/sheets`);
+  const response2024 = await fetch(`${server}/api/sheets?year=2024`);
   console.log("response2024");
   console.log(response2024);
 
