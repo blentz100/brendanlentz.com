@@ -127,7 +127,7 @@ interface IndexProps {
   staticRecords2023: RecordType[];
 }
 
-const Index = ({ staticRecords2024 }: IndexProps) => {
+const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
   return (
     <>
       <H1>
@@ -245,7 +245,7 @@ const Index = ({ staticRecords2024 }: IndexProps) => {
         I created a habit tracker to track my fitness goal and some other exercises. Updated in realtime.
       </Paragraph>
       <br />
-      <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2024} />
+      <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
     </>
   );
 };
@@ -263,11 +263,8 @@ export async function getStaticProps() {
   console.log("dev is: ", dev);
   console.log("server is: ", server);
 
-  // get the 2024 data
+  // grab the 2024 data
   const response2024 = await fetch(`${server}/api/sheets`);
-  console.log("response2024");
-  console.log(response2024);
-
   const responseData2024 = await response2024.json();
   console.log(responseData2024);
   if (!responseData2024.success) {
@@ -275,19 +272,19 @@ export async function getStaticProps() {
   }
   const records2024 = responseData2024.dataArrayFiltered;
 
-  // get the 2023 data
-  // const response2023 = await fetch(`${server}/api/sheets2023/`);
-  // const responseData2023 = await response2023.json();
-  // console.log("responseData2023", responseData2023);
-  // if (!responseData2023.success) {
-  //   throw new Error(responseData2023.message);
-  // }
-  // const records2023 = responseData2023.dataArrayFiltered;
+  // grab the 2023 data
+  const response2023 = await fetch(`${server}/api/sheets`);
+  const responseData2023 = await response2023.json();
+  console.log("responseData2023", responseData2023);
+  if (!responseData2023.success) {
+    throw new Error(responseData2023.message);
+  }
+  const records2023 = responseData2023.dataArrayFiltered;
 
   return {
     props: {
       staticRecords2024: records2024,
-      // staticRecords2023: records2023,
+      staticRecords2023: records2023,
     },
     revalidate: 300,
   };
