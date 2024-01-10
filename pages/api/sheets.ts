@@ -6,6 +6,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // new Google Auth Method
   const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
   const { year } = req.query;
+  console.log("year is: ", year);
+  console.log("typeof year is: ", typeof year);
 
   const { privateKey } = JSON.parse(process.env.GOOGLE_PRIVATE_KEY || "{ privateKey: null }");
   const auth = new google.auth.GoogleAuth({
@@ -23,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
-    range,
+    range: range,
   });
   console.log("response is ", response);
 
