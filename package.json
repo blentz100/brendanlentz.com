@@ -13,6 +13,7 @@
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
+    "build-local": "APP_ENV=development next build",
     "analyze": "cross-env ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint"

@@ -127,7 +127,7 @@ interface IndexProps {
   staticRecords2023: RecordType[];
 }
 
-const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
+const Index = ({ staticRecords2024 }: IndexProps) => {
   return (
     <>
       <H1>
@@ -251,12 +251,25 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
 };
 
 export async function getStaticProps() {
-  const dev = process.env.NODE_ENV !== "production";
+  let dev = process.env.NODE_ENV !== "production";
+
+  // workaround to support building the app locally with yarn build-local
+  if (process.env.APP_ENV == "development") {
+    dev = true;
+  }
   const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
+
+  console.log("process.env.NODE_ENV is: ", process.env.NODE_ENV);
+  console.log("dev is: ", dev);
+  console.log("server is: ", server);
 
   // get the 2024 data
   const response2024 = await fetch(`${server}/api/sheets`);
+  console.log("response2024");
+  console.log(response2024);
+
   const responseData2024 = await response2024.json();
+  console.log(responseData2024);
   if (!responseData2024.success) {
     throw new Error(responseData2024.message);
   }
