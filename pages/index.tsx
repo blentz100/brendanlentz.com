@@ -127,7 +127,7 @@ interface IndexProps {
   staticRecords2023: RecordType[];
 }
 
-const Index = ({ staticRecords2024 }: IndexProps) => {
+const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
   return (
     <>
       <H1>
@@ -287,7 +287,7 @@ export async function getStaticProps() {
   return {
     props: {
       staticRecords2024: records2024,
-      // staticRecords2023: records2023,
+      staticRecords2023: records2024,
     },
     revalidate: 300,
   };
