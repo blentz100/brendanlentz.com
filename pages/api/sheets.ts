@@ -5,7 +5,7 @@ import { RecordType } from "../index";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // new Google Auth Method
   const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
-  const year = req.query;
+  const { year } = req.query;
 
   const { privateKey } = JSON.parse(process.env.GOOGLE_PRIVATE_KEY || "{ privateKey: null }");
   const auth = new google.auth.GoogleAuth({
@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
 
   const sheets = google.sheets({ version: "v4", auth });
-  const range = `Habits&{year}!A8:G372`; // the habit data
+  const range = `Habits${year}!A8:G372`; // the habit data
   console.log("range is ", range);
 
   const response = await sheets.spreadsheets.values.get({
