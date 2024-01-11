@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
 
   const sheets = google.sheets({ version: "v4", auth });
-  const range = `Habits2024!A8:G372`; // the habit data
+  const range = `Habits${year}!A8:G372`; // the habit data
   console.log("range is ", range);
 
   const response = await sheets.spreadsheets.values.get({
