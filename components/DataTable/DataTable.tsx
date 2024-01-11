@@ -46,7 +46,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                 accessor: "dateAsNumber",
                 title: "Date",
                 sortable: true,
-                width: 130,
+                width: 150,
                 render: (item) => (
                   <div>
                     {item.date}
