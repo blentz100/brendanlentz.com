@@ -1,4 +1,4 @@
-import { Center, RingProgress, Text } from "@mantine/core";
+import { Center, RingProgress, Table, Text } from "@mantine/core";
 
 interface Props {
   total: number;
@@ -8,11 +8,33 @@ interface Props {
 }
 
 export const TableFooter: React.FC<Props> = ({ total, totalPercentage, habit, goal }) => {
+  console.log("habit, totalPercentage ", habit, " ", totalPercentage);
+
+  // @ts-ignore
   return (
     <>
+      <Table>
+        <tbody>
+          <tr key={0}>
+            <td>
+              <Text align={"left"}>Total </Text>
+            </td>
+            <td>
+              <Text align={"right"}>{Intl.NumberFormat().format(total)}</Text>
+            </td>
+          </tr>
+          <tr key={1}>
+            <td>
+              <Text align={"left"}>Goal </Text>
+            </td>
+            <td>
+              <Text align={"right"}>{Intl.NumberFormat().format(goal)}</Text>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
       <Center>
         <RingProgress
-          roundCaps
           thickness={7}
           size={80}
           sections={[
@@ -20,6 +42,11 @@ export const TableFooter: React.FC<Props> = ({ total, totalPercentage, habit, go
               value: totalPercentage,
               color: "blue",
               tooltip: `${total} ${habit} completed`,
+            },
+            {
+              value: totalPercentage > 100 ? 0 : 100 - totalPercentage,
+              color: "lightgrey",
+              tooltip: `${goal - total} ${habit} to go`,
             },
           ]}
           label={
@@ -31,7 +58,6 @@ export const TableFooter: React.FC<Props> = ({ total, totalPercentage, habit, go
           }
         ></RingProgress>
       </Center>
-      <Text>Goal: {Intl.NumberFormat().format(goal)}</Text>
     </>
   );
 };

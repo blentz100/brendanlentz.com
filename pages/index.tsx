@@ -1,12 +1,6 @@
 import Link, { LinkProps } from "../components/Link";
 import { styled, keyframes, darkTheme } from "../lib/styles/stitches.config";
-import { sortBy } from "lodash";
-import { useEffect, useState } from "react";
-import { Badge, Container } from "@mantine/core";
-import { DataTable, DataTableSortStatus } from "mantine-datatable";
-import { returnTotal, returnTotalPercentage } from "../lib/helpers/data-table";
-import { TableFooter } from "../components/TableFooter/TableFooter";
-import { Temporal } from "@js-temporal/polyfill";
+import { HabitTrackerTable } from "../components/DataTable";
 
 export interface RecordType {
   date: string;
@@ -129,25 +123,11 @@ const EasterEgg = styled(ColorfulLink, {
 });
 
 interface IndexProps {
-  staticRecords: RecordType[];
-}
-interface HabitTrackerProps {
-  staticRecords: RecordType[];
+  staticRecords2024: RecordType[];
+  staticRecords2023: RecordType[];
 }
 
-console.log("Client Side");
-const instant = Temporal.Instant.from(Temporal.Now.instant());
-console.log("instant is: ", instant);
-
-const localTimeZoneID = Temporal.TimeZone.from(Temporal.Now.timeZoneId());
-console.log("localTimeZoneID is: ", localTimeZoneID);
-
-const computedTime = instant.toZonedDateTimeISO(localTimeZoneID);
-console.log("computedTime", computedTime);
-
-console.log("computedTime.toPlainTime(): ", computedTime.toPlainTime());
-
-const Index = ({ staticRecords }: IndexProps) => {
+const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
   return (
     <>
       <H1>
@@ -260,143 +240,57 @@ const Index = ({ staticRecords }: IndexProps) => {
         </ColorfulLink>
         .
       </Paragraph>
-
-      <HabitTrackerTable staticRecords={staticRecords} />
+      <H2>Habit Tracker</H2>
+      <Paragraph>
+        I created a habit tracker to track my fitness goal and some other exercises. Updated in realtime.
+      </Paragraph>
+      <br />
+      <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2024} />
     </>
   );
 };
 
 export async function getStaticProps() {
-  const dev = process.env.NODE_ENV !== "production";
-  const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
-  const response = await fetch(`${server}/api/sheets`);
-  const responseData = await response.json();
-  if (!responseData.success) {
-    throw new Error(responseData.message);
+  let dev = process.env.NODE_ENV !== "production";
+
+  // workaround to support building the app locally with yarn build-local
+  if (process.env.APP_ENV == "development") {
+    dev = true;
   }
-  const records = responseData.dataArrayFiltered;
+  const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
+
+  console.log("process.env.NODE_ENV is: ", process.env.NODE_ENV);
+  console.log("dev is: ", dev);
+  console.log("server is: ", server);
+
+  // get the 2024 data
+  const response2024 = await fetch(`${server}/api/sheets`);
+  console.log("response2024");
+  console.log(response2024);
+
+  const responseData2024 = await response2024.json();
+  console.log(responseData2024);
+  if (!responseData2024.success) {
+    throw new Error(responseData2024.message);
+  }
+  const records2024 = responseData2024.dataArrayFiltered;
+
+  // get the 2023 data
+  // const response2023 = await fetch(`${server}/api/sheets2023/`);
+  // const responseData2023 = await response2023.json();
+  // console.log("responseData2023", responseData2023);
+  // if (!responseData2023.success) {
+  //   throw new Error(responseData2023.message);
+  // }
+  // const records2023 = responseData2023.dataArrayFiltered;
+
   return {
     props: {
-      staticRecords: records,
+      staticRecords2024: records2024,
+      staticRecords2023: records2024,
     },
     revalidate: 300,
   };
-}
-export function HabitTrackerTable({ staticRecords }: HabitTrackerProps) {
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
-    columnAccessor: "dateAsNumber",
-    direction: "desc",
-  });
-  const [records, setRecords] = useState<RecordType[]>(staticRecords);
-
-  // sort functionality
-  useEffect(() => {
-    const data = sortBy(records, sortStatus.columnAccessor);
-    setRecords(sortStatus.direction === "desc" ? data.reverse() : data);
-  }, [sortStatus]);
-
-  return (
-    <article>
-      <H2>Habit Tracker</H2>
-      <Paragraph>
-        I created a habit tracker to track my fitness goal and some other exercises. Updated in realtime.
-      </Paragraph>
-      <Container mt={20} ml={-15}>
-        <DataTable
-          columns={[
-            {
-              accessor: "dateAsNumber",
-              title: "Date",
-              sortable: true,
-              footer: <>Progress</>,
-              render: (item) => (
-                <div>
-                  {item.date}
-                  {item.date === new Date().toLocaleDateString() ? <Badge color="blue"> Today </Badge> : null}
-                </div>
-              ),
-            },
-            {
-              accessor: "pushups",
-              sortable: true,
-              textAlignment: "center",
-              footer: (
-                <TableFooter
-                  total={returnTotal(records, "pushups")}
-                  habit="pushups"
-                  goal={10000}
-                  totalPercentage={returnTotalPercentage(records, "pushups", 10000)}
-                />
-              ),
-            },
-            {
-              accessor: "situps",
-              sortable: true,
-              textAlignment: "center",
-              footer: (
-                <TableFooter
-                  total={returnTotal(records, "situps")}
-                  habit="situps"
-                  goal={3000}
-                  totalPercentage={returnTotalPercentage(records, "situps", 3000)}
-                />
-              ),
-            },
-            {
-              accessor: "jacks",
-              sortable: true,
-              textAlignment: "center",
-              title: "Jumping Jacks",
-              footer: (
-                <TableFooter
-                  total={returnTotal(records, "jacks")}
-                  habit="jacks"
-                  goal={6000}
-                  totalPercentage={returnTotalPercentage(records, "jacks", 6000)}
-                />
-              ),
-            },
-            {
-              accessor: "stairs",
-              sortable: true,
-              textAlignment: "center",
-              footer: (
-                <TableFooter
-                  total={returnTotal(records, "stairs")}
-                  habit="stairs"
-                  goal={200}
-                  totalPercentage={returnTotalPercentage(records, "stairs", 200)}
-                />
-              ),
-            },
-            {
-              accessor: "pullups",
-              sortable: true,
-              textAlignment: "center",
-              footer: (
-                <TableFooter
-                  total={returnTotal(records, "pullups")}
-                  habit="pullups"
-                  goal={400}
-                  totalPercentage={returnTotalPercentage(records, "pullups", 400)}
-                />
-              ),
-            },
-          ]}
-          records={records}
-          withBorder
-          striped
-          height={500}
-          highlightOnHover
-          scrollAreaProps={{ type: "always" }}
-          sortStatus={sortStatus}
-          onSortStatusChange={setSortStatus}
-          idAccessor={"date"}
-        />
-        {/* <figcaption><i>updated: {lastEditedDate}</i></figcaption> */}
-      </Container>
-    </article>
-  );
 }
 
 export default Index;
