@@ -2,7 +2,7 @@ import { google } from "googleapis";
 import { NextApiRequest, NextApiResponse } from "next";
 import { RecordType } from "../index";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // new Google Auth Method
   const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 
@@ -43,6 +43,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const dataArrayFiltered = dataArray?.filter((item) => new Date(item.date).getTime() < new Date().getTime()).reverse();
 
   return res.status(200).json({ dataArrayFiltered, success: true });
-};
-
-export default handler;
+}
