@@ -5,10 +5,7 @@ import { RecordType } from "../index";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // new Google Auth Method
   const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
-
   const { year } = req.query;
-  console.log("year is: ", year);
-
   const { privateKey } = JSON.parse(process.env.GOOGLE_PRIVATE_KEY || "{ privateKey: null }");
   const auth = new google.auth.GoogleAuth({
     scopes: SCOPES,
@@ -21,13 +18,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const sheets = google.sheets({ version: "v4", auth });
   const range = `Habits${year}!A8:G372`; // the habit data
-  console.log("range is ", range);
 
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
     range,
   });
-  console.log("response is ", response);
 
   // transform data into an array of objects
   const dataArray = response.data.values?.map<RecordType>((item) => {

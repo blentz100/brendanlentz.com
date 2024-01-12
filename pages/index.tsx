@@ -259,17 +259,9 @@ export async function getStaticProps() {
   }
   const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
 
-  console.log("process.env.NODE_ENV is: ", process.env.NODE_ENV);
-  console.log("dev is: ", dev);
-  console.log("server is: ", server);
-
   // get the 2024 data
   const response2024 = await fetch(`${server}/api/sheets?year=2024`);
-  console.log("response2024");
-  console.log(response2024);
-
   const responseData2024 = await response2024.json();
-  console.log(responseData2024);
   if (!responseData2024.success) {
     throw new Error(responseData2024.message);
   }
@@ -278,7 +270,6 @@ export async function getStaticProps() {
   // get the 2023 data
   const response2023 = await fetch(`${server}/api/sheets?year=2023`);
   const responseData2023 = await response2023.json();
-  console.log("responseData2023", responseData2023);
   if (!responseData2023.success) {
     throw new Error(responseData2023.message);
   }

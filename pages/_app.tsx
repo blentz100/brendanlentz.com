@@ -26,10 +26,6 @@ const App = ({ Component, pageProps }: AppProps) => {
   // get this page's URL with full domain, and hack around query parameters and anchors
   // NOTE: this assumes trailing slashes are enabled in next.config.js
   const canonical = `${config.baseUrl}${router.pathname === "/" ? "" : router.pathname}/`;
-  console.log("router.pathname is: ", router.pathname);
-  console.log("config.baseUrl is: ", config.baseUrl);
-  console.log("canonical is: ", canonical);
-  console.log(" ");
   useEffect(() => {
     // don't track pageviews on branch/deploy previews and localhost
     if (process.env.NEXT_PUBLIC_VERCEL_ENV !== "production") {
