@@ -24,13 +24,13 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
   useEffect(() => {
     const data = sortBy(records2024, sortStatus.columnAccessor);
     setRecords2024(sortStatus.direction === "desc" ? data.reverse() : data);
-  }, [sortStatus, records2024]);
+  }, [sortStatus]);
 
   // sort functionality
   useEffect(() => {
     const data = sortBy(records2023, sortStatus.columnAccessor);
     setRecords2023(sortStatus.direction === "desc" ? data.reverse() : data);
-  }, [sortStatus, records2023]);
+  }, [sortStatus]);
 
   return (
     <Container>
