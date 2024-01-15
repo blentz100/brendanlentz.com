@@ -5,11 +5,14 @@ export function returnTotal(records: any[] | undefined, habit: string) {
 }
 
 export function returnTotalPercentage(records: any[] | undefined, habit: string, goal: number) {
-  return Math.floor(
-    (records?.reduce((accumulator, currentValue) => {
-      return accumulator + currentValue[habit];
-    }, 0) /
-      goal) *
-      100
+  return Math.min(
+    Math.floor(
+      (records?.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue[habit];
+      }, 0) /
+        goal) *
+        100
+    ),
+    100
   );
 }
