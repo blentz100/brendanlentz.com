@@ -5,16 +5,25 @@ interface Props {
   totalPercentage: number;
   habit: string;
   goal: number;
+  topLabel?: string;
+  bottomLabel?: string;
 }
 
-export const TableFooter: React.FC<Props> = ({ total, totalPercentage, habit, goal }) => {
+export const TableFooter: React.FC<Props> = ({
+  total,
+  totalPercentage,
+  habit,
+  goal,
+  topLabel = "Total",
+  bottomLabel = "Goal",
+}) => {
   return (
     <>
       <Table>
         <tbody>
           <tr key={0}>
             <td>
-              <Text align={"left"}>Total </Text>
+              <Text align={"left"}>{topLabel}</Text>
             </td>
             <td>
               <Text align={"right"}>{Intl.NumberFormat().format(total)}</Text>
@@ -22,7 +31,7 @@ export const TableFooter: React.FC<Props> = ({ total, totalPercentage, habit, go
           </tr>
           <tr key={1}>
             <td>
-              <Text align={"left"}>Goal </Text>
+              <Text align={"left"}>{bottomLabel}</Text>
             </td>
             <td>
               <Text align={"right"}>{Intl.NumberFormat().format(goal)}</Text>

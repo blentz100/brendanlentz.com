@@ -6,6 +6,7 @@ import { TableFooter } from "../TableFooter/TableFooter";
 import { returnTotal, returnTotalPercentage } from "../../lib/helpers/data-table";
 import { RecordType } from "../../pages";
 import { Tabs } from "@mantine/core";
+import { Temporal } from "@js-temporal/polyfill";
 
 interface HabitTrackerProps {
   staticRecords2024: RecordType[];
@@ -58,6 +59,16 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                       </Badge>
                     ) : null}
                   </div>
+                ),
+                footer: (
+                  <TableFooter
+                    total={Temporal.Now.plainDateISO().dayOfYear}
+                    habit="days"
+                    goal={Temporal.Now.plainDateISO().daysInYear}
+                    totalPercentage={Math.floor((15 / 365) * 100)}
+                    topLabel={"Day #"}
+                    bottomLabel={"of"}
+                  />
                 ),
               },
               {
@@ -151,6 +162,16 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                     {item.date}
                     {item.date === new Date().toLocaleDateString() ? <Badge color="blue"> Today </Badge> : null}
                   </div>
+                ),
+                footer: (
+                  <TableFooter
+                    total={365}
+                    habit="days"
+                    goal={Temporal.Now.plainDateISO().daysInYear}
+                    totalPercentage={Math.floor((365 / 365) * 100)}
+                    topLabel={"Day #"}
+                    bottomLabel={"of"}
+                  />
                 ),
               },
               {
