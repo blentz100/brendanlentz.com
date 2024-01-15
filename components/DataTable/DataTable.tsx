@@ -17,20 +17,21 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
     columnAccessor: "dateAsNumber",
     direction: "desc",
   });
+
   const [records2024, setRecords2024] = useState<RecordType[]>(staticRecords2024);
   const [records2023, setRecords2023] = useState<RecordType[]>(staticRecords2023);
 
-  // sort functionality
+  // 2024 sort functionality
   useEffect(() => {
-    const data = sortBy(records2024, sortStatus.columnAccessor);
+    const data = sortBy(staticRecords2024, sortStatus.columnAccessor);
     setRecords2024(sortStatus.direction === "desc" ? data.reverse() : data);
-  }, [sortStatus]);
+  }, [sortStatus, staticRecords2024]);
 
-  // sort functionality
+  // 2023 sort functionality
   useEffect(() => {
-    const data = sortBy(records2023, sortStatus.columnAccessor);
+    const data = sortBy(staticRecords2023, sortStatus.columnAccessor);
     setRecords2023(sortStatus.direction === "desc" ? data.reverse() : data);
-  }, [sortStatus]);
+  }, [sortStatus, staticRecords2023]);
 
   return (
     <Container>
