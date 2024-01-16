@@ -236,7 +236,7 @@ export async function getStaticProps() {
   const dev = process.env.NODE_ENV !== "production";
   const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
 
-  // get the 2024 data
+  // fetch the 2024 data
   const response2024 = await fetch(`${server}/api/sheets?year=2024`);
   const responseData2024 = await response2024.json();
   if (!responseData2024.success) {
@@ -244,7 +244,7 @@ export async function getStaticProps() {
   }
   const records2024 = responseData2024.dataArrayFiltered;
 
-  // get the 2023 data
+  // fetch the 2023 data
   const response2023 = await fetch(`${server}/api/sheets?year=2023`);
   const responseData2023 = await response2023.json();
   if (!responseData2023.success) {
