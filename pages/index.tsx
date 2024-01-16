@@ -229,13 +229,11 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
   );
 };
 
+// Static Site Generation - NextJS pre-renders this page at
+// build time using the props returned by getStaticProps.
 export async function getStaticProps() {
-  let dev = process.env.NODE_ENV !== "production";
-
-  // workaround to support building the app locally with yarn build-local
-  if (process.env.APP_ENV == "development") {
-    dev = true;
-  }
+  // assign the correct web server prefix according to the environment
+  const dev = process.env.NODE_ENV !== "production";
   const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
 
   // get the 2024 data
