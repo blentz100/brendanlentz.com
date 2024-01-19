@@ -1,0 +1,99 @@
+---
+title: "TypeScript Errors with Dynamic Properties"
+date: 2024-01-19 10:31:02-0400
+description: "Debugging TypeScript Errors"
+tags:
+  - TypeScript
+  - JavaScript Object
+---
+
+This warning has been showing up in the Vercel build logs for my Habit Tracker app I've been working on:
+
+```
+1:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+```
+
+The refers to the helper function that computes the totals of each habit to be displayed in the table
+footer.
+
+```javascript
+export function returnTotal(records: any[] | undefined, habit: string) {
+  return records?.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue[habit];
+  }, 0);
+}
+```
+
+I have an existing type for records called `RecordType`
+
+```javascript
+export interface RecordType {
+  date: string;
+  dateAsNumber: number;
+  jacks: number;
+  meditation: number;
+  pullups: number;
+  pushups: number;
+  situps: number;
+  stairs: number;
+}
+```
+
+So I can just type that parameter like this
+
+```javascript
+records: RecordType[]
+```
+
+As soon as I do that though, I get
+
+```console
+TS7053: Element implicitly has an any type because expression of type string can't be used to index type RecordType
+No index signature with a parameter of type string was found on type RecordType
+```
+
+which refers to the `currentValue[habit]` expression in the return statement.
+
+This took a little while to figure out, but eventually I learned (or possibly relearned) that you have to do
+something special in TypeScript when dynamically accessing Object properties. TypeScript doesn't just let you use
+a parameter with type `string` to index your Object. You need to come up with something that has the `keyof` type.
+
+With the help of this [StackOverflow question](https://stackoverflow.
+com/questions/62438346/how-to-dynamically-access-object-property-in-typescript), I refactored to:
+
+```javascript
+export function returnTotal(records: RecordType[] | undefined, habit: string) {
+    return records?.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue[habit as keyof typeof currentValue];
+    }, 0);
+}
+```
+
+Which yields one more TS error:
+
+```
+TS2365: Operator + cannot be applied to types number and string | number
+```
+
+pointing to `accumulator + currentValue[habit as keyof typeof currentValue]` in the return. This is because the
+RecordType has one property of type string.
+
+Refactoring that line to
+
+```javascript
+accumulator + (currentValue[habit as keyof typeof currentValue] as number)
+```
+
+clears the final TS error and the build warning is gone.
+
+Final working function:
+
+```javascript
+export function returnTotal(records: RecordType[], habit: string) {
+  return records?.reduce((accumulator, currentValue) => {
+    return accumulator + (currentValue[habit as keyof typeof currentValue] as number);
+  }, 0);
+}
+```
+
+This was a great little exercise in dealing with Object and TypeScript errors.
