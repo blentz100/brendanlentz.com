@@ -1,6 +1,6 @@
 import Link, { LinkProps } from "../components/Link";
 import { styled, keyframes, darkTheme } from "../lib/styles/stitches.config";
-import { HabitTrackerTable } from "../components/DataTable";
+import { HabitTrackerTable } from "../components/HabitTrackerTable";
 
 export interface RecordType {
   date: string;

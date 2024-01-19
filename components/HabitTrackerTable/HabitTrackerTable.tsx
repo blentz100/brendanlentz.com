@@ -257,4 +257,4 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
   );
 }
 
-export default DataTable;
+export default HabitTrackerTable;
