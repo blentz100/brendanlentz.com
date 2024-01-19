@@ -101,7 +101,9 @@ This was a great little exercise in dealing with Object and TypeScript errors.
 Update:
 
 Shortly after publishing this, Justin from [Virtual Coffee](https://virtualcoffee.io/) read this and provided a
-refactor to help drop the usage of the `as` keyword, which is problematic. Thanks Justin!
+refactor to help drop the usage of the `as` keyword, which is problematic. I really like how
+`CountableHabits` strips out the properties that I don't want to count and TypeScript can't count. It makes for a concise final solution. Thanks
+Justin!
 
 ```javascript
 type CountableHabits = Omit<RecordType, "date" | "dateAsNumber">;
