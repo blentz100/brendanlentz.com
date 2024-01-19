@@ -97,3 +97,18 @@ export function returnTotal(records: RecordType[], habit: string) {
 ```
 
 This was a great little exercise in dealing with Object and TypeScript errors.
+
+Update:
+
+Shortly after publishing this, Justin from [Virtual Coffee](https://virtualcoffee.io/) read this and provided a
+refactor to help drop the usage of the `as` keyword, which is problematic. Thanks Justin!
+
+```javascript
+type CountableHabits = Omit<RecordType, "date" | "dateAsNumber">;
+
+export function returnTotal(records: RecordType[], habit: keyof CountableHabits) {
+  return records?.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue[habit];
+  }, 0);
+}
+```
