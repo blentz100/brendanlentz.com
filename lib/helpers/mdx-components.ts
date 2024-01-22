@@ -18,7 +18,6 @@ export const IFrame = dynamic(() => import("../../components/IFrame"));
 export const Video = dynamic(() => import("../../components/Video"));
 export const YouTube = dynamic(() => import("../../components/YouTubeEmbed"));
 export const Tweet = dynamic(() => import("../../components/TweetEmbed"));
-export const Gist = dynamic(() => import("../../components/GistEmbed"));
 export const CodePen = dynamic(() => import("../../components/CodePenEmbed"));
 
 // One-offs for specific posts:
