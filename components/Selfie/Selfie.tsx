@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import NextImage from "next/image";
+import NextImage from "next/legacy/image";
 import { styled } from "../../lib/styles/stitches.config";
 import { authorName } from "../../lib/config";
 import type { ComponentProps } from "react";
@@ -53,7 +53,7 @@ export type SelfieProps = Omit<ComponentProps<typeof Link>, "href">;
 const Selfie = ({ ...rest }: SelfieProps) => {
   return (
     <Link href="/" rel="author" title={authorName} {...rest}>
-      <Image src={selfieJpg} alt={`Photo of ${authorName}`} width={50} height={50} quality={60} layout="raw" priority />
+      <Image src={selfieJpg} alt={`Photo of ${authorName}`} width={50} height={50} quality={60} priority />
       <Name>{authorName}</Name>
     </Link>
   );
