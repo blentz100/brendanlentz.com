@@ -89,7 +89,7 @@ const Footer = ({ ...rest }: FooterProps) => {
       <Row>
         <div>
           Content{" "}
-          <Link href="/license/" prefetch={false} title="Creative Commons Attribution 4.0 International">
+          <Link href="/license/" title="Creative Commons Attribution 4.0 International">
             licensed under CC-BY-4.0
           </Link>
           ,{""}
