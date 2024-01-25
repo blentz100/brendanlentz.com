@@ -19,6 +19,11 @@ export const TableFooter: React.FC<Props> = ({
 }) => {
   return (
     <>
+      <div>TableFooter</div>
+    </>
+  );
+  return (
+    <>
       <Table>
         <tbody>
           <tr key={0}>
