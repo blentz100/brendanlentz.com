@@ -92,8 +92,8 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                   <TableFooter
                     total={returnTotal(records2024, "situps")}
                     habit="situps"
-                    goal={3000}
-                    totalPercentage={returnTotalPercentage(records2024, "situps", 3000)}
+                    goal={7000}
+                    totalPercentage={returnTotalPercentage(records2024, "situps", 7000)}
                   />
                 ),
               },
@@ -106,8 +106,8 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                   <TableFooter
                     total={returnTotal(records2024, "jacks")}
                     habit="jacks"
-                    goal={6000}
-                    totalPercentage={returnTotalPercentage(records2024, "jacks", 6000)}
+                    goal={15000}
+                    totalPercentage={returnTotalPercentage(records2024, "jacks", 15000)}
                   />
                 ),
               },
@@ -132,8 +132,8 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                   <TableFooter
                     total={returnTotal(records2024, "pullups")}
                     habit="pullups"
-                    goal={400}
-                    totalPercentage={returnTotalPercentage(records2024, "pullups", 400)}
+                    goal={600}
+                    totalPercentage={returnTotalPercentage(records2024, "pullups", 600)}
                   />
                 ),
               },
