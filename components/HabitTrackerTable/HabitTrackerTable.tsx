@@ -106,8 +106,8 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                   <TableFooter
                     total={returnTotal(records2024, "jacks")}
                     habit="jacks"
-                    goal={15000}
-                    totalPercentage={returnTotalPercentage(records2024, "jacks", 15000)}
+                    goal={14000}
+                    totalPercentage={returnTotalPercentage(records2024, "jacks", 14000)}
                   />
                 ),
               },
