@@ -10,22 +10,20 @@ type CountableHabits = Omit<RecordType, "date" | "dateAsNumber">;
 // You can't just use the habit variable to index the currentValue object.
 // TypeScript doesn't allow that
 export function returnTotal(records: RecordType[], habit: keyof CountableHabits) {
-  return 22;
-  // return records?.reduce((accumulator, currentValue) => {
-  //   return accumulator + currentValue[habit];
-  // }, 0);
+  return records?.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue[habit];
+  }, 0);
 }
 
 export function returnTotalPercentage(records: RecordType[], habit: keyof CountableHabits, goal: number) {
-  return 55;
-  // return Math.min(
-  //   Math.floor(
-  //     (records?.reduce((accumulator, currentValue) => {
-  //       return accumulator + currentValue[habit];
-  //     }, 0) /
-  //       goal) *
-  //       100
-  //   ),
-  //   100
-  // );
+  return Math.min(
+    Math.floor(
+      (records?.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue[habit];
+      }, 0) /
+        goal) *
+        100
+    ),
+    100
+  );
 }

@@ -6,7 +6,7 @@ import TableFooter from "../TableFooter/TableFooter";
 import { returnTotal, returnTotalPercentage } from "../../lib/helpers/data-table";
 import { RecordType } from "../../pages";
 import { Tabs } from "@mantine/core";
-import { Temporal } from "@js-temporal/polyfill";
+import { DateTime } from "luxon";
 
 interface HabitTrackerProps {
   staticRecords2024: RecordType[];
@@ -60,82 +60,82 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                     ) : null}
                   </div>
                 ),
-                // footer: (
-                //   <TableFooter
-                //     total={Temporal.Now.plainDateISO().dayOfYear}
-                //     habit="days"
-                //     goal={Temporal.Now.plainDateISO().daysInYear}
-                //     totalPercentage={Math.floor((15 / 365) * 100)}
-                //     topLabel={"Day #"}
-                //     bottomLabel={"of"}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={DateTime.now().ordinal}
+                    habit="days"
+                    goal={DateTime.local(2024).daysInYear}
+                    totalPercentage={Math.floor((15 / 365) * 100)}
+                    topLabel={"Day #"}
+                    bottomLabel={"of"}
+                  />
+                ),
               },
               {
                 accessor: "pushups",
                 sortable: true,
                 textAlignment: "center",
-                // footer: (
-                //   <TableFooter
-                //     total={returnTotal(records2024, "pushups")}
-                //     habit="pushups"
-                //     goal={10000}
-                //     totalPercentage={returnTotalPercentage(records2024, "pushups", 10000)}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={returnTotal(records2024, "pushups")}
+                    habit="pushups"
+                    goal={10000}
+                    totalPercentage={returnTotalPercentage(records2024, "pushups", 10000)}
+                  />
+                ),
               },
               {
                 accessor: "situps",
                 sortable: true,
                 textAlignment: "center",
-                // footer: (
-                //   <TableFooter
-                //     total={returnTotal(records2024, "situps")}
-                //     habit="situps"
-                //     goal={3000}
-                //     totalPercentage={returnTotalPercentage(records2024, "situps", 3000)}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={returnTotal(records2024, "situps")}
+                    habit="situps"
+                    goal={3000}
+                    totalPercentage={returnTotalPercentage(records2024, "situps", 3000)}
+                  />
+                ),
               },
               {
                 accessor: "jacks",
                 sortable: true,
                 textAlignment: "center",
                 title: "Jumping Jacks",
-                // footer: (
-                //   <TableFooter
-                //     total={returnTotal(records2024, "jacks")}
-                //     habit="jacks"
-                //     goal={6000}
-                //     totalPercentage={returnTotalPercentage(records2024, "jacks", 6000)}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={returnTotal(records2024, "jacks")}
+                    habit="jacks"
+                    goal={6000}
+                    totalPercentage={returnTotalPercentage(records2024, "jacks", 6000)}
+                  />
+                ),
               },
               {
                 accessor: "stairs",
                 sortable: true,
                 textAlignment: "center",
-                // footer: (
-                //   <TableFooter
-                //     total={returnTotal(records2024, "stairs")}
-                //     habit="stairs"
-                //     goal={200}
-                //     totalPercentage={returnTotalPercentage(records2024, "stairs", 200)}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={returnTotal(records2024, "stairs")}
+                    habit="stairs"
+                    goal={200}
+                    totalPercentage={returnTotalPercentage(records2024, "stairs", 200)}
+                  />
+                ),
               },
               {
                 accessor: "pullups",
                 sortable: true,
                 textAlignment: "center",
-                // footer: (
-                //   <TableFooter
-                //     total={returnTotal(records2024, "pullups")}
-                //     habit="pullups"
-                //     goal={400}
-                //     totalPercentage={returnTotalPercentage(records2024, "pullups", 400)}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={returnTotal(records2024, "pullups")}
+                    habit="pullups"
+                    goal={400}
+                    totalPercentage={returnTotalPercentage(records2024, "pullups", 400)}
+                  />
+                ),
               },
             ]}
             records={records2024}
@@ -163,82 +163,82 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                     {item.date === new Date().toLocaleDateString() ? <Badge color="blue"> Today </Badge> : null}
                   </div>
                 ),
-                // footer: (
-                //   <TableFooter
-                //     total={365}
-                //     habit="days"
-                //     goal={Temporal.Now.plainDateISO().daysInYear}
-                //     totalPercentage={Math.floor((365 / 365) * 100)}
-                //     topLabel={"Day #"}
-                //     bottomLabel={"of"}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={365}
+                    habit="days"
+                    goal={DateTime.local(2023).daysInYear}
+                    totalPercentage={Math.floor((365 / 365) * 100)}
+                    topLabel={"Day #"}
+                    bottomLabel={"of"}
+                  />
+                ),
               },
               {
                 accessor: "pushups",
                 sortable: true,
                 textAlignment: "center",
-                // footer: (
-                //   <TableFooter
-                //     total={returnTotal(records2023, "pushups")}
-                //     habit="pushups"
-                //     goal={10000}
-                //     totalPercentage={returnTotalPercentage(records2023, "pushups", 10000)}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={returnTotal(records2023, "pushups")}
+                    habit="pushups"
+                    goal={10000}
+                    totalPercentage={returnTotalPercentage(records2023, "pushups", 10000)}
+                  />
+                ),
               },
               {
                 accessor: "situps",
                 sortable: true,
                 textAlignment: "center",
-                // footer: (
-                //   <TableFooter
-                //     total={returnTotal(records2023, "situps")}
-                //     habit="situps"
-                //     goal={3000}
-                //     totalPercentage={returnTotalPercentage(records2023, "situps", 3000)}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={returnTotal(records2023, "situps")}
+                    habit="situps"
+                    goal={3000}
+                    totalPercentage={returnTotalPercentage(records2023, "situps", 3000)}
+                  />
+                ),
               },
               {
                 accessor: "jacks",
                 sortable: true,
                 textAlignment: "center",
                 title: "Jumping Jacks",
-                // footer: (
-                //   <TableFooter
-                //     total={returnTotal(records2023, "jacks")}
-                //     habit="jacks"
-                //     goal={6000}
-                //     totalPercentage={returnTotalPercentage(records2023, "jacks", 6000)}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={returnTotal(records2023, "jacks")}
+                    habit="jacks"
+                    goal={6000}
+                    totalPercentage={returnTotalPercentage(records2023, "jacks", 6000)}
+                  />
+                ),
               },
               {
                 accessor: "stairs",
                 sortable: true,
                 textAlignment: "center",
-                // footer: (
-                //   <TableFooter
-                //     total={returnTotal(records2023, "stairs")}
-                //     habit="stairs"
-                //     goal={200}
-                //     totalPercentage={returnTotalPercentage(records2023, "stairs", 200)}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={returnTotal(records2023, "stairs")}
+                    habit="stairs"
+                    goal={200}
+                    totalPercentage={returnTotalPercentage(records2023, "stairs", 200)}
+                  />
+                ),
               },
               {
                 accessor: "pullups",
                 sortable: true,
                 textAlignment: "center",
-                // footer: (
-                //   <TableFooter
-                //     total={returnTotal(records2023, "pullups")}
-                //     habit="pullups"
-                //     goal={400}
-                //     totalPercentage={returnTotalPercentage(records2023, "pullups", 400)}
-                //   />
-                // ),
+                footer: (
+                  <TableFooter
+                    total={returnTotal(records2023, "pullups")}
+                    habit="pullups"
+                    goal={400}
+                    totalPercentage={returnTotalPercentage(records2023, "pullups", 400)}
+                  />
+                ),
               },
             ]}
             records={records2023}
