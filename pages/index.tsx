@@ -1,7 +1,6 @@
 import Link, { LinkProps } from "../components/Link";
 import { styled, keyframes, darkTheme } from "../lib/styles/stitches.config";
 import { HabitTrackerTable } from "../components/HabitTrackerTable";
-import { ErrorBoundary } from "react-error-boundary";
 
 export interface RecordType {
   date: string;
@@ -225,9 +224,7 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
         I created a habit tracker to track my fitness goal and some other exercises. Updated in realtime.
       </Paragraph>
       <br />
-      <ErrorBoundary fallback={<div>Something went wrong</div>}>
-        <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
-      </ErrorBoundary>
+      <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
     </>
   );
 };
