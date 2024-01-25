@@ -30,7 +30,10 @@ module.exports = (phase, { defaultConfig }) => {
       // commenting out next line to solve an error after upgrading to next13
       // IS_DEV_SERVER: phase === PHASE_DEVELOPMENT_SERVER,
       // https://nextjs.org/docs/api-reference/cli#development
-      NEXT_DEV_PORT: process.env.PORT || 3000,
+
+      // commenting out next line to bypass build error after upgrading to
+      // next13
+      // NEXT_DEV_PORT: process.env.PORT || 3000,
     },
     images: {
       deviceSizes: [640, 750, 828, 1080, 1200, 1920],

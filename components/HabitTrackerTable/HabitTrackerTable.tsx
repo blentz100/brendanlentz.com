@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import { sortBy } from "lodash";
 import { Badge, Container } from "@mantine/core";
-import { TableFooter } from "../TableFooter/TableFooter";
+import TableFooter from "../TableFooter/TableFooter";
 import { returnTotal, returnTotalPercentage } from "../../lib/helpers/data-table";
 import { RecordType } from "../../pages";
 import { Tabs } from "@mantine/core";
-import { Temporal } from "@js-temporal/polyfill";
+import { DateTime } from "luxon";
 
 interface HabitTrackerProps {
   staticRecords2024: RecordType[];
@@ -62,9 +62,9 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                 ),
                 footer: (
                   <TableFooter
-                    total={Temporal.Now.plainDateISO().dayOfYear}
+                    total={DateTime.now().ordinal}
                     habit="days"
-                    goal={Temporal.Now.plainDateISO().daysInYear}
+                    goal={DateTime.local(2024).daysInYear}
                     totalPercentage={Math.floor((15 / 365) * 100)}
                     topLabel={"Day #"}
                     bottomLabel={"of"}
@@ -167,7 +167,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                   <TableFooter
                     total={365}
                     habit="days"
-                    goal={Temporal.Now.plainDateISO().daysInYear}
+                    goal={DateTime.local(2023).daysInYear}
                     totalPercentage={Math.floor((365 / 365) * 100)}
                     topLabel={"Day #"}
                     bottomLabel={"of"}

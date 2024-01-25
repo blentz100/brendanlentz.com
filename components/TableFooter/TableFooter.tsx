@@ -1,6 +1,6 @@
 import { Center, RingProgress, Table, Text } from "@mantine/core";
 
-interface Props {
+interface TableFooterProps {
   total: number;
   totalPercentage: number;
   habit: string;
@@ -9,14 +9,14 @@ interface Props {
   bottomLabel?: string;
 }
 
-export const TableFooter: React.FC<Props> = ({
+const TableFooter = ({
   total,
   totalPercentage,
   habit,
   goal,
   topLabel = "Total",
   bottomLabel = "Goal",
-}) => {
+}: TableFooterProps) => {
   return (
     <>
       <Table>
@@ -67,3 +67,5 @@ export const TableFooter: React.FC<Props> = ({
     </>
   );
 };
+
+export default TableFooter;
