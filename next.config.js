@@ -26,7 +26,9 @@ module.exports = (phase, { defaultConfig }) => {
       // freeze build timestamp for when serverless pages need a "last updated" date:
       NEXT_PUBLIC_RELEASE_DATE: new Date().toISOString(),
       // check if we're running locally via `next dev`:
-      IS_DEV_SERVER: phase === PHASE_DEVELOPMENT_SERVER,
+
+      // commenting out next line to solve an error after upgrading to next13
+      // IS_DEV_SERVER: phase === PHASE_DEVELOPMENT_SERVER,
       // https://nextjs.org/docs/api-reference/cli#development
       NEXT_DEV_PORT: process.env.PORT || 3000,
     },
@@ -36,12 +38,14 @@ module.exports = (phase, { defaultConfig }) => {
       minimumCacheTTL: 43200,
     },
     experimental: {
-      reactRoot: true, // 18
-      images: {
-        // allow forgoing the mess of `<span>`s around statically imported images
-        layoutRaw: true,
-      },
-      newNextLinkBehavior: true, // https://github.com/vercel/next.js/pull/36436
+      // commenting out all these experimental flags to solve an error after
+      // upgrading to next13
+      // reactRoot: true, // 18
+      // images: {
+      //   // allow forgoing the mess of `<span>`s around statically imported images
+      //   layoutRaw: true,
+      // },
+      // newNextLinkBehavior: true, // https://github.com/vercel/next.js/pull/36436
     },
     webpack: (config) => {
       // this lets us statically import webfonts like we would images, allowing cool things like preloading them
