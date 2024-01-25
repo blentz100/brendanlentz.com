@@ -12,7 +12,6 @@ import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps as NextAppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
-import { ErrorBoundary } from "react-error-boundary";
 
 // https://nextjs.org/docs/basic-features/layouts#with-typescript
 export type AppProps = NextAppProps & {
@@ -76,9 +75,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       />
       <SocialProfileJsonLd {...socialProfileJsonLd} />
       <MantineProvider>
-        <ErrorBoundary fallback={<div>Something went wrong</div>}>
-          <ThemeProvider classNames={themeClassNames}>{getLayout(<Component {...pageProps} />)}</ThemeProvider>
-        </ErrorBoundary>
+        <ThemeProvider classNames={themeClassNames}>{getLayout(<Component {...pageProps} />)}</ThemeProvider>
       </MantineProvider>
     </>
   );

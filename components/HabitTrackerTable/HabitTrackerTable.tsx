@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import { sortBy } from "lodash";
 import { Badge, Container } from "@mantine/core";
-import { TableFooter } from "../TableFooter/TableFooter";
+import TableFooter from "../TableFooter/TableFooter";
 import { returnTotal, returnTotalPercentage } from "../../lib/helpers/data-table";
 import { RecordType } from "../../pages";
 import { Tabs } from "@mantine/core";
