@@ -11,20 +11,19 @@ tags:
 I've been running Next 12.1.7-canary.38 for a while and recently my IDE
 started giving me warnings that this package contained vulnerabilities.
 
-So I finally decided to make the leap and upgrade to NextJS v13.
+So I decided to make the leap and upgrade to NextJS v13.
 
 Initially things went smooth.
 
 I upgraded locally and had a handful of warnings and errors that needed to be
 addressed by:
 
-- Removing the layout prop from Image component since that was removed in v13.1
+- Removing the layout prop from `Image` component since that was removed in v13.1
 
-- Running the Next codemod deal with other changes to the Image components
-  between
-  v12 and v13
+- Running the suggested Next codemod to deal with other changes to the `Image`
+  components between v12 and v13
 
-- Removing the prefetch attribute on a number of components to clear some
+- Removing the `prefetch` attribute on a number of components to clear some
   warnings.
 
 Everything was running great locally with `next dev`. No errors, no warnings.
@@ -64,13 +63,20 @@ I spent a considerable amount of experimenting with possible solutions, then
 deploying to Vercel, waiting 2 minutes only the find the error was still there.
 
 One good thing that came out of this was I finally figured out that running
-`vercel build` is a much faster way to test a production vercel build locally
+[`vercel build`](https://vercel.com/docs/cli/build) is a much faster way to test a production vercel build locally
 in a case like this. I'll definitely be making use of that in the future.
 With that shorter build-test cycle time I was able to narrow down the source
-of the error.
+of the error. This requires an install of [Vercel CLI](https://vercel
+.com/docs/cli).
 
-I had been using the `Temporal` package to calculate things like the current
-day of the year (aka the ordinal):
+If you are using Vercel CLI, do you install it globally like
+the docs suggest, or do you install on a per project basis? I went with the
+global install, but then realized it's not in my environment `PATH` variable.
+So instead of messing with that, I just called it with `~blentz/.yarn/bin/vercel build
+`
+
+Back to the original error. I had been using the `Temporal` package to
+calculate things like the current day of the year (aka the ordinal):
 
 ```javascript
 <TableFooter
@@ -92,6 +98,10 @@ Well, it turns out it was causing the mysterious:
 
 error.
 
+I figured this out by commenting out chunks of code and seeing
+somewhat helpful changes to the stacktrace in the original error message.
+They were kind of pointing me in the right direction.
+
 Looking into other date/time libraries led me to the Moment library. Since
 that is not being actively developed, I went with their recommendation and
 used Luxon. Its easy to use and well documented. Here's what it looks like
@@ -108,7 +118,13 @@ in use:
 />
 ```
 
-Issue solved, better library for date/time in use and no more 2 minute wait
-times when troubleshooting a Vercel build. I'm glad I made the switch to v13.
+Issue solved ✅
+
+Better library for date/time ✅
+
+No more 2 minute wait times when troubleshooting a Vercel build ✅
+
+I'm glad I made the switch to v13.
+
 Hopefully this might help someone else out who also thought it would be a
-great idea to use the Temporal library.
+great idea to use the [Temporal](https://tc39.es/proposal-temporal/docs/) library before it's been officially approved.
