@@ -1,0 +1,114 @@
+---
+title: "Upgrading from NextJS v12 to v13"
+date: 2024-01-25 10:31:02-0400
+description: "Lessons Learned from a NextJS upgrade"
+tags:
+  - NextJS
+  - Vercel
+  - Troubleshooting
+---
+
+I've been running Next 12.1.7-canary.38 for a while and recently my IDE
+started giving me warnings that this package contained vulnerabilities.
+
+So I finally decided to make the leap and upgrade to NextJS v13.
+
+Initially things went smooth.
+
+I upgraded locally and had a handful of warnings and errors that needed to be
+addressed by:
+
+- Removing the layout prop from Image component since that was removed in v13.1
+
+- Running the Next codemod deal with other changes to the Image components
+  between
+  v12 and v13
+
+- Removing the prefetch attribute on a number of components to clear some
+  warnings.
+
+Everything was running great locally with `next dev`. No errors, no warnings.
+
+But after pushing to Vercel, I got a new error I'd never seen before. The UI
+showed:
+
+`Application error: a client-side exception has occurred (see the
+browser console for more information).`
+
+on an otherwise blank screen.
+
+In the console, the first error message was:
+
+```
+index.js:271 TypeError: Cannot call a class as a function
+    at jsbi-umd.js:1:491
+    at a (jsbi-umd.js:1:491)
+    at a.<anonymous> (jsbi-umd.js:1:2649)
+    at new a (jsbi-umd.js:1:4473)
+    at Function.value (jsbi-umd.js:1:17240)
+    at Function.value (jsbi-umd.js:1:8031)
+    at 4567 (index.esm.js:1:3777)
+    at __webpack_require__ (bootstrap:21:1)
+    at 9997 (TableFooter.tsx:69:1)
+    at __webpack_require__ (bootstrap:21:1)
+```
+
+I hadn't seen anything like that before and I couldn't tell where it was
+coming from. I searched for solutions but nothing seemed to come close to my
+situation. I couldn't find any places where I was calling a class as a function.
+
+Again the problem was only happening in production, locally everything was
+fine.
+
+I spent a considerable amount of experimenting with possible solutions, then
+deploying to Vercel, waiting 2 minutes only the find the error was still there.
+
+One good thing that came out of this was I finally figured out that running
+`vercel build` is a much faster way to test a production vercel build locally
+in a case like this. I'll definitely be making use of that in the future.
+With that shorter build-test cycle time I was able to narrow down the source
+of the error.
+
+I had been using the `Temporal` package to calculate things like the current
+day of the year (aka the ordinal):
+
+```javascript
+<TableFooter
+  total={Temporal.Now.plainDateISO().dayOfYear}
+  habit="days"
+  goal={Temporal.Now.plainDateISO().daysInYear}
+  totalPercentage={Math.floor((15 / 365) * 100)}
+  topLabel={"Day #"}
+  bottomLabel={"of"}
+/>
+```
+
+Temporal is not yet approved for production use but at the time I thought
+what the hell, what could go wrong?
+
+Well, it turns out it was causing the mysterious:
+
+`index.js:271 TypeError: Cannot call a class as a function`
+
+error.
+
+Looking into other date/time libraries led me to the Moment library. Since
+that is not being actively developed, I went with their recommendation and
+used Luxon. Its easy to use and well documented. Here's what it looks like
+in use:
+
+```javascript
+<TableFooter
+  total={DateTime.now().ordinal}
+  habit="days"
+  goal={DateTime.local(2024).daysInYear}
+  totalPercentage={Math.floor((15 / 365) * 100)}
+  topLabel={"Day #"}
+  bottomLabel={"of"}
+/>
+```
+
+Issue solved, better library for date/time in use and no more 2 minute wait
+times when troubleshooting a Vercel build. I'm glad I made the switch to v13.
+Hopefully this might help someone else out who also thought it would be a
+great idea to use the Temporal library.
