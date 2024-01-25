@@ -1,4 +1,4 @@
-import type { StaticImageData } from "next/image";
+import type { StaticImageData } from "next/legacy/image";
 import type { DefaultSeoProps, SocialProfileJsonLdProps, ArticleJsonLdProps } from "next-seo";
 
 import * as config from ".";

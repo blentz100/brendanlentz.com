@@ -40,7 +40,7 @@ export type LinkProps = ComponentProps<typeof StyledLink> & {
   openInNewTab?: boolean;
 };
 
-const Link = ({ href, rel, target, prefetch = false, underline = true, openInNewTab, ...rest }: LinkProps) => {
+const Link = ({ href, rel, target, underline = true, openInNewTab, ...rest }: LinkProps) => {
   // This component auto-detects whether or not this link should open in the same window (the default for internal
   // links) or a new tab (the default for external links). Defaults can be overridden with `openInNewTab={true}`.
   const isExternal = typeof href === "string" && !href.startsWith("/") && !href.startsWith(baseUrl);
@@ -58,7 +58,7 @@ const Link = ({ href, rel, target, prefetch = false, underline = true, openInNew
   }
 
   // If link is to an internal page, simply pass *everything* along as-is to next/link.
-  return <StyledLink {...{ href, rel, target, prefetch, underline, ...rest }} />;
+  return <StyledLink {...{ href, rel, target, underline, ...rest }} />;
 };
 
 export default Link;

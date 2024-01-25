@@ -1,8 +1,8 @@
-import NextImage from "next/image";
+import NextImage from "next/legacy/image";
 import Link from "../Link";
 import { styled } from "../../lib/styles/stitches.config";
 import type { ComponentProps } from "react";
-import type { ImageProps as NextImageProps, StaticImageData } from "next/image";
+import type { ImageProps as NextImageProps, StaticImageData } from "next/legacy/image";
 
 // https://nextjs.org/docs/api-reference/next/image#optional-props
 const DEFAULT_QUALITY = 60;

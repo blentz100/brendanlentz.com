@@ -67,7 +67,7 @@ const MenuItem = ({ icon: ItemIcon, href, text, current, className }: MenuItemPr
   // allow both navigational links and/or other interactive react components (e.g. the theme toggle)
   if (href) {
     return (
-      <Link href={href} prefetch={false} className={className} current={current} title={text} aria-label={text}>
+      <Link href={href} className={className} current={current} title={text} aria-label={text}>
         {linkContent}
       </Link>
     );
