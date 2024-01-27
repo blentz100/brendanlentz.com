@@ -65,7 +65,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                     total={DateTime.now().ordinal}
                     habit="days"
                     goal={DateTime.local(2024).daysInYear}
-                    totalPercentage={Math.floor((15 / 365) * 100)}
+                    totalPercentage={Math.floor((DateTime.now().ordinal / 365) * 100)}
                     topLabel={"Day #"}
                     bottomLabel={"of"}
                   />
