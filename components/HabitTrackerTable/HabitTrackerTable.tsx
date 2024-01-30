@@ -51,13 +51,15 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                 width: 150,
                 render: (item) => (
                   <div>
-                    {item.date}
-                    {item.date === new Date().toLocaleDateString() ? (
-                      <Badge size="xs" color="blue">
-                        {" "}
-                        Today{" "}
-                      </Badge>
-                    ) : null}
+                    <>
+                      {item.date}
+                      {item.date === new Date().toLocaleDateString() ? (
+                        <Badge size="xs" color="blue">
+                          {" "}
+                          Today{" "}
+                        </Badge>
+                      ) : null}
+                    </>
                   </div>
                 ),
                 footer: (
@@ -74,7 +76,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               {
                 accessor: "pushups",
                 sortable: true,
-                textAlignment: "center",
+                textAlign: "center",
                 footer: (
                   <TableFooter
                     total={returnTotal(records2024, "pushups")}
@@ -87,7 +89,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               {
                 accessor: "situps",
                 sortable: true,
-                textAlignment: "center",
+                textAlign: "center",
                 footer: (
                   <TableFooter
                     total={returnTotal(records2024, "situps")}
@@ -100,7 +102,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               {
                 accessor: "jacks",
                 sortable: true,
-                textAlignment: "center",
+                textAlign: "center",
                 title: "Jumping Jacks",
                 footer: (
                   <TableFooter
@@ -114,7 +116,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               {
                 accessor: "stairs",
                 sortable: true,
-                textAlignment: "center",
+                textAlign: "center",
                 footer: (
                   <TableFooter
                     total={returnTotal(records2024, "stairs")}
@@ -127,7 +129,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               {
                 accessor: "pullups",
                 sortable: true,
-                textAlignment: "center",
+                textAlign: "center",
                 footer: (
                   <TableFooter
                     total={returnTotal(records2024, "pullups")}
@@ -139,7 +141,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               },
             ]}
             records={records2024}
-            withBorder
+            withTableBorder
             striped
             height={500}
             highlightOnHover
@@ -158,10 +160,10 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                 sortable: true,
                 width: 150,
                 render: (item) => (
-                  <div>
+                  <>
                     {item.date}
                     {item.date === new Date().toLocaleDateString() ? <Badge color="blue"> Today </Badge> : null}
-                  </div>
+                  </>
                 ),
                 footer: (
                   <TableFooter
@@ -177,7 +179,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               {
                 accessor: "pushups",
                 sortable: true,
-                textAlignment: "center",
+                textAlign: "center",
                 footer: (
                   <TableFooter
                     total={returnTotal(records2023, "pushups")}
@@ -190,7 +192,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               {
                 accessor: "situps",
                 sortable: true,
-                textAlignment: "center",
+                textAlign: "center",
                 footer: (
                   <TableFooter
                     total={returnTotal(records2023, "situps")}
@@ -203,7 +205,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               {
                 accessor: "jacks",
                 sortable: true,
-                textAlignment: "center",
+                textAlign: "center",
                 title: "Jumping Jacks",
                 footer: (
                   <TableFooter
@@ -217,7 +219,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               {
                 accessor: "stairs",
                 sortable: true,
-                textAlignment: "center",
+                textAlign: "center",
                 footer: (
                   <TableFooter
                     total={returnTotal(records2023, "stairs")}
@@ -230,7 +232,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               {
                 accessor: "pullups",
                 sortable: true,
-                textAlignment: "center",
+                textAlign: "center",
                 footer: (
                   <TableFooter
                     total={returnTotal(records2023, "pullups")}
@@ -242,7 +244,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
               },
             ]}
             records={records2023}
-            withBorder
+            withTableBorder
             striped
             height={500}
             highlightOnHover
