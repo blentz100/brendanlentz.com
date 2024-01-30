@@ -1,0 +1,3 @@
+/* Make sure the styles are applied in the correct order */
+/* https://icflorescu.github.io/mantine-datatable/getting-started/ */
+@layer mantine, mantine-datatable;
