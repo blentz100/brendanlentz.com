@@ -225,6 +225,8 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
       </Paragraph>
       <br />
       <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
+
+      <H2>Strava Data</H2>
     </>
   );
 };
@@ -257,7 +259,7 @@ export async function getStaticProps() {
       staticRecords2024: records2024,
       staticRecords2023: records2023,
     },
-    revalidate: 300,
+    revalidate: 5,
   };
 }
 
