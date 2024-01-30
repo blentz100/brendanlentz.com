@@ -257,7 +257,7 @@ export async function getStaticProps() {
       staticRecords2024: records2024,
       staticRecords2023: records2023,
     },
-    revalidate: 300,
+    revalidate: 5,
   };
 }
 
