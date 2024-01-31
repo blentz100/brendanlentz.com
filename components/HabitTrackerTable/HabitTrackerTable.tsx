@@ -145,7 +145,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
             striped
             height={500}
             highlightOnHover
-            scrollAreaProps={{ type: "always" }}
+            scrollAreaProps={{ type: "never" }}
             sortStatus={sortStatus}
             onSortStatusChange={setSortStatus}
             idAccessor={"date"}
@@ -248,7 +248,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
             striped
             height={500}
             highlightOnHover
-            scrollAreaProps={{ type: "always" }}
+            scrollAreaProps={{ type: "never" }}
             sortStatus={sortStatus}
             onSortStatusChange={setSortStatus}
             idAccessor={"date"}
