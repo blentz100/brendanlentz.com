@@ -2,7 +2,7 @@ import Link, { LinkProps } from "../components/Link";
 import { styled, keyframes, darkTheme } from "../lib/styles/stitches.config";
 import { HabitTrackerTable } from "../components/HabitTrackerTable";
 
-export interface RecordType {
+export type RecordType = {
   date: string;
   dateAsNumber: number;
   jacks: number;
@@ -11,7 +11,7 @@ export interface RecordType {
   pushups: number;
   situps: number;
   stairs: number;
-}
+};
 
 const ColorfulLink = ({
   lightColor,
