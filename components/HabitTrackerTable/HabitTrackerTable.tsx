@@ -54,7 +54,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
                     <>
                       {item.date}
                       {item.date === new Date().toLocaleDateString() ? (
-                        <Badge size="xs" color="blue">
+                        <Badge size="xs" color="blue" ml={10}>
                           {" "}
                           Today{" "}
                         </Badge>
