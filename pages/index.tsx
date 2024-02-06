@@ -1,7 +1,7 @@
 import Link, { LinkProps } from "../components/Link";
 import { styled, keyframes, darkTheme } from "../lib/styles/stitches.config";
 import { HabitTrackerTable } from "../components/HabitTrackerTable";
-import { LineChart } from "@mantine/charts";
+import { HabitLineChart } from "../components/HabitLineChart";
 
 export type RecordType = {
   date: string;
@@ -13,39 +13,6 @@ export type RecordType = {
   situps: number;
   stairs: number;
 };
-
-const data = [
-  {
-    date: "Jan 1",
-    Actual: 45,
-    Goal: 33,
-  },
-  {
-    date: "Jan 2",
-    Actual: 90,
-    Goal: 66,
-  },
-  {
-    date: "Jan 4",
-    Actual: 100,
-    Goal: 99,
-  },
-  {
-    date: "Jan 5",
-    Actual: 100,
-    Goal: 134,
-  },
-  {
-    date: "Jan 6",
-    Actual: 145,
-    Goal: 167,
-  },
-  {
-    date: "Jan 7",
-
-    Goal: 200,
-  },
-];
 
 const ColorfulLink = ({
   lightColor,
@@ -259,18 +226,7 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
       </Paragraph>
       <br />
       <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
-      <H2>Pushups</H2>
-      <LineChart
-        h={300}
-        data={data}
-        dataKey="date"
-        withTooltip={false}
-        series={[
-          { name: "Actual", color: "indigo.6" },
-          { name: "Goal", color: "blue.6" },
-        ]}
-        curveType="linear"
-      />
+      <HabitLineChart records={staticRecords2024} habit={"pushups"} />
     </>
   );
 };
