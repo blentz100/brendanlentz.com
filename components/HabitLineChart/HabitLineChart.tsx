@@ -1,59 +1,23 @@
 import { H2 } from "../Heading";
 import { LineChart } from "@mantine/charts";
 import { RecordType } from "../../pages";
+import { DateTime } from "luxon";
 
 interface HabitLineChart {
   records: RecordType[];
   habit: string;
 }
 
-const sampleData = [
-  {
-    date: "Jan 1",
-    Actual: 45,
-    Goal: 33,
-  },
-  {
-    date: "Jan 2",
-    Actual: 90,
-    Goal: 66,
-  },
-  {
-    date: "Jan 4",
-    Actual: 100,
-    Goal: 99,
-  },
-  {
-    date: "Jan 5",
-    Actual: 100,
-    Goal: 134,
-  },
-  {
-    date: "Jan 6",
-    Actual: 145,
-    Goal: 167,
-  },
-  {
-    date: "Jan 7",
-
-    Goal: 200,
-  },
-];
-
 export function HabitLineChart({ records, habit }: HabitLineChart) {
-  // console.log('records is: ', records)
-
   let runningTotal = 0;
   let runningGoalTotal = 0;
-
-  // need to add all the blank dates back into the array
 
   // reverse the records, so they count up
   const reversedRecords = records.slice().reverse();
 
   const data = reversedRecords.map((item, index) => {
     runningTotal += item.pushups;
-    runningGoalTotal += 10000 / 365;
+    runningGoalTotal += Math.round(10000 / 365);
     return {
       date: item.date.slice(0, item.date.length - 5),
       Actual: runningTotal,
@@ -61,7 +25,15 @@ export function HabitLineChart({ records, habit }: HabitLineChart) {
     };
   });
 
-  // console.log('data is: ', data)
+  for (let i = data.length; i < DateTime.now().daysInYear - DateTime.now().ordinal; i++) {
+    runningGoalTotal += Math.round(10000 / 365);
+    const runningDate = DateTime.now().plus({ days: i }).toFormat("M/d");
+    data.push({
+      date: runningDate.toString(),
+      Actual: NaN,
+      Goal: runningGoalTotal,
+    });
+  }
 
   return (
     <>
@@ -70,7 +42,9 @@ export function HabitLineChart({ records, habit }: HabitLineChart) {
         h={300}
         data={data}
         dataKey="date"
-        withTooltip={false}
+        strokeWidth={1}
+        dotProps={{ r: 3, stroke: "#fff" }}
+        withTooltip={true}
         series={[
           { name: "Actual", color: "green" },
           { name: "Goal", color: "blue" },
