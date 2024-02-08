@@ -12,6 +12,7 @@ import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps as NextAppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
+import "@mantine/charts/styles.css";
 
 // Important instructions for Mantine Data-Table v7
 // https://icflorescu.github.io/mantine-datatable/styling/
