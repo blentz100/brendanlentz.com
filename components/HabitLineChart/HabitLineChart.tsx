@@ -50,7 +50,8 @@ export function HabitLineChart({ records, habit }: HabitLineChart) {
         dataKey="date"
         strokeWidth={1}
         dotProps={{ r: 3, stroke: "#fff" }}
-        withTooltip={true}
+        withTooltip
+        withLegend
         valueFormatter={(value) => new Intl.NumberFormat("en-US").format(value)}
         series={[
           { name: "Actual", color: "green" },
