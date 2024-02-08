@@ -32,7 +32,7 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
     return {
       date: item.date.slice(0, item.date.length - 5),
       Actual: runningHabitTotal,
-      Goal: runningGoalTotal,
+      Goal: Math.round(runningGoalTotal),
     };
   });
 
@@ -43,7 +43,7 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
     data.push({
       date: runningDate.toString(),
       Actual: null,
-      Goal: runningGoalTotal,
+      Goal: Math.round(runningGoalTotal),
     });
   }
 
