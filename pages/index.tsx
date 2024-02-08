@@ -226,7 +226,7 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
       </Paragraph>
       <br />
       <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
-      <HabitLineChart records={staticRecords2024} habit={"pushups"} />
+      <HabitLineChart records={staticRecords2024} habit={"Pushups"} />
     </>
   );
 };

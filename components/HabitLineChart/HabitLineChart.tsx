@@ -15,18 +15,18 @@ interface HabitEntry {
 }
 
 export function HabitLineChart({ records, habit }: HabitLineChart) {
-  let runningTotal = 0;
+  let runningHabitTotal = 0;
   let runningGoalTotal = 0;
 
   // reverse the records, so they count up
   const reversedRecords = records.slice().reverse();
 
-  const data: HabitEntry[] = reversedRecords.map((item, index) => {
-    runningTotal += item.pushups;
+  const data: HabitEntry[] = reversedRecords.map((item) => {
+    runningHabitTotal += item.pushups;
     runningGoalTotal += Math.round(10000 / 365);
     return {
       date: item.date.slice(0, item.date.length - 5),
-      Actual: runningTotal,
+      Actual: runningHabitTotal,
       Goal: runningGoalTotal,
     };
   });
@@ -43,7 +43,7 @@ export function HabitLineChart({ records, habit }: HabitLineChart) {
 
   return (
     <>
-      <H2>Pushups</H2>
+      <H2>{habit}</H2>
       <LineChart
         h={300}
         data={data}
