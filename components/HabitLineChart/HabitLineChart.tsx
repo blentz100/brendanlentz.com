@@ -8,6 +8,12 @@ interface HabitLineChart {
   habit: string;
 }
 
+interface HabitEntry {
+  date: string;
+  Actual: number | null;
+  Goal: number;
+}
+
 export function HabitLineChart({ records, habit }: HabitLineChart) {
   let runningTotal = 0;
   let runningGoalTotal = 0;
@@ -15,7 +21,7 @@ export function HabitLineChart({ records, habit }: HabitLineChart) {
   // reverse the records, so they count up
   const reversedRecords = records.slice().reverse();
 
-  const data = reversedRecords.map((item, index) => {
+  const data: HabitEntry[] = reversedRecords.map((item, index) => {
     runningTotal += item.pushups;
     runningGoalTotal += Math.round(10000 / 365);
     return {
@@ -30,7 +36,7 @@ export function HabitLineChart({ records, habit }: HabitLineChart) {
     const runningDate = DateTime.now().plus({ days: i }).toFormat("M/d");
     data.push({
       date: runningDate.toString(),
-      Actual: NaN,
+      Actual: null,
       Goal: runningGoalTotal,
     });
   }
@@ -45,6 +51,7 @@ export function HabitLineChart({ records, habit }: HabitLineChart) {
         strokeWidth={1}
         dotProps={{ r: 3, stroke: "#fff" }}
         withTooltip={true}
+        valueFormatter={(value) => new Intl.NumberFormat("en-US").format(value)}
         series={[
           { name: "Actual", color: "green" },
           { name: "Goal", color: "blue" },
