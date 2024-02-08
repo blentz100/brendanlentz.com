@@ -5,7 +5,9 @@ import { DateTime } from "luxon";
 
 interface HabitLineChart {
   records: RecordType[];
-  habit: string;
+  habit: keyof chartableHabits;
+  habitDisplayName: string;
+  goal: number;
 }
 
 interface HabitEntry {
@@ -14,16 +16,19 @@ interface HabitEntry {
   Goal: number;
 }
 
-export function HabitLineChart({ records, habit }: HabitLineChart) {
+type chartableHabits = Omit<RecordType, "date" | "dateAsNumber">;
+
+export function HabitLineChart({ records, habit, habitDisplayName, goal }: HabitLineChart) {
   let runningHabitTotal = 0;
   let runningGoalTotal = 0;
 
   // reverse the records, so they count up
   const reversedRecords = records.slice().reverse();
 
+  // extract and transform the habit data we want and put it into data
   const data: HabitEntry[] = reversedRecords.map((item) => {
-    runningHabitTotal += item.pushups;
-    runningGoalTotal += Math.round(10000 / 365);
+    runningHabitTotal += item[habit];
+    runningGoalTotal = runningGoalTotal + goal / 366;
     return {
       date: item.date.slice(0, item.date.length - 5),
       Actual: runningHabitTotal,
@@ -31,8 +36,9 @@ export function HabitLineChart({ records, habit }: HabitLineChart) {
     };
   });
 
-  for (let i = data.length; i < DateTime.now().daysInYear - DateTime.now().ordinal; i++) {
-    runningGoalTotal += Math.round(10000 / 365);
+  // created and push all future entries for the rest of the year onto data
+  for (let i = 0; i <= DateTime.now().daysInYear - DateTime.now().ordinal; i++) {
+    runningGoalTotal = runningGoalTotal + goal / 366;
     const runningDate = DateTime.now().plus({ days: i }).toFormat("M/d");
     data.push({
       date: runningDate.toString(),
@@ -43,7 +49,7 @@ export function HabitLineChart({ records, habit }: HabitLineChart) {
 
   return (
     <>
-      <H2>{habit}</H2>
+      <H2>{habitDisplayName}</H2>
       <LineChart
         h={300}
         data={data}
