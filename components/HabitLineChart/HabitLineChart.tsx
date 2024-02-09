@@ -91,13 +91,13 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
     <Stack>
       <H3>{habitDisplayName}</H3>
       <LineChart
-        h={300}
+        h={250}
         data={data}
         dataKey="date"
         dotProps={{ r: 0.1 }}
         withTooltip
         withLegend
-        xAxisProps={{ interval: 0 }}
+        xAxisProps={{ interval: 11 }} // spacing of X axis labels
         strokeWidth={2}
         activeDotProps={{ r: 3, strokeWidth: 1 }}
         valueFormatter={(value) => new Intl.NumberFormat("en-US").format(value)}
