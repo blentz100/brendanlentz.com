@@ -1,7 +1,8 @@
 import { LineChart } from "@mantine/charts";
 import { RecordType } from "../../pages";
 import { DateTime } from "luxon";
-import { Paper, Table, Text } from "@mantine/core";
+import { Paper, Stack, Table } from "@mantine/core";
+import { H3 } from "../Heading";
 
 interface HabitLineChart {
   records: RecordType[];
@@ -11,7 +12,7 @@ interface HabitLineChart {
 }
 
 interface HabitEntry {
-  date: string;
+  date: string | undefined;
   Actual: number | null;
   Goal: number;
 }
@@ -23,14 +24,26 @@ interface ChartTooltipProps {
   payload: Record<string, any>[] | undefined;
 }
 
-function ChartTooltip({ label, payload }: ChartTooltipProps) {
+const monthLookUpDictionary: Record<number, string> = {
+  0: "Jan",
+  32: "Feb",
+  61: "Mar",
+  92: "Apr",
+  122: "May",
+  153: "Jun",
+  183: "Jul",
+  214: "Aug",
+  245: "Sep",
+  275: "Oct",
+  306: "Nov",
+  336: "Dec",
+};
+
+function ChartTooltip({ payload }: ChartTooltipProps) {
   if (!payload) return null;
 
   return (
     <Paper px="md" py="sm" withBorder shadow="md" radius="md">
-      <Text fw={500} mb={5}>
-        {label}
-      </Text>
       <Table withRowBorders={false}>
         <Table.Tbody>
           {payload.map((item: any) => (
@@ -53,11 +66,11 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
   const reversedRecords = records.slice().reverse();
 
   // extract and transform the habit data we want and put it into data
-  const data: HabitEntry[] = reversedRecords.map((item) => {
+  const data: HabitEntry[] = reversedRecords.map((item, index) => {
     runningHabitTotal += item[habit];
     runningGoalTotal = runningGoalTotal + goal / 366;
     return {
-      date: item.date.slice(0, item.date.length - 5),
+      date: monthLookUpDictionary[index] ?? "",
       Actual: runningHabitTotal,
       Goal: Math.round(runningGoalTotal),
     };
@@ -66,24 +79,25 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
   // created and push all future entries for the rest of the year onto data
   for (let i = 0; i < DateTime.now().daysInYear - DateTime.now().ordinal; i++) {
     runningGoalTotal = runningGoalTotal + goal / 366;
-    const runningDate = DateTime.now().plus({ days: i }).toFormat("M/d");
+    DateTime.now().plus({ days: i }).toFormat("M/d");
     data.push({
-      date: runningDate.toString(),
+      date: monthLookUpDictionary[DateTime.now().ordinal + i] ?? "",
       Actual: null,
       Goal: Math.round(runningGoalTotal),
     });
   }
 
   return (
-    <>
+    <Stack>
+      <H3>{habitDisplayName}</H3>
       <LineChart
-        title={habitDisplayName}
         h={300}
         data={data}
         dataKey="date"
         dotProps={{ r: 0.1 }}
         withTooltip
         withLegend
+        xAxisProps={{ interval: 0 }}
         strokeWidth={2}
         activeDotProps={{ r: 3, strokeWidth: 1 }}
         valueFormatter={(value) => new Intl.NumberFormat("en-US").format(value)}
@@ -93,10 +107,11 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
         ]}
         curveType="linear"
         tooltipProps={{
-          content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
+          content: ({ payload }) => <ChartTooltip label={habitDisplayName} payload={payload} />,
         }}
+        legendProps={{ verticalAlign: "bottom", height: 30 }}
       />
-    </>
+    </Stack>
   );
 }
 
