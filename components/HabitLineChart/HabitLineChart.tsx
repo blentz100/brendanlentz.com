@@ -2,6 +2,7 @@ import { H2 } from "../Heading";
 import { LineChart } from "@mantine/charts";
 import { RecordType } from "../../pages";
 import { DateTime } from "luxon";
+import { Paper, Table, Text } from "@mantine/core";
 
 interface HabitLineChart {
   records: RecordType[];
@@ -17,6 +18,33 @@ interface HabitEntry {
 }
 
 type chartableHabits = Omit<RecordType, "date" | "dateAsNumber">;
+
+interface ChartTooltipProps {
+  label: string;
+  payload: Record<string, any>[] | undefined;
+}
+
+function ChartTooltip({ label, payload }: ChartTooltipProps) {
+  if (!payload) return null;
+
+  return (
+    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+      <Text fw={500} mb={5}>
+        {label}
+      </Text>
+      <Table withRowBorders={false}>
+        <Table.Tbody>
+          {payload.map((item: any) => (
+            <Table.Tr key={item.name}>
+              <Table.Td>{item.name} to Date:</Table.Td>
+              <Table.Td ta={"right"}>{new Intl.NumberFormat("en-US").format(item.value)}</Table.Td>
+            </Table.Tr>
+          ))}
+        </Table.Tbody>
+      </Table>
+    </Paper>
+  );
+}
 
 export function HabitLineChart({ records, habit, habitDisplayName, goal }: HabitLineChart) {
   let runningHabitTotal = 0;
@@ -54,16 +82,19 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
         h={300}
         data={data}
         dataKey="date"
-        strokeWidth={1}
+        strokeWidth={0.1}
         dotProps={{ r: 3, stroke: "#fff" }}
         withTooltip
         withLegend
         valueFormatter={(value) => new Intl.NumberFormat("en-US").format(value)}
         series={[
-          { name: "Actual", color: "green" },
-          { name: "Goal", color: "blue" },
+          { name: "Goal", color: "lightgreen" },
+          { name: "Actual", color: "blue" },
         ]}
         curveType="linear"
+        tooltipProps={{
+          content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
+        }}
       />
     </>
   );
