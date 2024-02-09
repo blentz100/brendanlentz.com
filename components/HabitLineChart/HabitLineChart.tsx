@@ -1,4 +1,3 @@
-import { H2 } from "../Heading";
 import { LineChart } from "@mantine/charts";
 import { RecordType } from "../../pages";
 import { DateTime } from "luxon";
@@ -82,13 +81,14 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
         h={300}
         data={data}
         dataKey="date"
-        strokeWidth={0.1}
-        dotProps={{ r: 3, stroke: "#fff" }}
+        dotProps={{ r: 0.1 }}
         withTooltip
         withLegend
+        strokeWidth={2}
+        activeDotProps={{ r: 3, strokeWidth: 1 }}
         valueFormatter={(value) => new Intl.NumberFormat("en-US").format(value)}
         series={[
-          { name: "Goal", color: "lightgreen" },
+          { name: "Goal", color: "lightgrey" },
           { name: "Actual", color: "blue" },
         ]}
         curveType="linear"
