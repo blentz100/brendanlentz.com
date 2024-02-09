@@ -2,6 +2,7 @@ import Link, { LinkProps } from "../components/Link";
 import { styled, keyframes, darkTheme } from "../lib/styles/stitches.config";
 import { HabitTrackerTable } from "../components/HabitTrackerTable";
 import { HabitLineChart } from "../components/HabitLineChart";
+import { SimpleGrid } from "@mantine/core";
 
 export type RecordType = {
   date: string;
@@ -226,11 +227,13 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
       </Paragraph>
       <br />
       <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
-      <HabitLineChart records={staticRecords2024} habit={"pushups"} habitDisplayName={"Pushups"} goal={10000} />
-      <HabitLineChart records={staticRecords2024} habit={"situps"} habitDisplayName={"Situps"} goal={7000} />
-      <HabitLineChart records={staticRecords2024} habit={"jacks"} habitDisplayName={"Jumping Jacks"} goal={14000} />
-      <HabitLineChart records={staticRecords2024} habit={"stairs"} habitDisplayName={"Stairs"} goal={200} />
-      <HabitLineChart records={staticRecords2024} habit={"pullups"} habitDisplayName={"Pullups"} goal={600} />
+      <SimpleGrid cols={2}>
+        <HabitLineChart records={staticRecords2024} habit={"pushups"} habitDisplayName={"Pushups"} goal={10000} />
+        <HabitLineChart records={staticRecords2024} habit={"situps"} habitDisplayName={"Situps"} goal={7000} />
+        <HabitLineChart records={staticRecords2024} habit={"jacks"} habitDisplayName={"Jumping Jacks"} goal={14000} />
+        <HabitLineChart records={staticRecords2024} habit={"stairs"} habitDisplayName={"Stairs"} goal={200} />
+        <HabitLineChart records={staticRecords2024} habit={"pullups"} habitDisplayName={"Pullups"} goal={600} />
+      </SimpleGrid>
     </>
   );
 };

@@ -77,8 +77,8 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
 
   return (
     <>
-      <H2>{habitDisplayName}</H2>
       <LineChart
+        title={habitDisplayName}
         h={300}
         data={data}
         dataKey="date"
