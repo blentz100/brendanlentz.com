@@ -98,6 +98,7 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
         curveType="linear"
         tooltipProps={{
           content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
+          position: { x: 75, y: 0 },
         }}
         legendProps={{ verticalAlign: "bottom", height: 30 }}
       />
