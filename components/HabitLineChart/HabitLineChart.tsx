@@ -76,8 +76,8 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
     };
   });
 
-  // created and push all future entries for the rest of the year onto data
-  for (let i = 0; i < DateTime.now().daysInYear - DateTime.now().ordinal; i++) {
+  // create and push all future entries for the rest of the year onto data
+  for (let i = 0; i <= DateTime.now().daysInYear - DateTime.now().ordinal; i++) {
     runningGoalTotal = runningGoalTotal + goal / 366;
     DateTime.now().plus({ days: i }).toFormat("M/d");
     data.push({
