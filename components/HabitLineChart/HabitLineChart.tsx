@@ -1,7 +1,7 @@
 import { LineChart } from "@mantine/charts";
 import { RecordType } from "../../pages";
 import { DateTime } from "luxon";
-import { Paper, Stack, Table } from "@mantine/core";
+import { Paper, Stack, Table, Text } from "@mantine/core";
 import { H3 } from "../Heading";
 
 interface HabitLineChart {
@@ -23,32 +23,17 @@ interface ChartTooltipProps {
   label: string;
   payload: Record<string, any>[] | undefined;
 }
-
-const monthLookUpDictionary: Record<number, string> = {
-  0: "Jan",
-  32: "Feb",
-  61: "Mar",
-  92: "Apr",
-  122: "May",
-  153: "Jun",
-  183: "Jul",
-  214: "Aug",
-  245: "Sep",
-  275: "Oct",
-  306: "Nov",
-  336: "Dec",
-};
-
-function ChartTooltip({ payload }: ChartTooltipProps) {
+function ChartTooltip({ label, payload }: ChartTooltipProps) {
   if (!payload) return null;
 
   return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
-      <Table withRowBorders={false}>
+    <Paper px="xs" py="xs" withBorder shadow="md" radius="md">
+      <Text fz="xs">{label}</Text>
+      <Table withRowBorders={false} verticalSpacing="1">
         <Table.Tbody>
           {payload.map((item: any) => (
-            <Table.Tr key={item.name}>
-              <Table.Td>{item.name} to Date:</Table.Td>
+            <Table.Tr key={item.name} fz="xs">
+              <Table.Td>{item.name}</Table.Td>
               <Table.Td ta={"right"}>{new Intl.NumberFormat("en-US").format(item.value)}</Table.Td>
             </Table.Tr>
           ))}
@@ -58,6 +43,11 @@ function ChartTooltip({ payload }: ChartTooltipProps) {
   );
 }
 
+const tickFormatter = (value: number) =>
+  new Date(value).toLocaleDateString("en-US", {
+    month: "short",
+  });
+
 export function HabitLineChart({ records, habit, habitDisplayName, goal }: HabitLineChart) {
   let runningHabitTotal = 0;
   let runningGoalTotal = 0;
@@ -66,11 +56,11 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
   const reversedRecords = records.slice().reverse();
 
   // extract and transform the habit data we want and put it into data
-  const data: HabitEntry[] = reversedRecords.map((item, index) => {
+  const data: HabitEntry[] = reversedRecords.map((item) => {
     runningHabitTotal += item[habit];
     runningGoalTotal = runningGoalTotal + goal / 366;
     return {
-      date: monthLookUpDictionary[index] ?? "",
+      date: item.date,
       Actual: runningHabitTotal,
       Goal: Math.round(runningGoalTotal),
     };
@@ -81,7 +71,7 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
     runningGoalTotal = runningGoalTotal + goal / 366;
     DateTime.now().plus({ days: i }).toFormat("M/d");
     data.push({
-      date: monthLookUpDictionary[DateTime.now().ordinal + i] ?? "",
+      date: DateTime.now().plus({ days: i }).toFormat("M/d/yyyy"),
       Actual: null,
       Goal: Math.round(runningGoalTotal),
     });
@@ -97,7 +87,7 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
         dotProps={{ r: 0.1 }}
         withTooltip
         withLegend
-        xAxisProps={{ interval: 11 }} // spacing of X axis labels
+        xAxisProps={{ interval: 170, tickFormatter: tickFormatter }}
         strokeWidth={2}
         activeDotProps={{ r: 3, strokeWidth: 1 }}
         valueFormatter={(value) => new Intl.NumberFormat("en-US").format(value)}
@@ -107,7 +97,7 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
         ]}
         curveType="linear"
         tooltipProps={{
-          content: ({ payload }) => <ChartTooltip label={habitDisplayName} payload={payload} />,
+          content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
         }}
         legendProps={{ verticalAlign: "bottom", height: 30 }}
       />
