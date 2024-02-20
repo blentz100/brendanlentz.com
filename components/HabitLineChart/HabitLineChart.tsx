@@ -1,7 +1,7 @@
 import { LineChart } from "@mantine/charts";
 import { RecordType } from "../../pages";
 import { DateTime } from "luxon";
-import { Paper, Stack, Table, Text } from "@mantine/core";
+import { Center, Paper, Stack, Table, Text } from "@mantine/core";
 import { H3 } from "../Heading";
 
 interface HabitLineChart {
@@ -27,7 +27,7 @@ function ChartTooltip({ label, payload }: ChartTooltipProps) {
   if (!payload) return null;
 
   return (
-    <Paper px="xs" py="xs" withBorder shadow="md" radius="md">
+    <Paper px="5" py="5" withBorder shadow="md" radius="md">
       <Text fz="xs">{label}</Text>
       <Table withRowBorders={false} verticalSpacing="1">
         <Table.Tbody>
@@ -79,7 +79,10 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
 
   return (
     <Stack>
-      <H3>{habitDisplayName}</H3>
+      <Center p={-10} mb={-20}>
+        <H3>{habitDisplayName}</H3>
+      </Center>
+
       <LineChart
         h={250}
         data={data}
@@ -98,9 +101,9 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
         curveType="linear"
         tooltipProps={{
           content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
-          position: { x: 75, y: 0 },
+          position: { x: 60, y: 40 },
         }}
-        legendProps={{ verticalAlign: "bottom", height: 30 }}
+        legendProps={{ verticalAlign: "top", height: 30 }}
       />
     </Stack>
   );
