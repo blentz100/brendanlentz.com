@@ -12,6 +12,23 @@ import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps as NextAppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
+import "@mantine/charts/styles.css";
+
+// Important instructions for Mantine Data-Table v7
+// https://icflorescu.github.io/mantine-datatable/styling/
+
+// Import the mantine-core layer CSS file;
+// this will automatically place it in a `mantine` layer
+import "@mantine/core/styles.layer.css";
+
+// Import the mantine-datatable layer CSS file;
+// this will automatically place it in a `mantine-datatable` layer
+import "mantine-datatable/styles.layer.css";
+
+// Import your own CSS file;
+// make sure to specify the layers order with the `@layer` directive
+// inside that file
+import "./layout.css";
 
 // https://nextjs.org/docs/basic-features/layouts#with-typescript
 export type AppProps = NextAppProps & {

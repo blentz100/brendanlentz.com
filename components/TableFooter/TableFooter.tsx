@@ -23,18 +23,18 @@ const TableFooter = ({
         <tbody>
           <tr key={0}>
             <td>
-              <Text align={"left"}>{topLabel}</Text>
+              <Text ta={"left"}>{topLabel}</Text>
             </td>
             <td>
-              <Text align={"right"}>{Intl.NumberFormat().format(total)}</Text>
+              <Text ta={"right"}>{Intl.NumberFormat().format(total)}</Text>
             </td>
           </tr>
           <tr key={1}>
             <td>
-              <Text align={"left"}>{bottomLabel}</Text>
+              <Text ta={"left"}>{bottomLabel}</Text>
             </td>
             <td>
-              <Text align={"right"}>{Intl.NumberFormat().format(goal)}</Text>
+              <Text ta={"right"}>{Intl.NumberFormat().format(goal)}</Text>
             </td>
           </tr>
         </tbody>
