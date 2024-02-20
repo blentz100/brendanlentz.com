@@ -35,7 +35,7 @@ export function HabitTrackerTable({ staticRecords2024, staticRecords2023 }: Habi
   }, [sortStatus, staticRecords2023]);
 
   return (
-    <Container>
+    <Container mt={50}>
       <Tabs variant="outline" defaultValue="2024">
         <Tabs.List>
           <Tabs.Tab value="2024">2024</Tabs.Tab>
