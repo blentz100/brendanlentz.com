@@ -1,0 +1,79 @@
+---
+title: "Adding Line Charts to the Habit Tracker"
+date: 2024-02-21 1:53:02-0400
+description: "Notes on making my Habit Tracker look better on mobile"
+tags:
+  - Mantine
+  - Responsive
+  - HabitTracker
+  - Line Chart
+---
+
+Last month I showed my Habit Tracker to some work colleagues. I got some good
+feedback that it would be helpful to see the data in a different format.
+
+I researched options for data visualization libraries. The [D3](https://d3js.org/) library
+seemed powerful but possibly overkill for my needs. I took a look at the
+component library I'm currently using and it turns out they recently came out
+with [Mantine Line Charts](https://mantine.dev/charts/line-chart/).
+
+All I needed to do was upgrade to Mantine v7 and I could use those charts.
+[29 commits](https://github.com/blentz100/brendanlentz.com/pull/5)
+later and I had some decent looking line charts.
+
+<Image
+  src="/public/static/images/notes/line-charts/desktop.png"
+  width="687"
+  height="477"
+  alt="desktop line charts"
+  priority
+/>
+
+The mobile version wasn't looking great.
+
+<Image
+  src="/public/static/images/notes/line-charts/unresponsive.PNG"
+  width="187"
+  height="333"
+  alt="unresponsive habit tracker"
+  priority
+/>
+
+Mantine has a nice way to deal with this. The `cols` prop supports [responsive
+values](https://mantine.dev/core/simple-grid/#responsive-props).
+
+```javascript
+<SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
+  <HabitLineChart records={staticRecords2024} habit={"pushups"} habitDisplayName={"Pushups"} goal={10000} />
+  <HabitLineChart records={staticRecords2024} habit={"situps"} habitDisplayName={"Situps"} goal={7000} />
+  <HabitLineChart records={staticRecords2024} habit={"jacks"} habitDisplayName={"Jumping Jacks"} goal={14000} />
+  <HabitLineChart records={staticRecords2024} habit={"stairs"} habitDisplayName={"Stairs"} goal={200} />
+  <HabitLineChart records={staticRecords2024} habit={"pullups"} habitDisplayName={"Pullups"} goal={600} />
+</SimpleGrid>
+```
+
+With that in place, the mobile view now stacks each line chart on top of each
+other.
+
+<Image
+  src="/public/static/images/notes/line-charts/responsive.PNG"
+  width="187"
+  height="333"
+  alt="responsive habit tracker"
+  priority
+/>
+
+I really like the new way of viewing the data. At a glance I can tell where
+things stand with each habit. It's already changed the way I'm approaching
+meeting each goal.
+
+It turns out Mantine Line Charts is built on top of [Recharts](https://recharts.org/en-US/) which apparently
+is built on top of D3. So I guess I went with D3 anyway.
+
+Side question that came up while writing this post - how do you go about
+resizing images when bringing them into markdown? I've been bringing them in
+in their original size and then adjusting the height and width using the
+`height` and `width` props inside the Image component. That requires using some
+kind of [aspect ratio calculator](https://red-route.org/code/image-resizing-calculator)
+to keep the image from getting distorted. It seems like a tedious way to do
+it, what's your strategy?
