@@ -78,8 +78,8 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
   }
 
   return (
-    <Stack>
-      <Center p={-10} mb={-20}>
+    <Stack ml={-10}>
+      <Center mb={-20}>
         <H3>{habitDisplayName}</H3>
       </Center>
       <Center>
