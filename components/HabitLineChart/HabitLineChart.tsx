@@ -78,33 +78,35 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
   }
 
   return (
-    <Stack>
-      <Center p={-10} mb={-20}>
+    <Stack ml={-10}>
+      <Center mb={-20}>
         <H3>{habitDisplayName}</H3>
       </Center>
-
-      <LineChart
-        h={250}
-        data={data}
-        dataKey="date"
-        dotProps={{ r: 0.1 }}
-        withTooltip
-        withLegend
-        xAxisProps={{ interval: 170, tickFormatter: tickFormatter }}
-        strokeWidth={2}
-        activeDotProps={{ r: 3, strokeWidth: 1 }}
-        valueFormatter={(value) => new Intl.NumberFormat("en-US").format(value)}
-        series={[
-          { name: "Goal", color: "lightgrey" },
-          { name: "Actual", color: "blue" },
-        ]}
-        curveType="linear"
-        tooltipProps={{
-          content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
-          position: { x: 60, y: 40 },
-        }}
-        legendProps={{ verticalAlign: "top", height: 30 }}
-      />
+      <Center>
+        <LineChart
+          h={250}
+          w={300}
+          data={data}
+          dataKey="date"
+          dotProps={{ r: 0.1 }}
+          withTooltip
+          withLegend
+          xAxisProps={{ interval: 170, tickFormatter: tickFormatter }}
+          strokeWidth={2}
+          activeDotProps={{ r: 3, strokeWidth: 1 }}
+          valueFormatter={(value) => new Intl.NumberFormat("en-US").format(value)}
+          series={[
+            { name: "Goal", color: "lightgrey" },
+            { name: "Actual", color: "blue" },
+          ]}
+          curveType="linear"
+          tooltipProps={{
+            content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
+            position: { x: 60, y: 40 },
+          }}
+          legendProps={{ verticalAlign: "top", height: 30 }}
+        />
+      </Center>
     </Stack>
   );
 }

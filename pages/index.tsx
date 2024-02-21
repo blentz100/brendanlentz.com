@@ -177,7 +177,7 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
       </Paragraph>
       <br />
 
-      <SimpleGrid cols={3}>
+      <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
         <HabitLineChart records={staticRecords2024} habit={"pushups"} habitDisplayName={"Pushups"} goal={10000} />
         <HabitLineChart records={staticRecords2024} habit={"situps"} habitDisplayName={"Situps"} goal={7000} />
         <HabitLineChart records={staticRecords2024} habit={"jacks"} habitDisplayName={"Jumping Jacks"} goal={14000} />
