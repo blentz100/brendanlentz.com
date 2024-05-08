@@ -1,4 +1,4 @@
-# 🏡&nbsp;&nbsp;[brendanlentz.com](https://brendan.lentz.com/)
+# 🏡&nbsp;&nbsp;[brendanlentz.com](https://brendanlentz.com/)
 
 This is my personal homepage which I use to experiment with different technologies. Most recently I've been using it to work on my Habit Tracker - which I've used to help me do over 10,000 pushups in a year.
 
