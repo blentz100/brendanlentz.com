@@ -1,8 +1,10 @@
 import Link, { LinkProps } from "../components/Link";
 import { styled, keyframes, darkTheme } from "../lib/styles/stitches.config";
 import { HabitTrackerTable } from "../components/HabitTrackerTable";
+import { HabitLineChart } from "../components/HabitLineChart";
+import { SimpleGrid } from "@mantine/core";
 
-export interface RecordType {
+export type RecordType = {
   date: string;
   dateAsNumber: number;
   jacks: number;
@@ -11,7 +13,7 @@ export interface RecordType {
   pushups: number;
   situps: number;
   stairs: number;
-}
+};
 
 const ColorfulLink = ({
   lightColor,
@@ -106,79 +108,30 @@ interface IndexProps {
   staticRecords2023: RecordType[];
 }
 
+// Static Site Generation - NextJS pre-renders this page at
+// build time using the props returned by getStaticProps.
 const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
   return (
     <>
       <H1>
         Hi there, I'm Brendan... <Wave>👋</Wave>
       </H1>
-      <H2>
-        I'm a frontend developer based in the{" "}
-        <ColorfulLink
-          href="https://phxbrief.com/briefs"
-          title='"The PHX Brief"'
-          lightColor="#fb4d42"
-          darkColor="#ff5146"
-        >
-          Phoenix
-        </ColorfulLink>{" "}
-        area.
-      </H2>
 
       <Paragraph>
-        In my current role as a developer at{" "}
+        I am a software developer at{" "}
         <ColorfulLink
           href="https://www.operationalsystems.com/"
           title="Operational Systems Inc Homepage"
           lightColor="#1091b3"
           darkColor="#6fcbe3"
         >
-          Operational Systems Inc,
+          Operational Systems Inc.
         </ColorfulLink>{" "}
-        I focus on{" "}
-        <ColorfulLink
-          href="https://reactjs.org/"
-          title="React Official Website"
-          lightColor="#1091b3"
-          darkColor="#6fcbe3"
-        >
-          React
-        </ColorfulLink>{" "}
-        and{" "}
-        <ColorfulLink
-          href="https://sive.rs/learn-js"
-          title="How to Learn JavaScript by Derek Sivers"
-          lightColor="#f48024"
-          darkColor="#e18431"
-        >
-          JavaScript
-        </ColorfulLink>
-        . I love learning new technologies like Typescript, contributing to open source projects and listening to tech
-        podcasts (shoutout to Syntax and JS Party.)
+        I develop with React, TypeScript, NextJS, PHP and a little bit of Java.
       </Paragraph>
-
       <Paragraph>
-        In my previous role at a coding bootcamp I hosted weekly{" "}
-        <ColorfulLink
-          href="https://gist.github.com/blentz100"
-          title="Github Gists"
-          lightColor="#00b81a"
-          darkColor="#57f06d"
-        >
-          live coding challenges
-        </ColorfulLink>{" "}
-        to help our students prepare for
-        <ColorfulLink
-          href="https://www.youtube.com/watch?v=8gaM0uSANiM&t=2667s"
-          title="Get Better at Interviewing - Tips from a Tech Lead"
-          lightColor="#f48024"
-          darkColor="#e18431"
-        >
-          {" "}
-          technical interviews
-        </ColorfulLink>
-        . I helped to grow our startup from 3 people to over 20, and built the mentor team that supported over a 100 new
-        students every month.{" "}
+        My experience includes leading teams at a Fortune 100 company and helping a tech startup grow from 3 to 20
+        people.
       </Paragraph>
       <Paragraph>
         I have a bachelor's degree in{" "}
@@ -219,18 +172,27 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
         </ColorfulLink>
         .
       </Paragraph>
-      <H2>Habit Tracker</H2>
+      <H1>Habit Tracker</H1>
       <Paragraph>
-        I created a habit tracker to track my fitness goal and some other exercises. Updated in realtime.
+        I use my Habit Tracker app to help me do 10,000 pushups. The data below is from my daily workouts, updated in
+        realtime.
       </Paragraph>
       <br />
+
+      <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
+        <HabitLineChart records={staticRecords2024} habit={"pushups"} habitDisplayName={"Pushups"} goal={10000} />
+        <HabitLineChart records={staticRecords2024} habit={"situps"} habitDisplayName={"Situps"} goal={7000} />
+        <HabitLineChart records={staticRecords2024} habit={"jacks"} habitDisplayName={"Jumping Jacks"} goal={14000} />
+        <HabitLineChart records={staticRecords2024} habit={"stairs"} habitDisplayName={"Stairs"} goal={200} />
+        <HabitLineChart records={staticRecords2024} habit={"pullups"} habitDisplayName={"Pullups"} goal={600} />
+      </SimpleGrid>
+
       <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
     </>
   );
 };
 
-// Static Site Generation - NextJS pre-renders this page at
-// build time using the props returned by getStaticProps.
+// NextJS calls getStaticProps at build time
 export async function getStaticProps() {
   // assign the correct web server prefix according to the environment
   const dev = process.env.NODE_ENV !== "production";
@@ -257,7 +219,7 @@ export async function getStaticProps() {
       staticRecords2024: records2024,
       staticRecords2023: records2023,
     },
-    revalidate: 300,
+    revalidate: 5,
   };
 }
 

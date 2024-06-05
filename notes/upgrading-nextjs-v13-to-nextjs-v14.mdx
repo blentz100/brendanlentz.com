@@ -1,0 +1,126 @@
+---
+title: "Upgrading from NextJS v13 to v14"
+date: 2024-01-28 10:31:02-0400
+description: "Notes on upgrading to NextJS 14"
+tags:
+  - NextJS
+  - Vercel
+  - Troubleshooting
+---
+
+Following the steps here at the [NextJS](https://nextjs.org/docs/app/building-your-application/upgrading/version-14) docs.
+
+Running
+
+```
+yarn add next@latest react@latest react-dom@latest eslint-config-next@latest
+```
+
+works fine with no issues.
+
+There is a codemod for the version 14 upgrade to safely rename imports for
+`ImageResponse`:
+
+```
+npx @next/codemod@latest next-og-import .
+```
+
+However when I run that I get a bunch of errors:
+
+```
+➜  homepage git:(feature/HT-1) ✗ npx @next/codemod@latest next-og-import . --dry
+Executing command: jscodeshift --dry --verbose=2 --ignore-pattern=**/node_modules/** --ignore-pattern=**/.next/** --extensions=tsx,ts,jsx,js --transform /Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@next/codemod/transforms/next-og-import.js .
+Processing 299 files...
+Spawning 7 workers...
+Running in dry mode, no files will be written!
+Sending 43 files to free worker...
+Sending 43 files to free worker...
+Sending 43 files to free worker...
+Sending 43 files to free worker...
+Sending 43 files to free worker...
+Sending 43 files to free worker...
+Sending 41 files to free worker...
+ NOC .vercel/output/functions/notes/[slug].func/components/OctocatLink/index.ts
+ NOC .vercel/output/functions/notes/[slug].func/components/TweetEmbed/index.ts
+ NOC components/PageTitle/index.ts
+ NOC .vercel/output/static/_next/static/chunks/pages/sitemap.xml-92e0be9dc9cdbc10.js
+ NOC .vercel/output/functions/_next/data/T55Inr5Drl5SMCSRV5JFZ/notes.json.func/components/YouTubeEmbed/index.ts
+ NOC .vercel/output/functions/_next/data/T55Inr5Drl5SMCSRV5JFZ/projects.json.func/components/CodePenEmbed/index.ts
+ NOC .vercel/output/functions/_next/data/T55Inr5Drl5SMCSRV5JFZ/projects.json.func/components/TweetEmbed/index.ts
+ NOC .vercel/output/functions/_next/data/T55Inr5Drl5SMCSRV5JFZ/projects.json.func/components/Video/index.ts
+ NOC .vercel/output/functions/_next/data/T55Inr5Drl5SMCSRV5JFZ/projects.json.func/components/YouTubeEmbed/index.ts
+ NOC .vercel/output/functions/_next/data/T55Inr5Drl5SMCSRV5JFZ/projects.json.func/components/OctocatLink/index.ts
+ NOC next-env.d.ts
+ NOC .vercel/output/functions/notes/[slug].func/pages/_document.tsx
+ NOC lib/styles/stitches.config.ts
+ NOC .vercel/output/static/_next/static/chunks/pages/stats-58f149fc1eec13f4.js
+ NOC .vercel/output/functions/notes/[slug].func/components/Video/index.ts
+ NOC .vercel/output/functions/notes/extreme-ownership.func/components/TweetEmbed/index.ts
+ NOC .vercel/output/functions/notes/extreme-ownership.func/components/CodePenEmbed/index.ts
+ NOC .vercel/output/functions/notes/[slug].func/components/YouTubeEmbed/index.ts
+ NOC .vercel/output/functions/notes/extreme-ownership.func/components/YouTubeEmbed/index.ts
+ NOC .vercel/output/functions/notes/extreme-ownership.func/components/OctocatLink/index.ts
+ NOC .vercel/output/functions/notes/git-and-github-getting-started.func/components/CodePenEmbed/index.ts
+ NOC .vercel/output/functions/notes/git-and-github-getting-started.func/components/OctocatLink/index.ts
+ NOC .vercel/output/functions/notes/git-and-github-getting-started.func/components/TweetEmbed/index.ts
+ NOC .vercel/output/functions/notes/git-and-github-getting-started.func/components/Video/index.ts
+ NOC .vercel/output/functions/notes/typescript-error-with-dynamic-properties.func/components/CodePenEmbed/index.ts
+ NOC .vercel/output/functions/notes/typescript-error-with-dynamic-properties.func/components/TweetEmbed/index.ts
+ NOC .vercel/output/functions/notes/typescript-error-with-dynamic-properties.func/components/YouTubeEmbed/index.ts
+ NOC .vercel/output/functions/notes/naming-strategy-for-test-data.func/components/OctocatLink/index.ts
+ NOC .vercel/output/functions/notes/naming-strategy-for-test-data.func/components/CodePenEmbed/index.ts
+ NOC .vercel/output/functions/notes/typescript-error-with-dynamic-properties.func/components/Video/index.ts
+ NOC .vercel/output/functions/notes/typescript-error-with-dynamic-properties.func/components/OctocatLink/index.ts
+ NOC .vercel/output/functions/notes/naming-strategy-for-test-data.func/components/TweetEmbed/index.ts
+ NOC .vercel/output/functions/notes/naming-strategy-for-test-data.func/components/YouTubeEmbed/index.ts
+ NOC .vercel/output/functions/notes/naming-strategy-for-test-data.func/components/Video/index.ts
+ NOC .vercel/output/functions/notes/git-and-github-getting-started.func/components/YouTubeEmbed/index.ts
+ NOC .vercel/output/functions/notes/extreme-ownership.func/components/Video/index.ts
+ ERR .vercel/output/functions/_next/data/T55Inr5Drl5SMCSRV5JFZ/notes/[slug].json.func/pages/_app.tsx Transformation error (Unexpected token, expected "from" (11:12))
+SyntaxError: Unexpected token, expected "from" (11:12)
+    at toParseError (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parse-error.ts:81:19)
+    at JSXParserMixin.raise (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/tokenizer/index.ts:1487:19)
+    at JSXParserMixin.unexpected (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/tokenizer/index.ts:1528:16)
+    at JSXParserMixin.expectContextual (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parser/util.ts:107:12)
+    at JSXParserMixin.parseImportSpecifiersAndAfter (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parser/statement.ts:3110:10)
+    at JSXParserMixin.parseImport (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parser/statement.ts:3078:17)
+    at JSXParserMixin.parseStatementContent (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parser/statement.ts:587:25)
+    at JSXParserMixin.parseStatementLike (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parser/statement.ts:416:17)
+    at JSXParserMixin.parseModuleItem (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parser/statement.ts:353:17)
+    at JSXParserMixin.parseBlockOrModuleBlockBody (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parser/statement.ts:1393:16)
+    at JSXParserMixin.parseBlockBody (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parser/statement.ts:1367:10)
+    at JSXParserMixin.parseBlockBody (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/plugins/estree.ts:158:13)
+    at JSXParserMixin.parseProgram (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parser/statement.ts:212:10)
+    at JSXParserMixin.parseTopLevel (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parser/statement.ts:194:25)
+    at JSXParserMixin.parse (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/parser/index.ts:45:10)
+    at JSXParserMixin.parse (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/plugins/estree.ts:25:43)
+    at Object.parse (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@babel/parser/src/index.ts:66:38)
+    at Object.parse (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/jscodeshift/parser/babel5Compat.js:47:22)
+    at Object.parse (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/recast/lib/parser.js:23:30)
+    at fromSource (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/jscodeshift/src/core.js:82:25)
+    at core (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/jscodeshift/src/core.js:44:5)
+    at j (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/jscodeshift/src/core.js:142:12)
+    at transformer (/Users/blentz/.npm/_npx/04c93779852ad6b7/node_modules/@next/codemod/transforms/next-og-import.js:7:19)
+ ERR .vercel/output/functions/_next/data/T55Inr5Drl5SMCSRV5JFZ/notes/extreme-ownership.json.func/pages/_app.tsx Transformation error (Unexpected token, expected "from" (11:12))
+SyntaxError: Unexpected token, expected "from" (11:12)
+
+```
+
+Here's what that `_app.tsx` file looks like at the top:
+
+```javascript
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { DefaultSeo, SocialProfileJsonLd } from "next-seo";
+import * as Fathom from "fathom-client";
+import { ThemeProvider } from "../contexts/ThemeContext";
+import Layout from "../components/Layout";
+import * as config from "../lib/config";
+import { defaultSeo, socialProfileJsonLd } from "../lib/config/seo";
+import { themeClassNames } from "../lib/config/themes";
+import { globalStyles } from "../lib/styles/stitches.config";
+import type { ReactElement, ReactNode } from "react"; // line 11 where the error is pointing
+import type { NextPage } from "next";
+import type { AppProps as NextAppProps } from "next/app";
+import { MantineProvider } from "@mantine/core";
+```

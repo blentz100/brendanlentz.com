@@ -1,6 +1,7 @@
 import { google } from "googleapis";
 import { NextApiRequest, NextApiResponse } from "next";
 import { RecordType } from "../index";
+import { DateTime } from "luxon";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // new Google Auth Method
@@ -37,8 +38,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       pullups: parseInt(item[6], 10),
     };
   });
-  // filter out future dates from the spreadsheet and reverse it
-  const dataArrayFiltered = dataArray?.filter((item) => new Date(item.date).getTime() < new Date().getTime()).reverse();
 
+  // filter out future dates from the spreadsheet and reverse it
+  const now = DateTime.now();
+  const dataArrayFiltered = dataArray
+    ?.filter((item) => {
+      return now > DateTime.fromFormat(item.date, "D");
+    })
+    .reverse();
+
+  // return the results to the caller on the frontend
   return res.status(200).json({ dataArrayFiltered, success: true });
 }
