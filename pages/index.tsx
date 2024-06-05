@@ -108,6 +108,8 @@ interface IndexProps {
   staticRecords2023: RecordType[];
 }
 
+// Static Site Generation - NextJS pre-renders this page at
+// build time using the props returned by getStaticProps.
 const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
   return (
     <>
@@ -190,8 +192,7 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
   );
 };
 
-// Static Site Generation - NextJS pre-renders this page at
-// build time using the props returned by getStaticProps.
+// NextJS calls getStaticProps at build time
 export async function getStaticProps() {
   // assign the correct web server prefix according to the environment
   const dev = process.env.NODE_ENV !== "production";
