@@ -124,3 +124,14 @@ import type { NextPage } from "next";
 import type { AppProps as NextAppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
 ```
+
+Upon further investigation, I realized this codemod isn't even needed since
+I'm not using `ImageResponse`. I went ahead and completed the upgrade, which
+involved getting a bunch of packages updated. The site is now running on
+NextJS 14, which you can confirm by running the following command in the
+developer tools console:
+
+```
+console.log({ NextJSVersion: window.next?.version})
+{NextJSVersion: '14.2.3'}
+```
