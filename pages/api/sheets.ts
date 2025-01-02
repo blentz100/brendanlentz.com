@@ -3,6 +3,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { RecordType } from "../index";
 import { DateTime } from "luxon";
 
+function isLeapYear(year: number) {
+  return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // new Google Auth Method
   const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
@@ -18,7 +22,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
 
   const sheets = google.sheets({ version: "v4", auth });
-  const range = `Habits${year}!A8:G372`; // the habit data
+  let range;
+  if (isLeapYear(parseInt(<string>year, 10))) {
+    range = `Habits${year}!A8:G373`; // the habit data
+  } else {
+    range = `Habits${year}!A8:G372`; // the habit data
+  }
 
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
