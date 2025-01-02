@@ -104,13 +104,14 @@ const Wave = styled("span", {
 });
 
 interface IndexProps {
+  staticRecords2025: RecordType[];
   staticRecords2024: RecordType[];
   staticRecords2023: RecordType[];
 }
 
 // Static Site Generation - NextJS pre-renders this page at
 // build time using the props returned by getStaticProps.
-const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
+const Index = ({ staticRecords2025, staticRecords2024, staticRecords2023 }: IndexProps) => {
   return (
     <>
       <H1>
@@ -180,14 +181,18 @@ const Index = ({ staticRecords2024, staticRecords2023 }: IndexProps) => {
       <br />
 
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
-        <HabitLineChart records={staticRecords2024} habit={"pushups"} habitDisplayName={"Pushups"} goal={10000} />
-        <HabitLineChart records={staticRecords2024} habit={"situps"} habitDisplayName={"Situps"} goal={7000} />
-        <HabitLineChart records={staticRecords2024} habit={"jacks"} habitDisplayName={"Jumping Jacks"} goal={14000} />
-        <HabitLineChart records={staticRecords2024} habit={"stairs"} habitDisplayName={"Stairs"} goal={200} />
-        <HabitLineChart records={staticRecords2024} habit={"pullups"} habitDisplayName={"Pullups"} goal={600} />
+        <HabitLineChart records={staticRecords2025} habit={"pushups"} habitDisplayName={"Pushups"} goal={10000} />
+        <HabitLineChart records={staticRecords2025} habit={"situps"} habitDisplayName={"Situps"} goal={7000} />
+        <HabitLineChart records={staticRecords2025} habit={"jacks"} habitDisplayName={"Jumping Jacks"} goal={14000} />
+        <HabitLineChart records={staticRecords2025} habit={"stairs"} habitDisplayName={"Stairs"} goal={200} />
+        <HabitLineChart records={staticRecords2025} habit={"pullups"} habitDisplayName={"Pullups"} goal={600} />
       </SimpleGrid>
 
-      <HabitTrackerTable staticRecords2024={staticRecords2024} staticRecords2023={staticRecords2023} />
+      <HabitTrackerTable
+        staticRecords2025={staticRecords2025}
+        staticRecords2024={staticRecords2024}
+        staticRecords2023={staticRecords2023}
+      />
     </>
   );
 };
@@ -197,6 +202,14 @@ export async function getStaticProps() {
   // assign the correct web server prefix according to the environment
   const dev = process.env.NODE_ENV !== "production";
   const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
+
+  // fetch the 2025 data
+  const response2025 = await fetch(`${server}/api/sheets?year=2025`);
+  const responseData2025 = await response2025.json();
+  if (!responseData2025.success) {
+    throw new Error(responseData2025.message);
+  }
+  const records2025 = responseData2025.dataArrayFiltered;
 
   // fetch the 2024 data
   const response2024 = await fetch(`${server}/api/sheets?year=2024`);
@@ -216,6 +229,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      staticRecords2025: records2025,
       staticRecords2024: records2024,
       staticRecords2023: records2023,
     },
