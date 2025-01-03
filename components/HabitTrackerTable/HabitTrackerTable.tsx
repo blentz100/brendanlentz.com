@@ -7,6 +7,7 @@ import { returnTotal, returnTotalPercentage } from "../../lib/helpers/data-table
 import { RecordType } from "../../pages";
 import { Tabs } from "@mantine/core";
 import { DateTime } from "luxon";
+import { goals2025 } from "../../lib/config/goals";
 
 interface HabitTrackerProps {
   staticRecords2025: RecordType[];
@@ -90,8 +91,8 @@ export function HabitTrackerTable({ staticRecords2025, staticRecords2024, static
                   <TableFooter
                     total={returnTotal(records2025, "pushups")}
                     habit="pushups"
-                    goal={10000}
-                    totalPercentage={returnTotalPercentage(records2025, "pushups", 10000)}
+                    goal={goals2025.pushups}
+                    totalPercentage={returnTotalPercentage(records2025, "pushups", goals2025.pushups)}
                   />
                 ),
               },
@@ -103,8 +104,8 @@ export function HabitTrackerTable({ staticRecords2025, staticRecords2024, static
                   <TableFooter
                     total={returnTotal(records2025, "situps")}
                     habit="situps"
-                    goal={7000}
-                    totalPercentage={returnTotalPercentage(records2025, "situps", 7000)}
+                    goal={goals2025.situps}
+                    totalPercentage={returnTotalPercentage(records2025, "situps", goals2025.situps)}
                   />
                 ),
               },
@@ -117,8 +118,8 @@ export function HabitTrackerTable({ staticRecords2025, staticRecords2024, static
                   <TableFooter
                     total={returnTotal(records2025, "jacks")}
                     habit="jacks"
-                    goal={14000}
-                    totalPercentage={returnTotalPercentage(records2025, "jacks", 14000)}
+                    goal={goals2025.jacks}
+                    totalPercentage={returnTotalPercentage(records2025, "jacks", goals2025.jacks)}
                   />
                 ),
               },
@@ -130,8 +131,8 @@ export function HabitTrackerTable({ staticRecords2025, staticRecords2024, static
                   <TableFooter
                     total={returnTotal(records2025, "stairs")}
                     habit="stairs"
-                    goal={200}
-                    totalPercentage={returnTotalPercentage(records2025, "stairs", 200)}
+                    goal={goals2025.stairs}
+                    totalPercentage={returnTotalPercentage(records2025, "stairs", goals2025.stairs)}
                   />
                 ),
               },
@@ -143,8 +144,8 @@ export function HabitTrackerTable({ staticRecords2025, staticRecords2024, static
                   <TableFooter
                     total={returnTotal(records2025, "pullups")}
                     habit="pullups"
-                    goal={600}
-                    totalPercentage={returnTotalPercentage(records2025, "pullups", 600)}
+                    goal={goals2025.pullups}
+                    totalPercentage={returnTotalPercentage(records2025, "pullups", goals2025.pullups)}
                   />
                 ),
               },

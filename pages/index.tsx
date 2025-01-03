@@ -3,6 +3,7 @@ import { styled, keyframes, darkTheme } from "../lib/styles/stitches.config";
 import { HabitTrackerTable } from "../components/HabitTrackerTable";
 import { HabitLineChart } from "../components/HabitLineChart";
 import { SimpleGrid } from "@mantine/core";
+import { goals2025 } from "../lib/config/goals";
 
 export type RecordType = {
   date: string;
@@ -181,11 +182,36 @@ const Index = ({ staticRecords2025, staticRecords2024, staticRecords2023 }: Inde
       <br />
 
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
-        <HabitLineChart records={staticRecords2025} habit={"pushups"} habitDisplayName={"Pushups"} goal={10000} />
-        <HabitLineChart records={staticRecords2025} habit={"situps"} habitDisplayName={"Situps"} goal={7000} />
-        <HabitLineChart records={staticRecords2025} habit={"jacks"} habitDisplayName={"Jumping Jacks"} goal={14000} />
-        <HabitLineChart records={staticRecords2025} habit={"stairs"} habitDisplayName={"Stairs"} goal={200} />
-        <HabitLineChart records={staticRecords2025} habit={"pullups"} habitDisplayName={"Pullups"} goal={600} />
+        <HabitLineChart
+          records={staticRecords2025}
+          habit={"pushups"}
+          habitDisplayName={"Pushups"}
+          goal={goals2025.pushups}
+        />
+        <HabitLineChart
+          records={staticRecords2025}
+          habit={"situps"}
+          habitDisplayName={"Situps"}
+          goal={goals2025.situps}
+        />
+        <HabitLineChart
+          records={staticRecords2025}
+          habit={"jacks"}
+          habitDisplayName={"Jumping Jacks"}
+          goal={goals2025.jacks}
+        />
+        <HabitLineChart
+          records={staticRecords2025}
+          habit={"stairs"}
+          habitDisplayName={"Stairs"}
+          goal={goals2025.stairs}
+        />
+        <HabitLineChart
+          records={staticRecords2025}
+          habit={"pullups"}
+          habitDisplayName={"Pullups"}
+          goal={goals2025.pullups}
+        />
       </SimpleGrid>
 
       <HabitTrackerTable
