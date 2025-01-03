@@ -183,10 +183,12 @@ export function HabitTrackerTable({ staticRecords2025, staticRecords2024, static
                 ),
                 footer: (
                   <TableFooter
-                    total={DateTime.now().ordinal}
+                    total={DateTime.local(2024).daysInYear}
                     habit="days"
                     goal={DateTime.local(2024).daysInYear}
-                    totalPercentage={Math.floor((DateTime.now().ordinal / 365) * 100)}
+                    totalPercentage={Math.floor(
+                      (DateTime.local(2024).daysInYear / DateTime.local(2024).daysInYear) * 100
+                    )}
                     topLabel={"Day #"}
                     bottomLabel={"of"}
                   />
@@ -286,10 +288,12 @@ export function HabitTrackerTable({ staticRecords2025, staticRecords2024, static
                 ),
                 footer: (
                   <TableFooter
-                    total={365}
+                    total={DateTime.local(2023).daysInYear}
                     habit="days"
                     goal={DateTime.local(2023).daysInYear}
-                    totalPercentage={Math.floor((365 / 365) * 100)}
+                    totalPercentage={Math.floor(
+                      (DateTime.local(2023).daysInYear / DateTime.local(2023).daysInYear) * 100
+                    )}
                     topLabel={"Day #"}
                     bottomLabel={"of"}
                   />
