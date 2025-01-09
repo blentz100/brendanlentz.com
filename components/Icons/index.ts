@@ -12,6 +12,7 @@ export { default as NotesIcon } from "feather-icons/dist/icons/edit-3.svg";
 export { default as ProjectsIcon } from "feather-icons/dist/icons/code.svg";
 export { default as TagIcon } from "feather-icons/dist/icons/tag.svg";
 export { default as ViewsIcon } from "feather-icons/dist/icons/eye.svg";
+export { default as ToolIcon } from "feather-icons/dist/icons/tool.svg";
 
 // octicons: https://primer.style/octicons/
 export { default as CheckOcticon } from "@primer/octicons/build/svg/check-16.svg";
