@@ -5,13 +5,12 @@ import { Button, CopyButton, Grid, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 const Tools = () => {
-  const [reactUnixTimeStampInMilliseconds, setReactUnixTimeStampInMilliseconds] = useState(Date.now());
-  const [reactUnixTimeStampInSeconds, setReactUnixTimeStampInSeconds] = useState(Date.now());
-
+  const [unixTimeStampInMilliseconds, setUnixTimeStampInMilliseconds] = useState(Date.now());
+  const [unixTimeStampInSeconds, setUnixTimeStampInSeconds] = useState(Date.now());
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setReactUnixTimeStampInMilliseconds(Math.floor(Date.now()));
-      setReactUnixTimeStampInSeconds(Math.floor(Date.now() / 1000));
+      setUnixTimeStampInMilliseconds(Math.floor(Date.now()));
+      setUnixTimeStampInSeconds(Math.floor(Date.now() / 1000));
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -31,15 +30,13 @@ const Tools = () => {
       <Content>
         <Grid>
           <Grid.Col span={7} style={{ alignContent: "center" }}>
-            <Text suppressHydrationWarning>
-              Current React Unix Time in Milliseconds: {reactUnixTimeStampInMilliseconds}
-            </Text>
+            <Text suppressHydrationWarning>Current Unix Time in Milliseconds: {unixTimeStampInMilliseconds}</Text>
           </Grid.Col>
           <Grid.Col span={4}>
-            <CopyButton value={reactUnixTimeStampInMilliseconds.toString()}>
+            <CopyButton value={unixTimeStampInMilliseconds.toString()}>
               {({ copied, copy }) => (
                 <Button color={copied ? "teal" : "blue"} onClick={copy}>
-                  {copied ? "Copied timestamp" : "Copy" + " timestamp"}
+                  {copied ? `Copied timestamp` : "Copy" + " timestamp"}
                 </Button>
               )}
             </CopyButton>
@@ -48,10 +45,10 @@ const Tools = () => {
 
         <Grid>
           <Grid.Col span={7} style={{ alignContent: "center" }}>
-            <Text suppressHydrationWarning>Current React Unix Time in Seconds: {reactUnixTimeStampInSeconds}</Text>
+            <Text suppressHydrationWarning>Current Unix Time in Seconds: {unixTimeStampInSeconds}</Text>
           </Grid.Col>
           <Grid.Col span={4}>
-            <CopyButton value={reactUnixTimeStampInSeconds.toString()}>
+            <CopyButton value={unixTimeStampInSeconds.toString()}>
               {({ copied, copy }) => (
                 <Button color={copied ? "teal" : "blue"} onClick={copy}>
                   {copied ? "Copied timestamp" : "Copy" + " timestamp"}
