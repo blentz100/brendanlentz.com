@@ -3,8 +3,9 @@ import NextImage from "next/legacy/image";
 import { styled } from "../../lib/styles/stitches.config";
 import { authorName } from "../../lib/config";
 import type { ComponentProps } from "react";
-
+import { Indicator, Tooltip } from "@mantine/core";
 import selfieJpg from "../../public/static/images/me.jpg";
+import { useNetwork } from "@mantine/hooks";
 
 const Image = styled(NextImage, {
   display: "block",
@@ -51,9 +52,25 @@ const Name = styled("span", {
 export type SelfieProps = Omit<ComponentProps<typeof Link>, "href">;
 
 const Selfie = ({ ...rest }: SelfieProps) => {
+  const networkStatus = useNetwork();
   return (
-    <Link href="/" rel="author" title={authorName} {...rest}>
+    <Link href="/" rel="author" {...rest}>
       <Image src={selfieJpg} alt={`Photo of ${authorName}`} width={50} height={50} quality={60} priority />
+      <Tooltip
+        label={networkStatus.online ? "online" : "offline"}
+        zIndex={100000}
+        position={"bottom"}
+        offset={{ mainAxis: 25, crossAxis: 35 }}
+      >
+        <Indicator
+          inline
+          size={12}
+          offset={17}
+          position="top-center"
+          color={networkStatus.online ? "green" : "lightgrey"}
+          withBorder
+        ></Indicator>
+      </Tooltip>
       <Name>{authorName}</Name>
     </Link>
   );
