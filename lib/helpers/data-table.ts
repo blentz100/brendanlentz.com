@@ -11,7 +11,7 @@ type CountableHabits = Omit<RecordType, "date" | "dateAsNumber">;
 // TypeScript doesn't allow that
 export function returnTotal(records: RecordType[], habit: keyof CountableHabits) {
   return records?.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue[habit];
+    return accumulator + (currentValue[habit] || 0);
   }, 0);
 }
 
@@ -19,7 +19,7 @@ export function returnTotalPercentage(records: RecordType[], habit: keyof Counta
   return Math.min(
     Math.floor(
       (records?.reduce((accumulator, currentValue) => {
-        return accumulator + currentValue[habit];
+        return accumulator + (currentValue[habit] || 0);
       }, 0) /
         goal) *
         100
