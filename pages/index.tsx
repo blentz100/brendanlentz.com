@@ -238,6 +238,7 @@ export async function getStaticProps() {
 
   if (!response2025x.ok) {
     const text = await response2025x.text(); // get HTML content for debugging
+    console.log(`Failed to fetch habits: ${response2025x.status} - ${text}`)
     throw new Error(`Failed to fetch habits: ${response2025x.status} - ${text}`);
   }
 
