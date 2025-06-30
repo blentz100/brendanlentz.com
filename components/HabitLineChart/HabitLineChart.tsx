@@ -50,30 +50,51 @@ const tickFormatter = (value: number) =>
 
 export function HabitLineChart({ records, habit, habitDisplayName, goal }: HabitLineChart) {
   let runningHabitTotal = 0;
-  let runningGoalTotal = 0;
 
-  // reverse the records, so they count up
-  const reversedRecords = records.slice().reverse();
+  // Determine the year from the first record
+  const year = records.length > 0 ? DateTime.fromISO(records[0].date).year : DateTime.now().year;
+  const daysInYear = DateTime.local(year).daysInYear;
+  const dailyGoalIncrement = goal / daysInYear;
 
-  // extract and transform the habit data we want and put it into data
-  const data: HabitEntry[] = reversedRecords.map((item) => {
-    runningHabitTotal += item[habit];
-    runningGoalTotal = runningGoalTotal + goal / 366;
-    return {
-      date: item.date,
-      Actual: runningHabitTotal,
-      Goal: Math.round(runningGoalTotal),
-    };
+  // Create a complete goal line for the entire year
+  const completeGoalLine: Record<number, number> = {};
+  for (let day = 1; day <= daysInYear; day++) {
+    completeGoalLine[day] = Math.round(dailyGoalIncrement * day);
+  }
+
+  // Create a map of actual data by day of year
+  const actualDataByDay: Record<number, number> = {};
+  records.forEach((item) => {
+    const dayOfYear = DateTime.fromISO(item.date).ordinal;
+    if (!actualDataByDay[dayOfYear]) {
+      actualDataByDay[dayOfYear] = 0;
+    }
+    actualDataByDay[dayOfYear] += item[habit];
   });
 
-  // create and push all future entries for the rest of the year onto data
-  for (let i = 1; i <= DateTime.now().daysInYear - DateTime.now().ordinal + 1; i++) {
-    runningGoalTotal = runningGoalTotal + goal / 366;
-    DateTime.now().plus({ days: i }).toFormat("M/d");
+  // Build complete dataset with all days of the year
+  const data: HabitEntry[] = [];
+  let runningTotal = 0;
+  const currentDayOfYear = DateTime.now().ordinal;
+  const currentYear = DateTime.now().year;
+
+  for (let day = 1; day <= daysInYear; day++) {
+    const date = DateTime.local(year).startOf('year').plus({ days: day - 1 }).toFormat("yyyy-MM-dd");
+    const goalForThisDay = completeGoalLine[day];
+
+    // Add actual data if we have it for this day
+    if (actualDataByDay[day]) {
+      runningTotal += actualDataByDay[day];
+    }
+
+    // Only show actual data up to the current date
+    const shouldShowActual = year === currentYear ? day <= currentDayOfYear : true;
+    const actualValue = shouldShowActual && runningTotal > 0 ? runningTotal : null;
+
     data.push({
-      date: DateTime.now().plus({ days: i }).toFormat("M/d/yyyy"),
-      Actual: null,
-      Goal: Math.round(runningGoalTotal),
+      date: date,
+      Actual: actualValue,
+      Goal: goalForThisDay,
     });
   }
 
