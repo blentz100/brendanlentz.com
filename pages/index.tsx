@@ -227,17 +227,19 @@ const Index = ({ initialRecords2025, initialRecords2024, initialRecords2023 }: I
 export async function getStaticProps() {
   // assign the correct web server prefix according to the environment
   const dev = process.env.NODE_ENV !== "production";
-  const vercelURL = process.env.VERCEL_URL
-  const server = dev ? "http://localhost:3000" : `https://${vercelURL}`;
 
-  console.log('Env, inside getStaticProps:', {
-    url: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.slice(0, 10),
-  });
+  const server = dev
+      ? "http://localhost:3000"
+      : `https://${process.env.VERCEL_URL}`;
 
-  console.log('dev is: ', dev)
-  console.log('vercelURL is: ', vercelURL)
-  console.log('server is: ', server)
+  console.log("Using server URL:", server);
+
+  const response2025x = await fetch(`${server}/api/supabase-habits?year=2025`);
+
+  if (!response2025x.ok) {
+    const text = await response2025x.text(); // get HTML content for debugging
+    throw new Error(`Failed to fetch habits: ${response2025x.status} - ${text}`);
+  }
 
   // fetch the 2025 data from Supabase
   const response2025 = await fetch(`${server}/api/supabase-habits?year=2025`);
