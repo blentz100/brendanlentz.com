@@ -229,6 +229,11 @@ export async function getStaticProps() {
   const dev = process.env.NODE_ENV !== "production";
   const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
 
+  console.log('Env, inside getStaticProps:', {
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.slice(0, 10),
+  });
+
   // fetch the 2025 data from Supabase
   const response2025 = await fetch(`${server}/api/supabase-habits?year=2025`);
   const responseData2025 = await response2025.json();
