@@ -20,20 +20,20 @@ const HABIT_NAME_TO_KEY: Record<string, string> = {
     "Stair Climbing": "stairs",
 };
 
-export async function fetchHabitsByYear(year: string){
+export async function fetchHabitsByYear(year: string | string[]) {
     // 1. Get all habits for this user that match the names
-    const { data: habits, error: habitsError } = await supabase
+    const {data: habits, error: habitsError} = await supabase
         .from("habits")
         .select("id, name")
         .eq("user_id", USER_ID)
         .in("name", HABIT_NAMES);
 
     if (habitsError) {
-        console.error({ error: habitsError.message });
+        console.error({error: habitsError.message});
         return;
     }
     if (!habits) {
-        console.error({ error: "No habits found" });
+        console.error({error: "No habits found"});
         return;
     }
 
@@ -47,7 +47,7 @@ export async function fetchHabitsByYear(year: string){
     // 2. Get all habit_entries for these habits in the given year, joining habits to get user_id
     const startDate = DateTime.local(Number(year), 1, 1).toISODate();
     const endDate = DateTime.local(Number(year), 12, 31).toISODate();
-    const { data: entries, error: entriesError } = await supabase
+    const {data: entries, error: entriesError} = await supabase
         .from("habit_entries")
         .select("habit_id, value, date, habits!inner(id, user_id)")
         .in("habit_id", habitIds)
@@ -57,11 +57,11 @@ export async function fetchHabitsByYear(year: string){
 
 
     if (entriesError) {
-        console.error({ error: entriesError.message });
+        console.error({error: entriesError.message});
         return
     }
     if (!entries) {
-        console.error({ error: "No entries found" });
+        console.error({error: "No entries found"});
         return
     }
 
@@ -92,8 +92,5 @@ export async function fetchHabitsByYear(year: string){
     }
 
     // 4. Convert map to sorted array (descending by date)
-    const dataArray = Object.values(dateMap).sort((a, b) => (a.date < b.date ? 1 : -1));
-
-
-    return dataArray;
+    return Object.values(dateMap).sort((a, b) => (a.date < b.date ? 1 : -1));
 }
