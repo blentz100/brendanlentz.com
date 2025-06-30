@@ -19,7 +19,7 @@ export default [{
 }, ...compat.extends(
     "@jakejarvis/eslint-config",
     "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended",
+    //"plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
 ), {
     plugins: {
@@ -36,6 +36,7 @@ export default [{
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-empty-function": "error",
 
         "prettier/prettier": ["error", {
             singleQuote: false,
