@@ -56,18 +56,6 @@ const H1 = styled("h1", {
   },
 });
 
-const H2 = styled("h2", {
-  margin: "0.5em 0 0.5em -1px", // misaligned left margin, super nitpicky
-  fontSize: "1.35em",
-  fontWeight: 400,
-  lineHeight: 1.4,
-  color: "$text",
-
-  "@medium": {
-    fontSize: "1.25em",
-  },
-});
-
 const Paragraph = styled("p", {
   margin: "0.85em 0",
   lineHeight: 1.7,
@@ -230,47 +218,6 @@ export async function getStaticProps() {
   const records2025 = await fetchHabitsByYear("2025");
   const records2024 = await fetchHabitsByYear("2024");
   const records2023 = await fetchHabitsByYear("2023");
-
-  // assign the correct web server prefix according to the environment
-  // const dev = process.env.NODE_ENV !== "production";
-  //
-  // const server = dev
-  //     ? "http://localhost:3000"
-  //     : `https://${process.env.VERCEL_URL}`;
-  //
-  // console.log("Using server URL:", server);
-  //
-  // const response2025x = await fetch(`${server}/api/supabase-habits?year=2025`);
-  //
-  // if (!response2025x.ok) {
-  //   const text = await response2025x.text(); // get HTML content for debugging
-  //   console.log(`Failed to fetch habits: ${response2025x.status} - ${text}`)
-  //   throw new Error(`Failed to fetch habits: ${response2025x.status} - ${text}`);
-  // }
-  //
-  // // fetch the 2025 data from Supabase
-  // const response2025 = await fetch(`${server}/api/supabase-habits?year=2025`);
-  // const responseData2025 = await response2025.json();
-  // if (!responseData2025.success) {
-  //   throw new Error(responseData2025.message);
-  // }
-  // const records2025 = responseData2025.dataArray;
-  //
-  // // fetch the 2024 data from Supabase
-  // const response2024 = await fetch(`${server}/api/supabase-habits?year=2024`);
-  // const responseData2024 = await response2024.json();
-  // if (!responseData2024.success) {
-  //   throw new Error(responseData2024.message);
-  // }
-  // const records2024 = responseData2024.dataArray;
-  //
-  // // fetch the 2023 data from Supabase
-  // const response2023 = await fetch(`${server}/api/supabase-habits?year=2023`);
-  // const responseData2023 = await response2023.json();
-  // if (!responseData2023.success) {
-  //   throw new Error(responseData2023.message);
-  // }
-  // const records2023 = responseData2023.dataArray;
 
   return {
     props: {
