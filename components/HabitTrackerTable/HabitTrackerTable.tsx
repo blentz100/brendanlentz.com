@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { DataTable, DataTableSortStatus } from "mantine-datatable";
+import { DataTable } from "mantine-datatable";
 import { sortBy } from "lodash";
 import { Badge, Container } from "@mantine/core";
 import TableFooter from "../TableFooter/TableFooter";
@@ -8,40 +8,169 @@ import { RecordType } from "../../pages";
 import { Tabs } from "@mantine/core";
 import { DateTime } from "luxon";
 import { goals2025 } from "../../lib/config/goals";
+import type { DataTableColumn, DataTableSortStatus } from "mantine-datatable";
 
 interface HabitTrackerProps {
-  staticRecords2025: RecordType[];
-  staticRecords2024: RecordType[];
-  staticRecords2023: RecordType[];
+  initialRecords2025: RecordType[];
+  initialRecords2024: RecordType[];
+  initialRecords2023: RecordType[];
 }
 
-export function HabitTrackerTable({ staticRecords2025, staticRecords2024, staticRecords2023 }: HabitTrackerProps) {
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
+export function HabitTrackerTable({ initialRecords2025, initialRecords2024, initialRecords2023 }: HabitTrackerProps) {
+  const [sortStatus, setSortStatus] = useState<DataTableSortStatus<RecordType>>({
     columnAccessor: "dateAsNumber",
     direction: "desc",
   });
 
-  const [records2025, setRecords2025] = useState<RecordType[]>(staticRecords2025);
-  const [records2024, setRecords2024] = useState<RecordType[]>(staticRecords2024);
-  const [records2023, setRecords2023] = useState<RecordType[]>(staticRecords2023);
+  const [habitRecords2024, setHabitRecords2024] = useState<RecordType[]>(initialRecords2024);
+  const [habitRecords2025, setHabitRecords2025] = useState<RecordType[]>(initialRecords2025);
+  const [habitRecords2023, setHabitRecords2023] = useState<RecordType[]>(initialRecords2023);
 
-  // 2025 sort functionality
+  // Fetch habit data for all years
   useEffect(() => {
-    const data = sortBy(staticRecords2025, sortStatus.columnAccessor);
-    setRecords2025(sortStatus.direction === "desc" ? data.reverse() : data);
-  }, [sortStatus, staticRecords2025]);
+    const fetchAllYears = async () => {
+      try {
+        const [response2025, response2024, response2023] = await Promise.all([
+          fetch("/api/supabase-habits?year=2025"),
+          fetch("/api/supabase-habits?year=2024"),
+          fetch("/api/supabase-habits?year=2023")
+        ]);
 
-  // 2024 sort functionality
-  useEffect(() => {
-    const data = sortBy(staticRecords2024, sortStatus.columnAccessor);
-    setRecords2024(sortStatus.direction === "desc" ? data.reverse() : data);
-  }, [sortStatus, staticRecords2024]);
+        const [data2025, data2024, data2023] = await Promise.all([
+          response2025.json(),
+          response2024.json(),
+          response2023.json()
+        ]);
 
-  // 2023 sort functionality
-  useEffect(() => {
-    const data = sortBy(staticRecords2023, sortStatus.columnAccessor);
-    setRecords2023(sortStatus.direction === "desc" ? data.reverse() : data);
-  }, [sortStatus, staticRecords2023]);
+        if (data2025 && data2025.dataArray) {
+          setHabitRecords2025(data2025.dataArray);
+        }
+        if (data2024 && data2024.dataArray) {
+          setHabitRecords2024(data2024.dataArray);
+        }
+        if (data2023 && data2023.dataArray) {
+          setHabitRecords2023(data2023.dataArray);
+        }
+      } catch (error) {
+        console.error("Error fetching habit data:", error);
+      }
+    };
+
+    fetchAllYears();
+  }, []);
+
+  // Create a single function to generate columns for any year
+  const createColumns = (year: number, records: RecordType[]): DataTableColumn<RecordType>[] => {
+    const goals = year === 2025 ? goals2025 :
+                  year === 2024 ? { pushups: 10000, situps: 7000, jacks: 14000, stairs: 200, pullups: 600 } :
+                  { pushups: 10000, situps: 3000, jacks: 6000, stairs: 200, pullups: 400 };
+
+    const daysInYear = DateTime.local(year).daysInYear;
+    const currentDay = year === 2025 ? DateTime.now().ordinal : daysInYear;
+
+    return [
+      {
+        accessor: "dateAsNumber",
+        title: "Date",
+        sortable: true,
+        width: 160,
+        render: (item) => (
+          <div>
+            {item.date}
+            {item.date === new Date().toISOString().split('T')[0] ? (
+              <Badge size="xs" color="blue" ml={10}>
+                {" "}Today{" "}
+              </Badge>
+            ) : null}
+          </div>
+        ),
+        footer: (
+          <TableFooter
+            total={currentDay || 0}
+            habit="days"
+            goal={daysInYear || 0}
+            totalPercentage={Math.floor((currentDay / daysInYear) * 100) || 0}
+            topLabel={"Day #"}
+            bottomLabel={"of"}
+          />
+        ),
+      },
+      {
+        accessor: "pushups",
+        sortable: true,
+        textAlign: "center",
+        footer: (
+          <TableFooter
+            total={returnTotal(records, "pushups") || 0}
+            habit="pushups"
+            goal={goals.pushups}
+            totalPercentage={returnTotalPercentage(records, "pushups", goals.pushups) || 0}
+          />
+        ),
+      },
+      {
+        accessor: "situps",
+        sortable: true,
+        textAlign: "center",
+        footer: (
+          <TableFooter
+            total={returnTotal(records, "situps") || 0}
+            habit="situps"
+            goal={goals.situps}
+            totalPercentage={returnTotalPercentage(records, "situps", goals.situps) || 0}
+          />
+        ),
+      },
+      {
+        accessor: "jacks",
+        sortable: true,
+        textAlign: "center",
+        title: "Jumping Jacks",
+        footer: (
+          <TableFooter
+            total={returnTotal(records, "jacks") || 0}
+            habit="jacks"
+            goal={goals.jacks}
+            totalPercentage={returnTotalPercentage(records, "jacks", goals.jacks) || 0}
+          />
+        ),
+      },
+      {
+        accessor: "stairs",
+        sortable: true,
+        textAlign: "center",
+        footer: (
+          <TableFooter
+            total={returnTotal(records, "stairs") || 0}
+            habit="stairs"
+            goal={goals.stairs}
+            totalPercentage={returnTotalPercentage(records, "stairs", goals.stairs) || 0}
+          />
+        ),
+      },
+      {
+        accessor: "pullups",
+        sortable: true,
+        textAlign: "center",
+        footer: (
+          <TableFooter
+            total={returnTotal(records, "pullups") || 0}
+            habit="pullups"
+            goal={goals.pullups}
+            totalPercentage={returnTotalPercentage(records, "pullups", goals.pullups) || 0}
+          />
+        ),
+      },
+    ];
+  };
+
+  // Function to sort records based on current sort status
+  const getSortedRecords = (records: RecordType[]): RecordType[] => {
+    if (!sortStatus.columnAccessor) return records;
+
+    const sorted = sortBy(records, [sortStatus.columnAccessor]);
+    return sortStatus.direction === "desc" ? sorted.reverse() : sorted;
+  };
 
   return (
     <Container mt={50}>
@@ -52,329 +181,44 @@ export function HabitTrackerTable({ staticRecords2025, staticRecords2024, static
           <Tabs.Tab value="2023">2023</Tabs.Tab>
         </Tabs.List>
         <Tabs.Panel value="2025" pt="xs">
-          <DataTable
-            columns={[
-              {
-                accessor: "dateAsNumber",
-                title: "Date",
-                sortable: true,
-                width: 150,
-                render: (item) => (
-                  <div>
-                    <>
-                      {item.date}
-                      {item.date === new Date().toLocaleDateString() ? (
-                        <Badge size="xs" color="blue" ml={10}>
-                          {" "}
-                          Today{" "}
-                        </Badge>
-                      ) : null}
-                    </>
-                  </div>
-                ),
-                footer: (
-                  <TableFooter
-                    total={DateTime.now().ordinal}
-                    habit="days"
-                    goal={DateTime.local(2025).daysInYear}
-                    totalPercentage={Math.floor((DateTime.now().ordinal / 365) * 100)}
-                    topLabel={"Day #"}
-                    bottomLabel={"of"}
-                  />
-                ),
-              },
-              {
-                accessor: "pushups",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2025, "pushups")}
-                    habit="pushups"
-                    goal={goals2025.pushups}
-                    totalPercentage={returnTotalPercentage(records2025, "pushups", goals2025.pushups)}
-                  />
-                ),
-              },
-              {
-                accessor: "situps",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2025, "situps")}
-                    habit="situps"
-                    goal={goals2025.situps}
-                    totalPercentage={returnTotalPercentage(records2025, "situps", goals2025.situps)}
-                  />
-                ),
-              },
-              {
-                accessor: "jacks",
-                sortable: true,
-                textAlign: "center",
-                title: "Jumping Jacks",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2025, "jacks")}
-                    habit="jacks"
-                    goal={goals2025.jacks}
-                    totalPercentage={returnTotalPercentage(records2025, "jacks", goals2025.jacks)}
-                  />
-                ),
-              },
-              {
-                accessor: "stairs",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2025, "stairs")}
-                    habit="stairs"
-                    goal={goals2025.stairs}
-                    totalPercentage={returnTotalPercentage(records2025, "stairs", goals2025.stairs)}
-                  />
-                ),
-              },
-              {
-                accessor: "pullups",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2025, "pullups")}
-                    habit="pullups"
-                    goal={goals2025.pullups}
-                    totalPercentage={returnTotalPercentage(records2025, "pullups", goals2025.pullups)}
-                  />
-                ),
-              },
-            ]}
-            records={records2025}
+        <DataTable<RecordType>
+            columns={createColumns(2025, habitRecords2025)}
+            records={getSortedRecords(habitRecords2025)}
             withTableBorder
             striped
             height={500}
             highlightOnHover
             scrollAreaProps={{ type: "never" }}
             sortStatus={sortStatus}
-            onSortStatusChange={setSortStatus}
+            onSortStatusChange={status => setSortStatus(status)}
             idAccessor={"date"}
           />
         </Tabs.Panel>
         <Tabs.Panel value="2024" pt="xs">
-          <DataTable
-            columns={[
-              {
-                accessor: "dateAsNumber",
-                title: "Date",
-                sortable: true,
-                width: 150,
-                render: (item) => (
-                  <div>
-                    <>
-                      {item.date}
-                      {item.date === new Date().toLocaleDateString() ? (
-                        <Badge size="xs" color="blue" ml={10}>
-                          {" "}
-                          Today{" "}
-                        </Badge>
-                      ) : null}
-                    </>
-                  </div>
-                ),
-                footer: (
-                  <TableFooter
-                    total={DateTime.local(2024).daysInYear}
-                    habit="days"
-                    goal={DateTime.local(2024).daysInYear}
-                    totalPercentage={Math.floor(
-                      (DateTime.local(2024).daysInYear / DateTime.local(2024).daysInYear) * 100
-                    )}
-                    topLabel={"Day #"}
-                    bottomLabel={"of"}
-                  />
-                ),
-              },
-              {
-                accessor: "pushups",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2024, "pushups")}
-                    habit="pushups"
-                    goal={10000}
-                    totalPercentage={returnTotalPercentage(records2024, "pushups", 10000)}
-                  />
-                ),
-              },
-              {
-                accessor: "situps",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2024, "situps")}
-                    habit="situps"
-                    goal={7000}
-                    totalPercentage={returnTotalPercentage(records2024, "situps", 7000)}
-                  />
-                ),
-              },
-              {
-                accessor: "jacks",
-                sortable: true,
-                textAlign: "center",
-                title: "Jumping Jacks",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2024, "jacks")}
-                    habit="jacks"
-                    goal={14000}
-                    totalPercentage={returnTotalPercentage(records2024, "jacks", 14000)}
-                  />
-                ),
-              },
-              {
-                accessor: "stairs",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2024, "stairs")}
-                    habit="stairs"
-                    goal={200}
-                    totalPercentage={returnTotalPercentage(records2024, "stairs", 200)}
-                  />
-                ),
-              },
-              {
-                accessor: "pullups",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2024, "pullups")}
-                    habit="pullups"
-                    goal={600}
-                    totalPercentage={returnTotalPercentage(records2024, "pullups", 600)}
-                  />
-                ),
-              },
-            ]}
-            records={records2024}
+          <DataTable<RecordType>
+            columns={createColumns(2024, habitRecords2024)}
+            records={getSortedRecords(habitRecords2024)}
             withTableBorder
             striped
             height={500}
             highlightOnHover
             scrollAreaProps={{ type: "never" }}
             sortStatus={sortStatus}
-            onSortStatusChange={setSortStatus}
+            onSortStatusChange={status => setSortStatus(status)}
             idAccessor={"date"}
           />
         </Tabs.Panel>
         <Tabs.Panel value="2023" pt="xs">
-          <DataTable
-            columns={[
-              {
-                accessor: "dateAsNumber",
-                title: "Date",
-                sortable: true,
-                width: 150,
-                render: (item) => (
-                  <>
-                    {item.date}
-                    {item.date === new Date().toLocaleDateString() ? <Badge color="blue"> Today </Badge> : null}
-                  </>
-                ),
-                footer: (
-                  <TableFooter
-                    total={DateTime.local(2023).daysInYear}
-                    habit="days"
-                    goal={DateTime.local(2023).daysInYear}
-                    totalPercentage={Math.floor(
-                      (DateTime.local(2023).daysInYear / DateTime.local(2023).daysInYear) * 100
-                    )}
-                    topLabel={"Day #"}
-                    bottomLabel={"of"}
-                  />
-                ),
-              },
-              {
-                accessor: "pushups",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2023, "pushups")}
-                    habit="pushups"
-                    goal={10000}
-                    totalPercentage={returnTotalPercentage(records2023, "pushups", 10000)}
-                  />
-                ),
-              },
-              {
-                accessor: "situps",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2023, "situps")}
-                    habit="situps"
-                    goal={3000}
-                    totalPercentage={returnTotalPercentage(records2023, "situps", 3000)}
-                  />
-                ),
-              },
-              {
-                accessor: "jacks",
-                sortable: true,
-                textAlign: "center",
-                title: "Jumping Jacks",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2023, "jacks")}
-                    habit="jacks"
-                    goal={6000}
-                    totalPercentage={returnTotalPercentage(records2023, "jacks", 6000)}
-                  />
-                ),
-              },
-              {
-                accessor: "stairs",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2023, "stairs")}
-                    habit="stairs"
-                    goal={200}
-                    totalPercentage={returnTotalPercentage(records2023, "stairs", 200)}
-                  />
-                ),
-              },
-              {
-                accessor: "pullups",
-                sortable: true,
-                textAlign: "center",
-                footer: (
-                  <TableFooter
-                    total={returnTotal(records2023, "pullups")}
-                    habit="pullups"
-                    goal={400}
-                    totalPercentage={returnTotalPercentage(records2023, "pullups", 400)}
-                  />
-                ),
-              },
-            ]}
-            records={records2023}
+          <DataTable<RecordType>
+            columns={createColumns(2023, habitRecords2023)}
+            records={getSortedRecords(habitRecords2023)}
             withTableBorder
             striped
             height={500}
             highlightOnHover
             scrollAreaProps={{ type: "never" }}
             sortStatus={sortStatus}
-            onSortStatusChange={setSortStatus}
+            onSortStatusChange={status => setSortStatus(status)}
             idAccessor={"date"}
           />
         </Tabs.Panel>

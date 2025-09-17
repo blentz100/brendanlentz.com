@@ -4,6 +4,7 @@ import { HabitTrackerTable } from "../components/HabitTrackerTable";
 import { HabitLineChart } from "../components/HabitLineChart";
 import { SimpleGrid } from "@mantine/core";
 import { goals2025 } from "../lib/config/goals";
+import {fetchHabitsByYear} from "../lib/fetchHabits";
 
 export type RecordType = {
   date: string;
@@ -55,18 +56,6 @@ const H1 = styled("h1", {
   },
 });
 
-const H2 = styled("h2", {
-  margin: "0.5em 0 0.5em -1px", // misaligned left margin, super nitpicky
-  fontSize: "1.35em",
-  fontWeight: 400,
-  lineHeight: 1.4,
-  color: "$text",
-
-  "@medium": {
-    fontSize: "1.25em",
-  },
-});
-
 const Paragraph = styled("p", {
   margin: "0.85em 0",
   lineHeight: 1.7,
@@ -105,14 +94,14 @@ const Wave = styled("span", {
 });
 
 interface IndexProps {
-  staticRecords2025: RecordType[];
-  staticRecords2024: RecordType[];
-  staticRecords2023: RecordType[];
+  initialRecords2025: RecordType[];
+  initialRecords2024: RecordType[];
+  initialRecords2023: RecordType[];
 }
 
 // Static Site Generation - NextJS pre-renders this page at
 // build time using the props returned by getStaticProps.
-const Index = ({ staticRecords2025, staticRecords2024, staticRecords2023 }: IndexProps) => {
+const Index = ({ initialRecords2025, initialRecords2024, initialRecords2023 }: IndexProps) => {
   return (
     <>
       <H1>
@@ -183,31 +172,31 @@ const Index = ({ staticRecords2025, staticRecords2024, staticRecords2023 }: Inde
 
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
         <HabitLineChart
-          records={staticRecords2025}
+          records={initialRecords2025}
           habit={"pushups"}
           habitDisplayName={"Pushups"}
           goal={goals2025.pushups}
         />
         <HabitLineChart
-          records={staticRecords2025}
+          records={initialRecords2025}
           habit={"situps"}
           habitDisplayName={"Situps"}
           goal={goals2025.situps}
         />
         <HabitLineChart
-          records={staticRecords2025}
+          records={initialRecords2025}
           habit={"jacks"}
           habitDisplayName={"Jumping Jacks"}
           goal={goals2025.jacks}
         />
         <HabitLineChart
-          records={staticRecords2025}
+          records={initialRecords2025}
           habit={"stairs"}
           habitDisplayName={"Stairs"}
           goal={goals2025.stairs}
         />
         <HabitLineChart
-          records={staticRecords2025}
+          records={initialRecords2025}
           habit={"pullups"}
           habitDisplayName={"Pullups"}
           goal={goals2025.pullups}
@@ -215,9 +204,9 @@ const Index = ({ staticRecords2025, staticRecords2024, staticRecords2023 }: Inde
       </SimpleGrid>
 
       <HabitTrackerTable
-        staticRecords2025={staticRecords2025}
-        staticRecords2024={staticRecords2024}
-        staticRecords2023={staticRecords2023}
+        initialRecords2025={initialRecords2025}
+        initialRecords2024={initialRecords2024}
+        initialRecords2023={initialRecords2023}
       />
     </>
   );
@@ -225,39 +214,16 @@ const Index = ({ staticRecords2025, staticRecords2024, staticRecords2023 }: Inde
 
 // NextJS calls getStaticProps at build time
 export async function getStaticProps() {
-  // assign the correct web server prefix according to the environment
-  const dev = process.env.NODE_ENV !== "production";
-  const server = dev ? "http://localhost:3000" : "https://brendanlentz.com";
 
-  // fetch the 2025 data
-  const response2025 = await fetch(`${server}/api/sheets?year=2025`);
-  const responseData2025 = await response2025.json();
-  if (!responseData2025.success) {
-    throw new Error(responseData2025.message);
-  }
-  const records2025 = responseData2025.dataArrayFiltered;
-
-  // fetch the 2024 data
-  const response2024 = await fetch(`${server}/api/sheets?year=2024`);
-  const responseData2024 = await response2024.json();
-  if (!responseData2024.success) {
-    throw new Error(responseData2024.message);
-  }
-  const records2024 = responseData2024.dataArrayFiltered;
-
-  // fetch the 2023 data
-  const response2023 = await fetch(`${server}/api/sheets?year=2023`);
-  const responseData2023 = await response2023.json();
-  if (!responseData2023.success) {
-    throw new Error(responseData2023.message);
-  }
-  const records2023 = responseData2023.dataArrayFiltered;
+  const records2025 = await fetchHabitsByYear("2025");
+  const records2024 = await fetchHabitsByYear("2024");
+  const records2023 = await fetchHabitsByYear("2023");
 
   return {
     props: {
-      staticRecords2025: records2025,
-      staticRecords2024: records2024,
-      staticRecords2023: records2023,
+      initialRecords2025: records2025,
+      initialRecords2024: records2024,
+      initialRecords2023: records2023,
     },
     revalidate: 5,
   };
