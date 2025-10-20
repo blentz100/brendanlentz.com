@@ -3,6 +3,8 @@ import Content from "../components/Content";
 import PageTitle from "../components/PageTitle";
 import { Button, CopyButton, Grid, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
+import CodePlayground from "./editor";
+import NormalizeTool from "./tools/NormalizeTool";
 
 const Tools = () => {
   const [unixTimeStampInMilliseconds, setUnixTimeStampInMilliseconds] = useState(Date.now());
@@ -57,6 +59,8 @@ const Tools = () => {
             </CopyButton>
           </Grid.Col>
         </Grid>
+        <NormalizeTool />
+        <CodePlayground/>
       </Content>
     </>
   );
