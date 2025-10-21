@@ -1,0 +1,65 @@
+---
+title: "Clean as You Go Software Development"
+date: 2025-04-08 1:53:02-0400
+description: "Notes on best practices"
+tags:
+  - Software Development
+  - Best Practices
+---
+
+Last week I was working on a story where I had extra time to address
+some nagging issues in the project. You know what I'm talking
+about: The build warnings that you've been ignoring since joining the team. Deprecated packages. "Unsupported in the
+next release."
+
+First I tackled a Docker warning from a `docker-compose.yml` file:
+
+```
+the attribute version is obsolete, it will be ignored, please remove it to avoid potential confusion
+```
+
+Yank it. Easy victory. Thank you very much Docker v2.
+
+This Docker config file was building a specific version of WordPress. Version
+6.7.1 to be exact. But every time I fired up the Docker container, the WP
+Admin interface reported I was running version 6.7.2. After checking and
+rechecking the Docker config file, I figured out WordPress was auto-updating
+itself to 6.7.2 immediately after the Docker image was created. No thanks, I don't want a version bump - I want my local
+dev environment to match what my WP host is using in production and staging.
+
+The fix is to disable auto updates. You can add something like this to your
+`wp-config.php` file:
+
+```
+define('WP_AUTO_UPDATE_CORE', false);
+```
+
+Another thing I wanted to customize was the default WordPress plugins. The
+Docker images for WordPress includes the Akismet plugin. We aren't using that
+so I don't want it in the local dev environment every time we
+fire up the Docker container.
+
+To solve that you can add something like this to `wordpress.Dockerfile`:
+
+```
+RUN rm -rf /usr/src/wordpress/wp-content/plugins/akismet
+```
+
+Now the local dev environment matches what's in production and staging.
+
+This got me thinking about a clean-as-you-go mindset. I do it when I'm cooking too. If I'm making
+quinoa I know I have about 20 minutes until it's done.
+
+I'll use that 20 minutes to prep the rest of the ingredients for the meal and then start the cleanup tasks: load
+the dishwasher, audit the fridge for expired food, wipe down the table, etc.
+
+I like to clean as I go because it reduces mental clutter and reduces tech (kitchen?) debt.
+
+Don't allow commented out code blocks to accumulate and pile up in your codebase.
+
+Don't allow unused packages, components, functions or dirty dishes to pile up.
+
+If you adopt a clean-as-you-go mindset, you are making future work easier.
+
+You are creating the mental space to solve real challenges instead of wondering about a commented out function from
+6 years ago.
