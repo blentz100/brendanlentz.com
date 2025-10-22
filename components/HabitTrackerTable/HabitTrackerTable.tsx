@@ -173,7 +173,7 @@ export function HabitTrackerTable({ initialRecords2025, initialRecords2024, init
   };
 
   return (
-    <Container mt={50}>
+    <Container mt={50} px={0}>
       <Tabs variant="outline" defaultValue="2025">
         <Tabs.List>
           <Tabs.Tab value="2025">2025</Tabs.Tab>

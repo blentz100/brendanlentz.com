@@ -3,10 +3,12 @@ import { ForkOcticon, NextjsLogo } from "../Icons";
 import { keyframes, styled } from "../../lib/styles/stitches.config";
 import * as config from "../../lib/config";
 import type { ComponentProps } from "react";
+import NewsletterSignup from "../NewsletterSignup/NewsletterSignup";
 
 const Wrapper = styled("footer", {
   width: "100%",
-  padding: "1.25em 1.5em",
+  paddingTop: "1rem",
+  paddingBottom: "6rem",
   borderTop: "1px solid $kindaLight",
   backgroundColor: "$backgroundOuter",
   color: "$mediumDark",
@@ -87,15 +89,7 @@ const Footer = ({ ...rest }: FooterProps) => {
   return (
     <Wrapper {...rest}>
       <Row>
-        <div>
-          Content{" "}
-          <Link href="/license/" title="Creative Commons Attribution 4.0 International">
-            licensed under CC-BY-4.0
-          </Link>
-          ,{""}
-          {new Date(process.env.NEXT_PUBLIC_RELEASE_DATE || Date.now()).getUTCFullYear()}.
-        </div>
-
+        <NewsletterSignup/>
         <div>
           Made with{" "}
           <Heart title="Fork">
