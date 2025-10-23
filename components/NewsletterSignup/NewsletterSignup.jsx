@@ -23,7 +23,8 @@ export default function NewsletterSignup() {
                 setStatus({type: "error", message: data.error || "Subscription" +
                         " Failed"});
             } else {
-                setStatus({type: "success", message: "Thanks for subscribing!"});
+                setStatus({type: "success", message: "Check your email to" +
+                        " confirm subscription."});
                 setEmail("");
                 setTimeout(() => setStatus(null), 3000)
             }
