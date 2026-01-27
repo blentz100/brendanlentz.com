@@ -41,100 +41,106 @@ const GitHubLogo = styled(OctocatOcticon, {
   fill: "$text",
 });
 
-const Projects = ({ repos }: { repos: Repository[] }) => {
+const Projects = async () => {
+  // const res = await fetch("/api/github/repos");
+  // console.log('res is: ', res)
+  // const repos = await res.json();
+  // console.log('repos is: ', repos)
+
   return (
     <>
-      <NextSeo
-        title="Projects"
-        openGraph={{
-          title: "Projects",
-        }}
-      />
+      <div>hello</div>
+      {/*<NextSeo*/}
+      {/*  title="Projects"*/}
+      {/*  openGraph={{*/}
+      {/*    title: "Projects",*/}
+      {/*  }}*/}
+      {/*/>*/}
 
-      <PageTitle>💾 Projects</PageTitle>
+      {/*<PageTitle>💾 Projects</PageTitle>*/}
 
-      <Content>
-        <Wrapper>
-          {repos.map((repo) => (
-            <Card key={repo.name} {...repo} />
-          ))}
-        </Wrapper>
+      {/*<Content>*/}
+        {/*<Wrapper>*/}
+        {/*  {repos.map((repo) => (*/}
+        {/*    <Card key={repo.name} {...repo} />*/}
+        {/*  ))}*/}
+        {/*</Wrapper>*/}
 
-        <ViewMore>
-          <Link href={`https://github.com/${authorSocial.github}`}>
-            View more on <GitHubLogo /> GitHub...
-          </Link>
-        </ViewMore>
-      </Content>
+        {/*<ViewMore>*/}
+        {/*  <Link href={`https://github.com/${authorSocial.github}`}>*/}
+        {/*    View more on <GitHubLogo /> GitHub...*/}
+        {/*  </Link>*/}
+        {/*</ViewMore>*/}
+      {/*</Content>*/}
     </>
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  // https://docs.github.com/en/graphql/reference/objects#repository
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const response: any = await graphql(
-    `
-      query ($username: String!, $sort: RepositoryOrderField!, $limit: Int) {
-        user(login: $username) {
-          repositories(
-            first: $limit
-            isLocked: false
-            isFork: false
-            ownerAffiliations: OWNER
-            privacy: PUBLIC
-            orderBy: { field: $sort, direction: DESC }
-          ) {
-            edges {
-              node {
-                name
-                url
-                description
-                pushedAt
-                stargazerCount
-                forkCount
-                primaryLanguage {
-                  name
-                  color
-                }
-              }
-            }
-          }
-        }
-      }
-    `,
-    {
-      username: authorSocial.github,
-      sort: "STARGAZERS",
-      limit: 12,
-      headers: {
-        accept: "application/vnd.github.v3+json",
-        authorization: `token ${process.env.GH_PUBLIC_TOKEN}`,
-      },
-    }
-  );
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const results: Array<{ node: Record<string, any> }> = response.user.repositories.edges;
-
-  const repos = results.map<Repository>(({ node: repo }) => ({
-    name: repo.name,
-    url: repo.url,
-    description: repo.description,
-    updatedAt: repo.pushedAt,
-    stars: repo.stargazerCount,
-    forks: repo.forkCount,
-    language: repo.primaryLanguage,
-  }));
-
-  return {
-    props: {
-      repos,
-    },
-    // fetch updated data and update page every 10 minutes (as needed)
-    // https://nextjs.org/docs/basic-features/data-fetching#incremental-static-regeneration
-    revalidate: 600,
-  };
-};
+// export const getStaticProps: GetStaticProps = async () => {
+//   // https://docs.github.com/en/graphql/reference/objects#repository
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   const response: any = await graphql(
+//     `
+//       query ($username: String!, $sort: RepositoryOrderField!, $limit: Int) {
+//         user(login: $username) {
+//           repositories(
+//             first: $limit
+//             isLocked: false
+//             isFork: false
+//             ownerAffiliations: OWNER
+//             privacy: PUBLIC
+//             orderBy: { field: $sort, direction: DESC }
+//           ) {
+//             edges {
+//               node {
+//                 name
+//                 url
+//                 description
+//                 pushedAt
+//                 stargazerCount
+//                 forkCount
+//                 primaryLanguage {
+//                   name
+//                   color
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     `,
+//     {
+//       username: authorSocial.github,
+//       sort: "STARGAZERS",
+//       limit: 12,
+//       headers: {
+//         accept: "application/vnd.github.v3+json",
+//         authorization: `token ${process.env.GH_PUBLIC_TOKEN}`,
+//       },
+//     }
+//   );
+//
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   const results: Array<{ node: Record<string, any> }> = response.user.repositories.edges;
+//
+//   const repos = results.map<Repository>(({ node: repo }) => ({
+//     name: repo.name,
+//     url: repo.url,
+//     description: repo.description,
+//     updatedAt: repo.pushedAt,
+//     stars: repo.stargazerCount,
+//     forks: repo.forkCount,
+//     language: repo.primaryLanguage,
+//   }));
+//
+//   return {
+//     props: {
+//       repos,
+//     },
+//     // fetch updated data and update page every 10 minutes (as needed)
+//     // https://nextjs.org/docs/basic-features/data-fetching#incremental-static-regeneration
+//     revalidate: 600,
+//   };
+// };
 
 export default Projects;
