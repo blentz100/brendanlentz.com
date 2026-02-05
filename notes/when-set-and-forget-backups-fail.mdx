@@ -11,11 +11,11 @@ tags:
   - Devops
 ---
 
-Recently, while working with a client, I uncovered a problem that illustrates why backups aren’t
+While working with a client recently, I uncovered a problem that illustrates why backups aren’t
 just about having files - they’re also about having reliable processes around them.
 
 
-The system in question has been running for years and consists of:
+The system in question:
 
 - A Laravel/PHP app
 
@@ -27,7 +27,7 @@ The system in question has been running for years and consists of:
 
 All hosted on AWS EC2.
 
-The client had expressed concerns about the ability to restore the system in the event of an outage. His
+The client expressed concerns about the ability to restore the system in the event of an outage. His
 entire business is built on top of this application, so I wanted to make sure we get this addressed quickly.
 
 I created a specific story to assess the current backup system, so we can better understand any weaknesses and
@@ -43,13 +43,13 @@ While reviewing the S3 bucket that stores database backups, I noticed:
 
 Regular backup files existed going back more than 4 years.
 
-But the most recent file was several weeks old
+But the most recent file was several weeks old.
 
 No failures.
 No warnings.
 Just… silence.
 
-That’s a big red flag.
+That’s a major concern.
 
 Any backup system that can fail silently is already in a risky state.
 
@@ -69,7 +69,7 @@ This image relies on:
 
     * Uploads it to S3
 
-Since cron jobs don’t surface errors unless you explicitly wire them up, my first stop was to examine the container 
+Since cron jobs don’t surface errors unless you explicitly wire them up, my next step was to examine the container
 logs.
 
 ## Step 3: Inspecting Docker Logs
@@ -91,16 +91,18 @@ crond: USER root pid 699 cmd * /bin/sh /backup.sh /bin/ash: *: not found
 crond: USER root pid 1496 cmd * /bin/sh /backup.sh /bin/ash: *: not found
 crond: USER root pid 1922 cmd * /bin/sh /backup.sh /bin/ash: *: not found
 ```
+Busybox is a suite of common Unix commands that are packaged together and intended to run on systems with limited
+resources. The cron scheduler daemon (`crond`) is part of this suite.
 
-This explained a lot:
+The logs explained a lot:
 
-The container was still running
+- The container was still running
 
-Cron was still firing
+- Cron was still firing
 
-But the dump was having issues, seemingly related to not being able to find a command
+- But the dump was having issues, seemingly related to not being able to find a command
 
-And nothing was alerting us of that failure
+And nothing was alerting us of that failure.
 
 ## Step 4: Troubleshooting the Root Cause
 
@@ -139,18 +141,13 @@ The cron daemon in this container is BusyBox cron, not standard cron.
 
 BusyBox expects five fields, not six.
 
-So instead of running daily at 10:00 AM, the job was being parsed incorrectly (look again at the errors in Step 3,
-they should make more sense now)
+So instead of running daily at 10:00 AM, the job was being parsed incorrectly.
 
-Here's what I knew at this point:
+Look again at the errors in Step 3 - they should make more sense now. Cron assumed the last asterisk in the crontab
+file was the first character in the command. It was attempting to run `* /bin/sh /backup.sh` instead of `/bin/sh
+/backup.sh`
 
-- The container was healthy
-
-- Cron was running
-
-- But the backup script wasn't running due to the crontab format issue
-
-A single extra field likely broke the entire backup process.
+It seemed like the issue was a single extra field in the crontab file.
 
 ## Step 6: Fixing the Immediate Problem
 
@@ -163,7 +160,8 @@ So I updated the crontab file to:
 */5 * * * * /bin/sh /backup.sh
 ```
 
-This makes the backup script run every 5 minutes. Not ideal for production, but good for testing.
+This makes the backup script run every 5 minutes and removes the extra asterisk. Not ideal for production, but good for
+testing.
 
 I had to delete, rebuild and restart the container for the change to take effect.
 
@@ -172,19 +170,43 @@ Then I waited 15 minutes and verified that the S3 bucket now had 3 new backup fi
 I was confident that updating the crontab file to
 
 ```
-0 0 10 * * * /bin/sh /backup.sh
+0 0 10 * * /bin/sh /backup.sh
 ```
 
-would work. I made that update and rebuilt the container again.
+would work now. I made that update and rebuilt the container again.
 
 Over the next two days, I confirmed that the database backups were uploaded to S3. I also verified I could download and
 inspect the backup files.
 
 I now knew with certainty that the issue was resolved.
 
-I wrote up a summary of the issue in the JIRA ticket. In case this happens again we can fix it quickly.
+I wrote up a summary of the fix in the JIRA ticket so we have a solid reference if this happens again.
 
-The client was happy that this was resolved and documented.
+I informed the client of the fix. They were happy that their database backups are working again.
+
+For reference - the cron schedule itself was not in source control, so it’s not obvious when this misconfiguration was
+originally
+introduced. That's a separate issue that will also be addressed, but outside the scope of this work.
+
+The next step is to continue with the original effort - complete an overall assessment of their backup process.
+
+## Final Thoughts
+
+If there’s one takeaway from this experience, it’s this:
+
+> Every backup system should do three things: create the backup, verify it works, and alert a human when there's a
+problem.
+
+If you’re responsible for a system that’s been “working fine” for years, it’s worth asking:
+
+- How would I know if backups stopped today?
+
+- Who would be notified?
+
+- When was the last time someone actually restored from a database backup?
+
+Sometimes the most important bugs aren’t loud.
+They’re the ones that quietly wait.
 
 ## References
 
@@ -193,20 +215,3 @@ The client was happy that this was resolved and documented.
 [Docker image for backups](https://hub.docker.com/r/schickling/mysql-backup-s3)
 
 [crontab guru](https://crontab.guru/)
-
-## Final Thoughts
-
-If there’s one takeaway from this experience, it’s this:
-
-> A backup process that isn’t observed is indistinguishable from one that’s broken.
-
-If you’re responsible for a system that’s been “working fine” for years, it’s worth asking:
-
-- How would I know if backups stopped today?
-
-- Who would be notified?
-
-- When was the last time someone actually restored a database backup?
-
-Sometimes the most important bugs aren’t loud.
-They’re the ones that quietly wait.
