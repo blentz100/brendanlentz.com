@@ -1,7 +1,6 @@
 import useSWR from "swr";
 import commaNumber from "comma-number";
 import Loading from "../Loading";
-import fetcher from "../../lib/helpers/fetcher";
 
 export type HitCounterProps = {
   slug: string;
@@ -11,10 +10,21 @@ export type HitCounterProps = {
 const HitCounter = ({ slug, className }: HitCounterProps) => {
   // start fetching repos from API immediately
   const { data, error } = useSWR(
-    `/api/hits/?${new URLSearchParams({
-      slug,
-    })}`,
-    fetcher,
+    slug ? "/api/hits/" : null,
+    async (url) => {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ slug }),
+      })
+
+      if (!res.ok){
+        throw new Error("Failed to fetch hits");
+      }
+      return res.json();
+    },
     {
       // avoid double (or more) counting views
       revalidateOnFocus: false,
