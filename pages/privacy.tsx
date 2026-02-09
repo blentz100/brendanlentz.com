@@ -10,7 +10,6 @@ import { H2 } from "../components/Heading";
 import { UnorderedList, ListItem } from "../components/List";
 import { fathomSiteId, siteDomain } from "../lib/config";
 
-import faunaImg from "../public/static/images/privacy/fauna_hits.png";
 
 const Privacy = () => {
   return (
@@ -53,7 +52,7 @@ const Privacy = () => {
 
         <p>
           A very simple hit counter on each blog post tallies an aggregate number of pageviews (i.e.{" "}
-          <CodeInline>hits = hits + 1</CodeInline>) in a <Link href="https://fauna.com/">Fauna</Link> database.
+          <CodeInline>hits = hits + 1</CodeInline>) in a <Link href="https://supabase.com/">Supabase</Link> database.
           Individual views and identifying (or non-identifying) details are <strong>never stored or logged</strong>.
         </p>
 
@@ -66,8 +65,6 @@ const Privacy = () => {
           are open source, and <Link href="https://github.com/jakejarvis/website-stats">snapshots of the database</Link>{" "}
           are public.
         </p>
-
-        <Image src={faunaImg} alt="The entire database schema." />
 
         <p>
           <Link href="https://usefathom.com/ref/ZEYG0O">
