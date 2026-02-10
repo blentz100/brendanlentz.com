@@ -29,12 +29,6 @@ const Note = ({ frontMatter, source }: NoteWithSource) => {
             publishedTime: frontMatter.date,
             modifiedTime: frontMatter.date,
           },
-          images: [
-            {
-              url: `${config.baseUrl}${frontMatter.image || favicons.meJpg.src}`,
-              alt: frontMatter.title,
-            },
-          ],
         }}
         twitter={{
           cardType: "summary_large_image",

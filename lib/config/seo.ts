@@ -25,12 +25,6 @@ export const defaultSeo: DefaultSeoProps = {
     title: `${config.siteName} – ${config.shortDescription}`,
     locale: config.siteLocale?.replace("-", "_"),
     type: "website",
-    images: [
-      {
-        url: `${config.baseUrl}${meJpg.src}`,
-        alt: `${config.siteName} – ${config.shortDescription}`,
-      },
-    ],
   },
   twitter: {
     handle: `@${config.authorSocial?.twitter}`,
