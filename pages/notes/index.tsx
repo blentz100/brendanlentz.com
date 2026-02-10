@@ -9,7 +9,7 @@ const Notes = ({ notesByYear }: NotesListProps) => {
     <>
       <NextSeo
         title="Notes"
-        description="Recent posts by Jake Jarvis."
+        description="Recent blog posts by Brendan Lentz."
         openGraph={{
           title: "Notes",
         }}
