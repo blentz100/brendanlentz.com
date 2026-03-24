@@ -58,7 +58,7 @@
     "marked": "^4.0.17",
     "next": "^14.2.10",
     "next-compose-plugins": "^2.2.1",
-    "next-mdx-remote": "^5.0.0",
+    "next-mdx-remote": "^6.0.0",
     "next-seo": "^5.4.0",
     "next-transpile-modules": "^10.0.1",
     "p-map": "^5.5.0",

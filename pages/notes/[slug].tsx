@@ -13,6 +13,10 @@ import type { GetStaticProps, GetStaticPaths } from "next";
 import type { NoteWithSource, NoteFrontMatter } from "../../types";
 
 const Note = ({ frontMatter, source }: NoteWithSource) => {
+  const imageUrl = frontMatter.image
+    ? new URL(frontMatter.image, config.baseUrl).toString()
+    : `${config.baseUrl}${favicons.meJpg.src}`;
+
   return (
     <>
       <NextSeo
@@ -23,6 +27,11 @@ const Note = ({ frontMatter, source }: NoteWithSource) => {
           title: frontMatter.title,
           url: frontMatter.permalink,
           type: "article",
+          images: [
+            {
+              url: imageUrl,
+            },
+          ],
           article: {
             authors: [config.authorName],
             tags: frontMatter.tags,
@@ -33,6 +42,12 @@ const Note = ({ frontMatter, source }: NoteWithSource) => {
         twitter={{
           cardType: "summary_large_image",
         }}
+        additionalMetaTags={[
+          {
+            name: "twitter:image",
+            content: imageUrl,
+          },
+        ]}
       />
       <ArticleJsonLd
         url={frontMatter.permalink}
@@ -40,7 +55,7 @@ const Note = ({ frontMatter, source }: NoteWithSource) => {
         description={frontMatter.description || config.longDescription}
         datePublished={frontMatter.date}
         dateModified={frontMatter.date}
-        images={[`${config.baseUrl}${frontMatter.image || favicons.meJpg.src}`]}
+        images={[imageUrl]}
         {...articleJsonLd}
       />
 
