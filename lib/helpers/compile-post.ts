@@ -1,19 +1,19 @@
 import { serialize } from "next-mdx-remote/serialize";
 import { minify } from "uglify-js";
-import { getNoteData } from "./parse-notes";
+import { getPostData } from "./parse-posts";
 
-// remark/rehype markdown plugins
+// remark/rehype Markdown plugins
 import remarkGfm from "remark-gfm";
 import remarkSmartypants from "remark-smartypants";
 import remarkUnwrapImages from "remark-unwrap-images";
 import rehypeSlug from "rehype-slug";
 import rehypePrism from "rehype-prism-plus";
 
-import type { NoteWithSource } from "../../types";
+import type { PostWithSource } from "../../types";
 
 // fully parses MDX into JS and returns *everything* about a note
-export const compileNote = async (slug: string): Promise<NoteWithSource> => {
-  const { frontMatter, content } = await getNoteData(slug);
+export const compilePost = async (slug: string): Promise<PostWithSource> => {
+  const { frontMatter, content } = await getPostData(slug);
   const source = await serialize(content, {
     parseFrontmatter: false,
     mdxOptions: {

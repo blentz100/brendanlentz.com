@@ -1,11 +1,11 @@
 import NextLink from "next/link";
 import Time from "../Time";
 import HitCounter from "../HitCounter";
-import NoteTitle from "../NoteTitle";
+import PostTitle from "../PostTitle";
 import { DateIcon, TagIcon, EditIcon, ViewsIcon } from "../Icons";
 import { styled } from "../../lib/styles/stitches.config";
 import * as config from "../../lib/config";
-import type { NoteFrontMatter } from "../../types";
+import type { PostFrontMatter } from "../../types";
 
 const Wrapper = styled("div", {
   display: "inline-flex",
@@ -55,16 +55,16 @@ const Tag = styled("span", {
   },
 });
 
-export type NoteMetaProps = Pick<NoteFrontMatter, "slug" | "date" | "title" | "htmlTitle" | "tags">;
+export type PostMetaProps = Pick<PostFrontMatter, "slug" | "date" | "title" | "htmlTitle" | "tags">;
 
-const NoteMeta = ({ slug, date, title, htmlTitle, tags = [] }: NoteMetaProps) => {
+const PostMeta = ({ slug, date, title, htmlTitle, tags = [] }: PostMetaProps) => {
   return (
     <>
       <Wrapper>
         <MetaItem>
           <MetaLink
             href={{
-              pathname: "/notes/[slug]/",
+              pathname: "/blog/[slug]/",
               query: { slug },
             }}
           >
@@ -92,7 +92,7 @@ const NoteMeta = ({ slug, date, title, htmlTitle, tags = [] }: NoteMetaProps) =>
 
         <MetaItem>
           <MetaLink
-            href={`https://github.com/${config.githubRepo}/blob/main/notes/${slug}.mdx`}
+            href={`https://github.com/${config.githubRepo}/blob/main/blog/${slug}.mdx`}
             target="_blank"
             rel="noopener noreferrer"
             title={`Edit "${title}" on GitHub`}
@@ -119,9 +119,9 @@ const NoteMeta = ({ slug, date, title, htmlTitle, tags = [] }: NoteMetaProps) =>
         )}
       </Wrapper>
 
-      <NoteTitle {...{ slug, title, htmlTitle }} />
+      <PostTitle {...{ slug, title, htmlTitle }} />
     </>
   );
 };
 
-export default NoteMeta;
+export default PostMeta;

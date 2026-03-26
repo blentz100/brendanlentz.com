@@ -14,8 +14,8 @@ export const menuItems: MenuItemProps[] = [
   },
   {
     icon: NotesIcon,
-    text: "Notes",
-    href: "/notes",
+    text: "Blog",
+    href: "/blog",
   },
   {
     icon: ProjectsIcon,
