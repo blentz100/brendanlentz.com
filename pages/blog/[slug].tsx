@@ -2,17 +2,17 @@ import { InView } from "react-intersection-observer";
 import { NextSeo, ArticleJsonLd } from "next-seo";
 import { MDXRemote } from "next-mdx-remote";
 import Content from "../../components/Content";
-import NoteMeta from "../../components/NoteMeta";
+import PostMeta from "../../components/PostMeta";
 import Comments from "../../components/Comments";
 import * as mdxComponents from "../../lib/helpers/mdx-components";
-import { getNoteSlugs } from "../../lib/helpers/parse-notes";
-import { compileNote } from "../../lib/helpers/compile-note";
+import { getPostSlugs } from "../../lib/helpers/parse-posts";
+import { compilePost } from "../../lib/helpers/compile-post";
 import * as config from "../../lib/config";
 import { articleJsonLd, favicons } from "../../lib/config/seo";
 import type { GetStaticProps, GetStaticPaths } from "next";
-import type { NoteWithSource, NoteFrontMatter } from "../../types";
+import type { PostWithSource, PostFrontMatter } from "../../types";
 
-const Note = ({ frontMatter, source }: NoteWithSource) => {
+const Note = ({ frontMatter, source }: PostWithSource) => {
   const imageUrl = frontMatter.image
     ? new URL(frontMatter.image, config.baseUrl).toString()
     : `${config.baseUrl}${favicons.meJpg.src}`;
@@ -59,7 +59,7 @@ const Note = ({ frontMatter, source }: NoteWithSource) => {
         {...articleJsonLd}
       />
 
-      <NoteMeta {...frontMatter} />
+      <PostMeta {...frontMatter} />
 
       <Content>
         <MDXRemote
@@ -83,7 +83,7 @@ const Note = ({ frontMatter, source }: NoteWithSource) => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { frontMatter, source } = await compileNote((params as Pick<NoteFrontMatter, "slug">).slug);
+  const { frontMatter, source } = await compilePost((params as Pick<PostFrontMatter, "slug">).slug);
 
   return {
     props: {
@@ -94,7 +94,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const slugs = await getNoteSlugs();
+  const slugs = await getPostSlugs();
   const paths = slugs.map((slug) => ({ params: { slug } }));
 
   return {

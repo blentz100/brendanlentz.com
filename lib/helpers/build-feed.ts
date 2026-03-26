@@ -1,5 +1,5 @@
 import { Feed } from "feed";
-import { getAllNotes } from "./parse-notes";
+import { getAllPosts } from "./parse-posts";
 import * as config from "../config";
 import { RELEASE_DATE } from "../config/constants";
 import { favicons } from "../config/seo";
@@ -39,22 +39,22 @@ export const buildFeed = async (
     },
   });
 
-  // add notes separately using their frontmatter
-  const notes = await getAllNotes();
-  notes.forEach((note) => {
+  // add blog posts separately using their frontmatter
+  const posts = await getAllPosts();
+  posts.forEach((post) => {
     feed.addItem({
-      guid: note.permalink,
-      link: note.permalink,
-      title: note.title,
-      description: note.description,
-      image: note.image && `${config.baseUrl}${note.image}`,
+      guid: post.permalink,
+      link: post.permalink,
+      title: post.title,
+      description: post.description,
+      image: post.image && `${config.baseUrl}${post.image}`,
       author: [
         {
           name: config.authorName,
           link: `${config.baseUrl}/`,
         },
       ],
-      date: new Date(note.date),
+      date: new Date(post.date),
     });
   });
 

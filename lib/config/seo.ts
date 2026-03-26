@@ -119,7 +119,7 @@ export const socialProfileJsonLd: SocialProfileJsonLdProps = {
   ],
 };
 
-// Just the basic items applicable to all notes, extended by pages/notes/[slug].tsx
+// Just the basic items applicable to all blog posts, extended by pages/blog/[slug].tsx
 // https://github.com/garmeeh/next-seo#article-1
 export const articleJsonLd: Pick<ArticleJsonLdProps, "authorName" | "publisherName" | "publisherLogo"> = {
   authorName: [config.authorName],

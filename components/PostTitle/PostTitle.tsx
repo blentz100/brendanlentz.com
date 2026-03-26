@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import { styled } from "../../lib/styles/stitches.config";
 import type { ComponentProps } from "react";
-import type { NoteFrontMatter } from "../../types";
+import type { PostFrontMatter } from "../../types";
 
 const Title = styled("h1", {
   margin: "0.3em 0 0.5em -1px", // misaligned left margin, super nitpicky
@@ -23,14 +23,14 @@ const Link = styled(NextLink, {
   textDecoration: "none",
 });
 
-export type NoteTitleProps = Pick<NoteFrontMatter, "slug" | "title" | "htmlTitle"> & ComponentProps<typeof Title>;
+export type PostTitleProps = Pick<PostFrontMatter, "slug" | "title" | "htmlTitle"> & ComponentProps<typeof Title>;
 
-const NoteTitle = ({ slug, title, htmlTitle, ...rest }: NoteTitleProps) => {
+const PostTitle = ({ slug, title, htmlTitle, ...rest }: PostTitleProps) => {
   return (
     <Title {...rest}>
       <Link
         href={{
-          pathname: "/notes/[slug]/",
+          pathname: "/blog/[slug]/",
           query: { slug },
         }}
         dangerouslySetInnerHTML={{ __html: htmlTitle || title }}
@@ -39,4 +39,4 @@ const NoteTitle = ({ slug, title, htmlTitle, ...rest }: NoteTitleProps) => {
   );
 };
 
-export default NoteTitle;
+export default PostTitle;
