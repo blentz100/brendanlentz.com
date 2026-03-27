@@ -1,10 +1,11 @@
-import Link, { LinkProps } from "../components/Link";
 import { styled, keyframes, darkTheme } from "../lib/styles/stitches.config";
 import { HabitTrackerTable } from "../components/HabitTrackerTable";
 import { HabitLineChart } from "../components/HabitLineChart";
 import { SimpleGrid } from "@mantine/core";
 import { goals2025 } from "../lib/config/goals";
 import {fetchHabitsByYear} from "../lib/fetchHabits";
+import BlogPostsList, {BlogPostsListProps} from "../components/BlogPostsList";
+import { getPostsByYear } from "../lib/helpers/get-posts-by-year";
 
 export type RecordType = {
   date: string;
@@ -15,33 +16,6 @@ export type RecordType = {
   pushups: number;
   situps: number;
   stairs: number;
-};
-
-const ColorfulLink = ({
-  lightColor,
-  darkColor,
-  css,
-  ...rest
-}: LinkProps & {
-  lightColor: string;
-  darkColor: string;
-}) => {
-  return (
-    <Link
-      css={{
-        color: lightColor,
-        setUnderlineVars: { color: lightColor },
-
-        [`.${darkTheme} &`]: {
-          color: darkColor,
-          setUnderlineVars: { color: darkColor },
-        },
-
-        ...css,
-      }}
-      {...rest}
-    />
-  );
 };
 
 const H1 = styled("h1", {
@@ -71,7 +45,24 @@ const Paragraph = styled("p", {
   },
 });
 
-const Wave = styled("span", {
+const BlogSection = styled("div", {
+  marginTop: "3rem",
+  marginBottom: "4rem",
+});
+
+const SectionHeading = styled("h2", {
+  margin: "0 0 0.5em 0",
+  fontSize: "1.5em",
+  fontWeight: 600,
+  lineHeight: 1.2,
+  color: "$text",
+
+  "@medium": {
+    fontSize: "1.35em",
+  },
+});
+
+styled("span", {
   display: "inline-block",
   marginLeft: "0.1em",
   fontSize: "1.0em", // reduced from 1.2em
@@ -92,83 +83,35 @@ const Wave = styled("span", {
     willChange: "transform",
   },
 });
-
 interface IndexProps {
   initialRecords2025: RecordType[];
   initialRecords2024: RecordType[];
   initialRecords2023: RecordType[];
+  postsByYear: BlogPostsListProps["postsByYear"];
 }
 
 // Static Site Generation - NextJS pre-renders this page at
 // build time using the props returned by getStaticProps.
-const Index = ({ initialRecords2025, initialRecords2024, initialRecords2023 }: IndexProps) => {
+const Index = ({ initialRecords2025, initialRecords2024, initialRecords2023, postsByYear }: IndexProps,
+) => {
   return (
     <>
       <H1>
-        Hi there, I'm Brendan... <Wave>👋</Wave>
+        Building reliable software
       </H1>
 
       <Paragraph>
-        I am a software developer at{" "}
-        <ColorfulLink
-          href="https://www.operationalsystems.com/"
-          title="Operational Systems Inc Homepage"
-          lightColor="#1091b3"
-          darkColor="#6fcbe3"
-        >
-          Operational Systems Inc.
-        </ColorfulLink>{" "}
-        I develop with React, TypeScript, NextJS, PHP and a little bit of Java.
+        Writing about reliable systems, software architecture, and ownership in engineering.
       </Paragraph>
+
+      <BlogSection>
+        <BlogPostsList postsByYear={postsByYear}></BlogPostsList>
+      </BlogSection>
+
+      <SectionHeading>Habit Tracker</SectionHeading>
       <Paragraph>
-        My experience includes leading teams at a Fortune 100 company and helping a tech startup grow from 3 to 20
-        people.
+        A small side project: a React Native habit tracker with live charts built from my own workout data.
       </Paragraph>
-      <Paragraph>
-        I have a bachelor's degree in{" "}
-        <ColorfulLink
-          href="https://www.wm.edu/as/computerscience/"
-          title="W&M Computer Science Department"
-          lightColor="#1091b3"
-          darkColor="#6fcbe3"
-        >
-          Computer Science
-        </ColorfulLink>{" "}
-        from{" "}
-        <ColorfulLink href="https://www.wm.edu/" title="William and Mary" lightColor="#6fbc4e" darkColor="#84d95f">
-          The College of William and Mary in Virginia
-        </ColorfulLink>
-        .
-      </Paragraph>
-      <Paragraph>
-        You can find more of my work on{" "}
-        <ColorfulLink
-          href="https://github.com/blentz100"
-          rel="me"
-          title="Brendan Lentz on GitHub"
-          lightColor="#8d4eff"
-          darkColor="#a379f0"
-        >
-          GitHub
-        </ColorfulLink>{" "}
-        and{" "}
-        <ColorfulLink
-          href="https://www.linkedin.com/in/brendanlentz/"
-          rel="me"
-          title="Brendan Lentz on LinkedIn"
-          lightColor="#0073b1"
-          darkColor="#3b9dd2"
-        >
-          LinkedIn
-        </ColorfulLink>
-        .
-      </Paragraph>
-      <H1>Habit Tracker</H1>
-      <Paragraph>
-        I use my Habit Tracker app to help me do 10,000 pushups. The data below is from my daily workouts, updated in
-        realtime.
-      </Paragraph>
-      <br />
 
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
         <HabitLineChart
@@ -218,12 +161,14 @@ export async function getStaticProps() {
   const records2025 = await fetchHabitsByYear("2025");
   const records2024 = await fetchHabitsByYear("2024");
   const records2023 = await fetchHabitsByYear("2023");
+  const postsByYear = await getPostsByYear();
 
   return {
     props: {
       initialRecords2025: records2025,
       initialRecords2024: records2024,
       initialRecords2023: records2023,
+      postsByYear: postsByYear,
     },
     revalidate: 5,
   };
