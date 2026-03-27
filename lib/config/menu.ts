@@ -1,4 +1,4 @@
-import { HomeIcon, NotesIcon, ProjectsIcon, ToolIcon } from "../../components/Icons";
+import { ActivityIcon, HomeIcon, ProjectsIcon, ToolIcon } from "../../components/Icons";
 import type { MenuItemProps } from "../../components/MenuItem";
 
 export const menuItems: MenuItemProps[] = [
@@ -8,14 +8,14 @@ export const menuItems: MenuItemProps[] = [
     href: "/",
   },
   {
+    icon: ActivityIcon,
+    text: "Habits",
+    href: "/habits",
+  },
+  {
     icon: ToolIcon,
     text: "Tools",
     href: "/tools",
-  },
-  {
-    icon: NotesIcon,
-    text: "Blog",
-    href: "/blog",
   },
   {
     icon: ProjectsIcon,
