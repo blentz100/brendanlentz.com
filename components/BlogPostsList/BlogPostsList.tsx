@@ -23,12 +23,14 @@ const Section = styled("section", {
 });
 
 const Year = styled("h2", {
-  fontSize: "2.2em",
+  fontSize: "1.35em",
   marginTop: 0,
   marginBottom: "0.5em",
+  lineHeight: 1.2,
+  fontWeight: 600,
 
   "@medium": {
-    fontSize: "2em",
+    fontSize: "1.25em",
   },
 });
 

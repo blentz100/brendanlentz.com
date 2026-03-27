@@ -26,11 +26,6 @@ export const defaultSeo: DefaultSeoProps = {
     locale: config.siteLocale?.replace("-", "_"),
     type: "website",
   },
-  twitter: {
-    handle: `@${config.authorSocial?.twitter}`,
-    site: `@${config.authorSocial?.twitter}`,
-    cardType: "summary",
-  },
   additionalMetaTags: [
     {
       name: "viewport",
@@ -110,12 +105,7 @@ export const socialProfileJsonLd: SocialProfileJsonLdProps = {
   sameAs: [
     `${config.baseUrl}/`,
     `https://github.com/${config.authorSocial?.github}`,
-    `https://keybase.io/${config.authorSocial?.keybase}`,
-    `https://twitter.com/${config.authorSocial?.twitter}`,
-    `https://medium.com/@${config.authorSocial?.medium}`,
     `https://www.linkedin.com/in/${config.authorSocial?.linkedin}/`,
-    `https://www.facebook.com/${config.authorSocial?.facebook}`,
-    `https://www.instagram.com/${config.authorSocial?.instagram}/`,
   ],
 };
 

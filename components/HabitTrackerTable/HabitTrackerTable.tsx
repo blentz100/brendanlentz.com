@@ -4,11 +4,11 @@ import { sortBy } from "lodash";
 import { Badge, Container } from "@mantine/core";
 import TableFooter from "../TableFooter/TableFooter";
 import { returnTotal, returnTotalPercentage } from "../../lib/helpers/data-table";
-import { RecordType } from "../../pages";
 import { Tabs } from "@mantine/core";
 import { DateTime } from "luxon";
 import { goals2025 } from "../../lib/config/goals";
 import type { DataTableColumn, DataTableSortStatus } from "mantine-datatable";
+import type { RecordType } from "../../types/habits";
 
 interface HabitTrackerProps {
   initialRecords2025: RecordType[];

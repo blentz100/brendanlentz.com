@@ -1,6 +1,6 @@
 import NextLink from "next/link";
-import { ForkOcticon, NextjsLogo } from "../Icons";
-import { keyframes, styled } from "../../lib/styles/stitches.config";
+import { LinkedInLogo, OctocatOcticon } from "../Icons";
+import { styled } from "../../lib/styles/stitches.config";
 import * as config from "../../lib/config";
 import type { ComponentProps } from "react";
 import NewsletterSignup from "../NewsletterSignup/NewsletterSignup";
@@ -42,18 +42,27 @@ const Link = styled(NextLink, {
   textDecoration: "none",
 });
 
-const NextjsLink = styled(Link, {
-  "&:hover": {
-    color: "$medium",
-  },
-});
-
 const ViewSourceLink = styled(Link, {
   paddingBottom: "2px",
   borderBottom: "1px solid $light",
 
   "&:hover": {
     borderColor: "$kindaLight",
+  },
+});
+
+const SocialLinks = styled("span", {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "0.65rem",
+  marginLeft: "0.9rem",
+});
+
+const SocialLink = styled(Link, {
+  color: "$mediumDark",
+
+  "&:hover": {
+    color: "$medium",
   },
 });
 
@@ -65,24 +74,6 @@ const Icon = styled("svg", {
   fill: "currentColor",
 });
 
-const Heart = styled("span", {
-  display: "inline-block",
-  color: "$error", // somewhat ironically color the heart with the themed "error" red... </3
-
-  "@media (prefers-reduced-motion: no-preference)": {
-    animation: `${keyframes({
-      "0%": { transform: "scale(1)" },
-      "2%": { transform: "scale(1.25)" },
-      "4%": { transform: "scale(1)" },
-      "6%": { transform: "scale(1.2)" },
-      "8%": { transform: "scale(1)" },
-      // pause for ~9 out of 10 seconds
-      "100%": { transform: "scale(1)" },
-    })} 10s ease 7.5s infinite`,
-    willChange: "transform",
-  },
-});
-
 export type FooterProps = ComponentProps<typeof Wrapper>;
 
 const Footer = ({ ...rest }: FooterProps) => {
@@ -91,21 +82,6 @@ const Footer = ({ ...rest }: FooterProps) => {
       <Row>
         <NewsletterSignup/>
         <div>
-          Made with{" "}
-          <Heart title="Fork">
-            <Icon as={ForkOcticon} />
-          </Heart>{" "}
-          and{" "}
-          <NextjsLink
-            href="https://nextjs.org/"
-            title="Powered by Next.js"
-            aria-label="Next.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Icon as={NextjsLogo} />
-          </NextjsLink>
-          .{" "}
           <ViewSourceLink
             href={`https://github.com/${config.githubRepo}`}
             title="View Source on GitHub"
@@ -114,6 +90,26 @@ const Footer = ({ ...rest }: FooterProps) => {
           >
             View source.
           </ViewSourceLink>
+          <SocialLinks>
+            <SocialLink
+              href={`https://github.com/${config.authorSocial.github}`}
+              title="GitHub profile"
+              aria-label="GitHub profile"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon as={OctocatOcticon} />
+            </SocialLink>
+            <SocialLink
+              href={`https://www.linkedin.com/in/${config.authorSocial.linkedin}/`}
+              title="LinkedIn profile"
+              aria-label="LinkedIn profile"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon as={LinkedInLogo} />
+            </SocialLink>
+          </SocialLinks>
         </div>
       </Row>
     </Wrapper>
