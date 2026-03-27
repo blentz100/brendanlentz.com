@@ -2,13 +2,10 @@ import { NextSeo } from "next-seo";
 import Content from "../components/Content";
 import PageTitle from "../components/PageTitle";
 import Link from "../components/Link";
-import Image from "../components/Image";
-import IFrame from "../components/IFrame";
 import Blockquote from "../components/Blockquote";
 import CodeInline from "../components/CodeInline";
 import { H2 } from "../components/Heading";
 import { UnorderedList, ListItem } from "../components/List";
-import { fathomSiteId, siteDomain } from "../lib/config";
 
 
 const Privacy = () => {
@@ -65,23 +62,6 @@ const Privacy = () => {
           are open source, and <Link href="https://github.com/jakejarvis/website-stats">snapshots of the database</Link>{" "}
           are public.
         </p>
-
-        <p>
-          <Link href="https://usefathom.com/ref/ZEYG0O">
-            <strong>Fathom Analytics</strong>
-          </Link>
-          , a <em>very</em> <Link href="https://usefathom.com/privacy-focused-web-analytics">privacy-focused</Link>{" "}
-          service, is also used to gain insights into referrers, search terms, etc.{" "}
-          <strong>without collecting anything identifiable about you</strong>. (My <Link href="/stats/">dashboard</Link>{" "}
-          is completely public, too!)
-        </p>
-
-        <IFrame
-          src={`https://app.usefathom.com/share/${fathomSiteId}/${siteDomain}`}
-          title="Fathom Analytics dashboard"
-          height={500}
-          allowScripts
-        />
 
         <H2 id="third-party">Third-Party Content</H2>
 

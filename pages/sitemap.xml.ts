@@ -16,18 +16,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       changefreq: EnumChangefreq.WEEKLY,
       lastmod: RELEASE_DATE, // timestamp frozen when a new build is deployed
     },
-    { url: "/birthday/" },
-    { url: "/cli/" },
     { url: "/contact/" },
-    { url: "/hillary/" },
-    { url: "/leo/" },
+    { url: "/habits/", changefreq: EnumChangefreq.DAILY },
     { url: "/license/", priority: 0.1, changefreq: EnumChangefreq.YEARLY },
-    { url: "/previously/" },
     { url: "/privacy/", priority: 0.1, changefreq: EnumChangefreq.YEARLY },
     { url: "/projects/", changefreq: EnumChangefreq.DAILY },
-    { url: "/stats/", priority: 0.1, changefreq: EnumChangefreq.YEARLY },
-    { url: "/uses/" },
-    { url: "/y2k/" },
+    { url: "/tools/", changefreq: EnumChangefreq.MONTHLY },
   ];
 
   // push blog posts separately and use their metadata

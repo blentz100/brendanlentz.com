@@ -35,14 +35,6 @@ export const defaultSeo: DefaultSeoProps = {
       name: "author",
       content: config.authorName,
     },
-    {
-      name: "google-site-verification",
-      content: config.verifyGoogle,
-    },
-    {
-      name: "msvalidate.01",
-      content: config.verifyBing,
-    },
   ],
   additionalLinkTags: [
     {
