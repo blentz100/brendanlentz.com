@@ -1,4 +1,5 @@
 {
   "origins": ["http://localhost:3000", "https://www.brendanlentz.com"],
-  "originsRegex": ["http://localhost:[0-9]+","https://www.brendanlentz.com" ]
+  "originsRegex": ["http://localhost:[0-9]+","https://www.brendanlentz.com",
+    "https://homepage-git-[a-zA-Z0-9-]+-brendanlentzgmailcoms-projects\\.vercel\\.app" ]
 }
