@@ -7,17 +7,7 @@ import { HabitLineChart } from "../components/HabitLineChart";
 import { styled } from "../lib/styles/stitches.config";
 import { goals2025 } from "../lib/config/goals";
 import { fetchHabitsByYear } from "../lib/fetchHabits";
-
-type RecordType = {
-  date: string;
-  dateAsNumber: number;
-  jacks: number;
-  meditation: number;
-  pullups: number;
-  pushups: number;
-  situps: number;
-  stairs: number;
-};
+import type { RecordType } from "../types/habits";
 
 type HabitsProps = {
   initialRecords2025: RecordType[];

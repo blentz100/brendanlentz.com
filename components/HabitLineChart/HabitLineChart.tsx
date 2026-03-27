@@ -1,8 +1,8 @@
 import { LineChart } from "@mantine/charts";
-import { RecordType } from "../../pages";
 import { DateTime } from "luxon";
 import { Center, Paper, Stack, Table, Text } from "@mantine/core";
 import { H3 } from "../Heading";
+import type { RecordType } from "../../types/habits";
 
 interface HabitLineChart {
   records: RecordType[];
@@ -49,8 +49,6 @@ const tickFormatter = (value: number) =>
   });
 
 export function HabitLineChart({ records, habit, habitDisplayName, goal }: HabitLineChart) {
-  let runningHabitTotal = 0;
-
   // Determine the year from the first record
   const year = records.length > 0 ? DateTime.fromISO(records[0].date).year : DateTime.now().year;
   const daysInYear = DateTime.local(year).daysInYear;

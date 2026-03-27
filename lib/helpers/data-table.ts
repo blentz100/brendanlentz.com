@@ -1,4 +1,4 @@
-import { RecordType } from "../../pages";
+import type { RecordType } from "../../types/habits";
 
 // add this type to strip out things we don't want to count from the records,
 // so the reduce function works well and doesn't throw TS errors because we
