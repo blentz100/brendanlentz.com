@@ -50,10 +50,6 @@ const TextNormalizer: React.FC = () => {
 
     return (
         <Card shadow="sm" p="lg" mt="lg" radius="md" withBorder>
-            <Text size="xl" fw={600} mb="md">
-                Text Normalizer
-            </Text>
-
             {/* Sample words */}
             <Group mb="lg" >
                 {sampleWords.map(({ label, value }) => (
