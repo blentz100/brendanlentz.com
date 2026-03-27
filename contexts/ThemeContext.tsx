@@ -74,6 +74,7 @@ export const ThemeProvider = ({
     const colorScheme = preferredTheme && ["light", "dark"].includes(preferredTheme) ? preferredTheme : systemTheme;
 
     document.documentElement.style?.setProperty("color-scheme", colorScheme);
+    document.documentElement.setAttribute("data-mantine-color-scheme", colorScheme);
   }, [preferredTheme, systemTheme]);
 
   return (
