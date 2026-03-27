@@ -24,7 +24,7 @@
 
 # HUMAN
 
-    Jake Jarvis (@jakejarvis)
+    Brendan Lentz
 
 # TECHNOLOGY
 
@@ -33,24 +33,19 @@
   - Stitches
   - Fauna
   - Giscus
-  - Fathom Analytics
-  - ...and more: https://jarv.is/uses/
 
 # VIEW SOURCE
 
-    https://github.com/jakejarvis/jarv.is
+    https://github.com/blentz100/brendanlentz.com
 
 # PRIVACY POLICY
 
-    https://jarv.is/privacy/
+    https://brendanlentz.com/privacy/
 
-# TOR MIRROR
-
-    http://jarvis2i2vp4j4tbxjogsnqdemnte5xhzyi7hziiyzxwge3hzmh57zad.onion/
 
 # LICENSE
 
     All content is licensed under CC-BY-4.0, an
     open & permissive Creative Commons license:
 
-    https://jarv.is/license/
+    https://brendanlentz.com/license/
