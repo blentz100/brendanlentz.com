@@ -114,7 +114,7 @@ const PostMeta = ({ slug, date, title, htmlTitle, tags = [] }: PostMetaProps) =>
             <span>
               <Icon as={ViewsIcon} />
             </span>
-            <HitCounter slug={`notes/${slug}`} />
+            <HitCounter slug={`blog/${slug}`} />
           </MetaItem>
         )}
       </Wrapper>

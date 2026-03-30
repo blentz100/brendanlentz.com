@@ -127,6 +127,16 @@ module.exports = (phase, { defaultConfig }) => {
       // NOTE: don't remove this, it ensures de-AMPing the site hasn't offended our google overlords too badly!
       // https://developers.google.com/search/docs/advanced/experience/remove-amp#remove-only-amp
       { source: "/notes/:slug/amp.html", destination: "/blog/:slug/", statusCode: 301 },
+      {
+        source: '/notes',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/notes/:path*',
+        destination: '/blog/:path*',
+        permanent: true,
+      },
     ],
   };
 
