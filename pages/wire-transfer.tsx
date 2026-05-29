@@ -513,6 +513,22 @@ const AmountValue = styled("span", {
   lineHeight: 1.2,
 });
 
+const AmountInput = styled("input", {
+  fontFamily: "$mono",
+  fontSize: "0.95rem",
+  fontWeight: 500,
+  color: "$text",
+  letterSpacing: "0.04em",
+  background: "$backgroundInner",
+  border: "1px solid $light",
+  borderRadius: "0.4rem",
+  padding: "0.45rem 0.75rem",
+  outline: "none",
+  transition: "border-color 0.15s ease",
+  width: "14rem",
+  "&:focus": { borderColor: "$link" },
+});
+
 const VerifiedBadge = styled("span", {
   display: "inline-flex",
   alignItems: "center",
@@ -1152,6 +1168,7 @@ const WireTransferPage = () => {
   const [lookupState, setLookupState] = useState<LookupState>("idle");
   const [showBankSearch, setShowBankSearch] = useState(false);
   const [bankSearchQuery, setBankSearchQuery] = useState("");
+  const [amountStr, setAmountStr] = useState(String(TRANSFER.amount));
   const [referenceId, setReferenceId] = useState("");
   const [submittedAt, setSubmittedAt] = useState("");
   const skipLookupRef = useRef(false);
@@ -1256,6 +1273,7 @@ const WireTransferPage = () => {
     setRoutingNumber("");
     setBankName(null);
     setLookupState("idle");
+    setAmountStr(String(TRANSFER.amount));
     setReferenceId("");
     setSubmittedAt("");
   };
@@ -1330,7 +1348,24 @@ const WireTransferPage = () => {
                     </Field>
                     <Field>
                       <FieldLabel>Amount</FieldLabel>
-                      <AmountValue>${TRANSFER.amount.toLocaleString()}</AmountValue>
+                      <AmountInput
+                        type="text"
+                        inputMode="numeric"
+                        value={(() => {
+                          if (!amountStr) return "";
+                          const [intPart, decPart] = amountStr.split(".");
+                          const formatted = (parseInt(intPart || "0", 10) || 0).toLocaleString();
+                          return "$" + formatted + (decPart !== undefined ? "." + decPart : "");
+                        })()}
+                        onChange={(e) => {
+                          const stripped = e.target.value.replace(/[^0-9.]/g, "");
+                          const parts = stripped.split(".");
+                          if (parts.length > 2) return;
+                          if (parts[1] !== undefined && parts[1].length > 2) return;
+                          setAmountStr(stripped);
+                        }}
+                        aria-label="Transfer amount in dollars"
+                      />
                     </Field>
                     <Field>
                       <FieldLabel>Memo</FieldLabel>
@@ -1384,7 +1419,7 @@ const WireTransferPage = () => {
                     </Field>
                     <Field>
                       <FieldLabel>Amount</FieldLabel>
-                      <AmountValue>${TRANSFER.amount.toLocaleString()}</AmountValue>
+                      <AmountValue>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: amountStr.includes(".") ? 2 : 0, maximumFractionDigits: 2 }).format(parseFloat(amountStr) || 0)}</AmountValue>
                     </Field>
                     <Field>
                       <FieldLabel>Routing number</FieldLabel>
@@ -1411,7 +1446,7 @@ const WireTransferPage = () => {
                     </ChecklistItem>
                     <ChecklistItem>
                       <CheckCircle aria-hidden>✓</CheckCircle>
-                      Amount of <strong>$12,500.00</strong> is correct
+                      Amount of <strong>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: amountStr.includes(".") ? 2 : 0, maximumFractionDigits: 2 }).format(parseFloat(amountStr) || 0)}</strong> is correct
                     </ChecklistItem>
                     <ChecklistItem>
                       <CheckCircle aria-hidden>✓</CheckCircle>
