@@ -1141,6 +1141,39 @@ const DisclaimerBox = styled("p", {
   textAlign: "center",
 });
 
+// Engineering Considerations
+
+const ConsiderationsHeading = styled("h2", {
+  fontSize: "1rem",
+  fontWeight: 600,
+  color: "$mediumDark",
+  margin: "0 0 1.25rem",
+});
+
+const ConsiderationList = styled("div", {
+  display: "grid",
+  gap: "1.25rem",
+});
+
+const ConsiderationItem = styled("div", {
+  borderLeft: "2px solid $link",
+  paddingLeft: "0.85rem",
+});
+
+const ConsiderationTitle = styled("p", {
+  margin: "0 0 0.2rem",
+  fontSize: "0.875rem",
+  fontWeight: 600,
+  color: "$text",
+});
+
+const ConsiderationDesc = styled("p", {
+  margin: 0,
+  fontSize: "0.8rem",
+  color: "$medium",
+  lineHeight: 1.6,
+});
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 type Step = "setup" | "review" | "submitted";
@@ -1521,6 +1554,31 @@ const WireTransferPage = () => {
         </Section>
 
 
+
+        {/* Engineering Considerations */}
+        <Section>
+          <ConsiderationsHeading>Product Engineering Considerations</ConsiderationsHeading>
+          <ConsiderationList>
+            <ConsiderationItem>
+              <ConsiderationTitle>Behavioral anomaly scoring</ConsiderationTitle>
+              <ConsiderationDesc>
+                Score each transfer against the user's historical patterns — typical amounts, known recipients, time of day, originating device. Require step-up authentication when a transfer deviates significantly. This catches account takeover fraud without adding friction to routine transfers.
+              </ConsiderationDesc>
+            </ConsiderationItem>
+            <ConsiderationItem>
+              <ConsiderationTitle>Estimated Delivery Times</ConsiderationTitle>
+              <ConsiderationDesc>
+                Provide real-time delivery estimates during wire creation, highlighting when a transfer may miss same-day processing windows. Giving customers visibility upfront reduces uncertainty and helps prevent time-sensitive payment mistakes.
+              </ConsiderationDesc>
+            </ConsiderationItem>
+            <ConsiderationItem>
+              <ConsiderationTitle>ISO 20022 Data Opportunities</ConsiderationTitle>
+              <ConsiderationDesc>
+                Explore richer ISO 20022 payment data to improve the wire experience over time, such as clearer fee disclosure, better recipient details, structured remittance information, and more useful transfer status updates.
+              </ConsiderationDesc>
+            </ConsiderationItem>
+          </ConsiderationList>
+        </Section>
 
         {/* Footnotes */}
         <FootnotesSection>
