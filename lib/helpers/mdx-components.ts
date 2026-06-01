@@ -22,3 +22,4 @@ export const CodePen = dynamic(() => import("../../components/CodePenEmbed"));
 
 // One-offs for specific posts:
 export const OctocatLink = dynamic(() => import("../../components/OctocatLink"));
+export const WireTransferDemo = dynamic(() => import("../../components/WireTransferDemo"));

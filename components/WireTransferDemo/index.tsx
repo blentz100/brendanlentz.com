@@ -1,8 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { NextSeo } from "next-seo";
-import Content from "../components/Content";
-import PageTitle from "../components/PageTitle";
-import { styled, keyframes } from "../lib/styles/stitches.config";
+import { styled, keyframes } from "../../lib/styles/stitches.config";
 
 // ── Mock data ──────────────────────────────────────────────────────────────────
 
@@ -12,8 +9,6 @@ const TRANSFER = {
   amount: 150000000,
   memo: "Series D",
   deliveryEstimate: "Same business day",
-  referenceId: "WT-8F42-K91B",
-  submittedAt: "May 27, 2026 · 10:42 AM ET",
 };
 
 type TimelineStatus = "complete" | "active" | "pending";
@@ -51,7 +46,6 @@ const TIMELINE: TimelineStep[] = [
     detail: "Expected same business day if accepted before cutoff.",
   },
 ];
-
 
 // ── Routing number validation ─────────────────────────────────────────────────
 
@@ -400,9 +394,8 @@ const pulse = keyframes({
 
 // ── Styled components ─────────────────────────────────────────────────────────
 
-const PageWrapper = styled(Content, {
-  maxWidth: "680px",
-  margin: "0 auto",
+const DemoWrapper = styled("div", {
+  margin: "2rem 0 0",
 });
 
 const Section = styled("section", {
@@ -412,17 +405,6 @@ const Section = styled("section", {
     marginTop: 0,
   },
 });
-
-// Hero
-
-const HeroIntro = styled("p", {
-  textAlign: "left",
-  color: "$medium",
-  fontSize: "1em",
-  lineHeight: 1.75,
-  margin: "0 0 1.25rem",
-});
-
 
 // Demo card
 
@@ -504,7 +486,6 @@ const FieldValue = styled("span", {
   fontWeight: 500,
   lineHeight: 1.4,
 });
-
 
 const AmountInput = styled("input", {
   fontFamily: "$mono",
@@ -1060,41 +1041,6 @@ const ExpandHint = styled("span", {
   fontWeight: 400,
 });
 
-
-// Footnotes
-
-const FootnotesSection = styled("ol", {
-  listStyle: "none",
-  margin: "2rem 0 0",
-  padding: 0,
-  borderTop: "1px solid $kindaLight",
-  paddingTop: "1rem",
-  counterReset: "footnotes",
-});
-
-const FootnoteItem = styled("li", {
-  display: "flex",
-  gap: "0.5rem",
-  fontSize: "0.78rem",
-  color: "$mediumLight",
-  lineHeight: 1.55,
-  marginBottom: "0.4rem",
-  counterIncrement: "footnotes",
-
-  "&::before": {
-    content: "counter(footnotes) '.'",
-    flexShrink: 0,
-    fontWeight: 600,
-    minWidth: "1.1rem",
-  },
-
-  "& a": {
-    color: "inherit",
-    textDecorationColor: "$light",
-    "&:hover": { color: "$medium" },
-  },
-});
-
 // Friction callouts
 
 const FrictionGrid = styled("div", {
@@ -1130,7 +1076,7 @@ const FrictionDesc = styled("p", {
 // Disclaimer
 
 const DisclaimerBox = styled("p", {
-  marginTop: "3rem",
+  marginTop: "2rem",
   padding: "0.9rem 1.2rem",
   borderRadius: "0.45rem",
   background: "$superLight",
@@ -1141,40 +1087,7 @@ const DisclaimerBox = styled("p", {
   textAlign: "center",
 });
 
-// Engineering Considerations
-
-const ConsiderationsHeading = styled("h2", {
-  fontSize: "1rem",
-  fontWeight: 600,
-  color: "$mediumDark",
-  margin: "0 0 1.25rem",
-});
-
-const ConsiderationList = styled("div", {
-  display: "grid",
-  gap: "1.25rem",
-});
-
-const ConsiderationItem = styled("div", {
-  borderLeft: "2px solid $link",
-  paddingLeft: "0.85rem",
-});
-
-const ConsiderationTitle = styled("p", {
-  margin: "0 0 0.2rem",
-  fontSize: "0.875rem",
-  fontWeight: 600,
-  color: "$text",
-});
-
-const ConsiderationDesc = styled("p", {
-  margin: 0,
-  fontSize: "0.8rem",
-  color: "$medium",
-  lineHeight: 1.6,
-});
-
-// ── Page ──────────────────────────────────────────────────────────────────────
+// ── Component ─────────────────────────────────────────────────────────────────
 
 type Step = "setup" | "review" | "submitted";
 
@@ -1186,7 +1099,7 @@ const statusLabel: Record<TimelineStatus, string> = {
 
 type LookupState = "idle" | "loading" | "found" | "not-found" | "error";
 
-const WireTransferPage = () => {
+const WireTransferDemo = () => {
   const [step, setStep] = useState<Step>("setup");
   const [expandedItem, setExpandedItem] = useState<number | null>(null);
   const [routingNumber, setRoutingNumber] = useState("");
@@ -1310,29 +1223,7 @@ const WireTransferPage = () => {
 
   return (
     <>
-      <NextSeo
-        title="Wire Transfer Confidence — Product Engineering Concept"
-        description="A product engineering prototype exploring how transparency and clear system feedback reduce anxiety in wire transfers."
-        noindex
-      />
-
-      <PageTitle>Reducing Friction in Wire Transfers</PageTitle>
-
-      <PageWrapper>
-        {/* Hero */}
-        <Section>
-          <HeroIntro>
-            The U.S. wire transfer ecosystem is enormous, with the Federal Reserve's Fedwire network alone processing over $1.1 quadrillion in transfers annually, averaging approximately $4.6 trillion every business day.{" "}
-            <a
-              href="#fn-1"
-              style={{ fontSize: "0.75em", verticalAlign: "super", color: "inherit", opacity: 0.55, textDecoration: "none" }}
-            >
-              [1]
-            </a>{" "}
-            At that scale, even small improvements in wire transfer efficiency, error reduction, or transparency costs can create significant value for both financial institutions and their customers.
-          </HeroIntro>
-        </Section>
-
+      <DemoWrapper>
         {/* Friction callouts */}
         <FrictionGrid>
           <FrictionItem>
@@ -1472,7 +1363,7 @@ const WireTransferPage = () => {
                     </ChecklistItem>
                     <ChecklistItem>
                       <CheckCircle aria-hidden>✓</CheckCircle>
-                      Amount of <strong>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: amountStr.includes(".") ? 2 : 0, maximumFractionDigits: 2 }).format(parseFloat(amountStr) || 0)}</strong> is correct
+                      <span>Amount of <strong>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: amountStr.includes(".") ? 2 : 0, maximumFractionDigits: 2 }).format(parseFloat(amountStr) || 0)}</strong> is correct</span>
                     </ChecklistItem>
                     <ChecklistItem>
                       <CheckCircle aria-hidden>✓</CheckCircle>
@@ -1553,52 +1444,10 @@ const WireTransferPage = () => {
           </DemoCard>
         </Section>
 
-
-
-        {/* Engineering Considerations */}
-        <Section>
-          <ConsiderationsHeading>Product Engineering Considerations</ConsiderationsHeading>
-          <ConsiderationList>
-            <ConsiderationItem>
-              <ConsiderationTitle>Behavioral anomaly scoring</ConsiderationTitle>
-              <ConsiderationDesc>
-                Score each transfer against the user's historical patterns — typical amounts, known recipients, time of day, originating device. Require step-up authentication when a transfer deviates significantly. This catches account takeover fraud without adding friction to routine transfers.
-              </ConsiderationDesc>
-            </ConsiderationItem>
-            <ConsiderationItem>
-              <ConsiderationTitle>Estimated Delivery Times</ConsiderationTitle>
-              <ConsiderationDesc>
-                Provide real-time delivery estimates during wire creation, highlighting when a transfer may miss same-day processing windows. Giving customers visibility upfront reduces uncertainty and helps prevent time-sensitive payment mistakes.
-              </ConsiderationDesc>
-            </ConsiderationItem>
-            <ConsiderationItem>
-              <ConsiderationTitle>ISO 20022 Data Opportunities</ConsiderationTitle>
-              <ConsiderationDesc>
-                Explore richer ISO 20022 payment data to improve the wire experience over time, such as clearer fee disclosure, better recipient details, structured remittance information, and more useful transfer status updates.
-              </ConsiderationDesc>
-            </ConsiderationItem>
-          </ConsiderationList>
-        </Section>
-
-        {/* Footnotes */}
-        <FootnotesSection>
-          <FootnoteItem id="fn-1">
-            Federal Reserve Financial Services. <em>Fedwire Funds Service — Annual Statistics.</em>{" "}
-            <a
-              href="https://www.frbservices.org/resources/financial-services/wires/volume-value-stats/annual-stats.html"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              frbservices.org
-            </a>
-          </FootnoteItem>
-        </FootnotesSection>
-
-        {/* Disclaimer */}
         <DisclaimerBox>
           This is an independent product engineering concept built as an application artifact. It is not affiliated with any real bank.
         </DisclaimerBox>
-      </PageWrapper>
+      </DemoWrapper>
 
       {/* Bank search modal */}
       {showBankSearch && (
@@ -1637,7 +1486,7 @@ const WireTransferPage = () => {
                   </BankRow>
                 ))
               ) : (
-                <ModalEmptyState>No banks match "{bankSearchQuery}"</ModalEmptyState>
+                <ModalEmptyState>No banks match &ldquo;{bankSearchQuery}&rdquo;</ModalEmptyState>
               )}
             </BankList>
           </ModalCard>
@@ -1647,4 +1496,4 @@ const WireTransferPage = () => {
   );
 };
 
-export default WireTransferPage;
+export default WireTransferDemo;

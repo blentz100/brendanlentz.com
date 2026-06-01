@@ -1,0 +1,28 @@
+---
+title: "Reducing Friction in Wire Transfers"
+date: 2026-06-01
+description: "A product engineering exploration of how transparency and better UX can reduce anxiety in wire transfers."
+tags:
+  - product-engineering
+  - fintech
+---
+
+The U.S. wire transfer ecosystem is enormous, with the Federal Reserve's Fedwire network alone processing over $1.1 quadrillion in transfers annually, averaging approximately $4.6 trillion every business day.[^1] At that scale, even small improvements in wire transfer efficiency, error reduction, or transparency can create significant value for both financial institutions and their customers.
+
+<WireTransferDemo />
+
+## Product Engineering Considerations
+
+### Behavioral anomaly scoring
+
+Score each transfer against the user's historical patterns — typical amounts, known recipients, time of day, originating device. Require step-up authentication when a transfer deviates significantly. This catches account takeover fraud without adding friction to routine transfers.
+
+### Estimated delivery times
+
+Provide real-time delivery estimates during wire creation, highlighting when a transfer may miss same-day processing windows. Giving customers visibility upfront reduces uncertainty and helps prevent time-sensitive payment mistakes.
+
+### ISO 20022 data opportunities
+
+Explore richer ISO 20022 payment data to improve the wire experience over time, such as clearer fee disclosure, better recipient details, structured remittance information, and more useful transfer status updates.
+
+[^1]: Federal Reserve Financial Services. *Fedwire Funds Service — Annual Statistics.* [frbservices.org](https://www.frbservices.org/resources/financial-services/wires/volume-value-stats/annual-stats.html)
