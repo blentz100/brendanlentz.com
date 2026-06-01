@@ -7,9 +7,9 @@ import { styled, keyframes } from "../lib/styles/stitches.config";
 // ── Mock data ──────────────────────────────────────────────────────────────────
 
 const TRANSFER = {
-  recipient: "Mercury",
+  recipient: "First National Bank",
   bankName: "First National Bank",
-  amount: 200000000,
+  amount: 150000000,
   memo: "Series D",
   deliveryEstimate: "Same business day",
   referenceId: "WT-8F42-K91B",
@@ -1447,7 +1447,7 @@ const WireTransferPage = () => {
                       <FieldLabel>Amount</FieldLabel>
                       <FieldValue>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: amountStr.includes(".") ? 2 : 0, maximumFractionDigits: 2 }).format(parseFloat(amountStr) || 0)}</FieldValue>
                     </Field>
-                    <Field>
+                    <Field css={{ gridColumn: "1 / -1" }}>
                       <FieldLabel>Routing number</FieldLabel>
                       <FieldValue css={{ fontFamily: "$mono", letterSpacing: "0.04em" }}>
                         {routingNumber}
