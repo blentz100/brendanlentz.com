@@ -505,13 +505,6 @@ const FieldValue = styled("span", {
   lineHeight: 1.4,
 });
 
-const AmountValue = styled("span", {
-  fontSize: "1.7rem",
-  fontWeight: 700,
-  color: "$text",
-  letterSpacing: "-0.02em",
-  lineHeight: 1.2,
-});
 
 const AmountInput = styled("input", {
   fontFamily: "$mono",
@@ -1419,7 +1412,7 @@ const WireTransferPage = () => {
                     </Field>
                     <Field>
                       <FieldLabel>Amount</FieldLabel>
-                      <AmountValue>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: amountStr.includes(".") ? 2 : 0, maximumFractionDigits: 2 }).format(parseFloat(amountStr) || 0)}</AmountValue>
+                      <FieldValue>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: amountStr.includes(".") ? 2 : 0, maximumFractionDigits: 2 }).format(parseFloat(amountStr) || 0)}</FieldValue>
                     </Field>
                     <Field>
                       <FieldLabel>Routing number</FieldLabel>
