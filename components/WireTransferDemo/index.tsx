@@ -1114,15 +1114,17 @@ const WireTransferDemo = () => {
 
   const routingValid = validateRoutingNumber(routingNumber);
   const isNineDigits = /^\d{9}$/.test(routingNumber);
+  // True when the routing number is either checksumvalid or was confirmed via directory selection
+  const routingConfirmed = routingValid || (lookupState === "found" && !!bankName);
 
   useEffect(() => {
+    if (skipLookupRef.current) {
+      skipLookupRef.current = false;
+      return;
+    }
     if (!routingValid) {
       setBankName(null);
       setLookupState("idle");
-      return;
-    }
-    if (skipLookupRef.current) {
-      skipLookupRef.current = false;
       return;
     }
     setLookupState("loading");
@@ -1147,7 +1149,7 @@ const WireTransferDemo = () => {
 
   const routingInputValidity = !isNineDigits
     ? "empty"
-    : routingValid
+    : routingConfirmed
       ? "valid"
       : "invalid";
 
@@ -1156,17 +1158,17 @@ const WireTransferDemo = () => {
       ? { state: "empty",        text: "Enter a 9-digit ABA routing number" }
       : !isNineDigits
         ? { state: "empty",        text: "A routing number should be exactly 9 digits" }
+      : lookupState === "found" && bankName
+        ? { state: "valid",        text: `✓ ${bankName}` }
       : !routingValid
         ? { state: "invalid",      text: "We don't recognize that routing number, please double check it." }
         : lookupState === "loading"
           ? { state: "empty",        text: "Checking..." }
-          : lookupState === "found" && bankName
-            ? { state: "valid",        text: `✓ ${bankName}` }
-            : lookupState === "not-found"
-              ? { state: "invalid",      text: "We don't recognize that routing number, please double check it." }
-              : lookupState === "error"
-                ? { state: "unrecognized", text: "✓ Valid — lookup unavailable" }
-                : { state: "empty",        text: "Checking..." };
+          : lookupState === "not-found"
+            ? { state: "invalid",      text: "We don't recognize that routing number, please double check it." }
+            : lookupState === "error"
+              ? { state: "unrecognized", text: "✓ Valid — lookup unavailable" }
+              : { state: "empty",        text: "Checking..." };
 
   const openBankSearch = () => {
     setBankSearchQuery("");
@@ -1318,8 +1320,8 @@ const WireTransferDemo = () => {
                   <ButtonRow>
                     <PrimaryButton
                       onClick={() => setStep("review")}
-                      disabled={!routingValid}
-                      css={!routingValid ? { opacity: 0.45, cursor: "not-allowed" } : {}}
+                      disabled={!routingConfirmed}
+                      css={!routingConfirmed ? { opacity: 0.45, cursor: "not-allowed" } : {}}
                     >
                       Review transfer →
                     </PrimaryButton>
