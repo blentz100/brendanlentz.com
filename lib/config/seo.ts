@@ -12,6 +12,7 @@ import chrome192Png from "../../public/static/favicons/android-chrome-192x192.pn
 import maskable512Png from "../../public/static/favicons/maskable-512x512.png";
 import maskable192Png from "../../public/static/favicons/maskable-192x192.png";
 import meJpg from "../../public/static/images/me.jpg";
+import ogDefaultPng from "../../public/static/images/og-default.png";
 
 // Most of this file simply takes the data already defined in ./config.js and translates it into objects that are
 // compatible with next-seo's props:
@@ -119,4 +120,5 @@ export const favicons: Record<string, StaticImageData> = {
   maskable512Png,
   maskable192Png,
   meJpg,
+  ogDefaultPng,
 };

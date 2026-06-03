@@ -15,7 +15,7 @@ import type { PostWithSource, PostFrontMatter } from "../../types";
 const Note = ({ frontMatter, source }: PostWithSource) => {
   const imageUrl = frontMatter.image
     ? new URL(frontMatter.image, config.baseUrl).toString()
-    : `${config.baseUrl}${favicons.meJpg.src}`;
+    : `${config.baseUrl}${favicons.ogDefaultPng.src}`;
 
   return (
     <>
