@@ -15,11 +15,15 @@ const compat = new FlatCompat({
 });
 
 export default [{
-    ignores: ["**/README.md"],
+    ignores: ["**/README.md",
+        ".next/**",
+        "node_modules/**",
+        "out/**",
+        "coverage/**",
+        "public/**"],
 }, ...compat.extends(
-    "@jakejarvis/eslint-config",
     "next/core-web-vitals",
-    //"plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
 ), {
     plugins: {
