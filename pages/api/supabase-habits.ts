@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import {fetchHabitsByYear} from "../../lib/fetchHabits";
-
+import { fetchHabitsByYear } from "../../lib/fetchHabits";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { year } = req.query;

@@ -13,14 +13,14 @@ const HitCounter = ({ slug, className }: HitCounterProps) => {
     slug ? "/api/hits/" : null,
     async (url) => {
       const res = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ slug }),
-      })
+      });
 
-      if (!res.ok){
+      if (!res.ok) {
         throw new Error("Failed to fetch hits");
       }
       return res.json();

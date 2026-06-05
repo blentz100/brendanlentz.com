@@ -7,7 +7,6 @@ import CodeInline from "../components/CodeInline";
 import { H2 } from "../components/Heading";
 import { UnorderedList, ListItem } from "../components/List";
 
-
 const Privacy = () => {
   return (
     <>

@@ -33,13 +33,13 @@ export function HabitTrackerTable({ initialRecords2025, initialRecords2024, init
         const [response2025, response2024, response2023] = await Promise.all([
           fetch("/api/supabase-habits?year=2025"),
           fetch("/api/supabase-habits?year=2024"),
-          fetch("/api/supabase-habits?year=2023")
+          fetch("/api/supabase-habits?year=2023"),
         ]);
 
         const [data2025, data2024, data2023] = await Promise.all([
           response2025.json(),
           response2024.json(),
-          response2023.json()
+          response2023.json(),
         ]);
 
         if (data2025 && data2025.dataArray) {
@@ -61,9 +61,12 @@ export function HabitTrackerTable({ initialRecords2025, initialRecords2024, init
 
   // Create a single function to generate columns for any year
   const createColumns = (year: number, records: RecordType[]): DataTableColumn<RecordType>[] => {
-    const goals = year === 2025 ? goals2025 :
-                  year === 2024 ? { pushups: 10000, situps: 7000, jacks: 14000, stairs: 200, pullups: 600 } :
-                  { pushups: 10000, situps: 3000, jacks: 6000, stairs: 200, pullups: 400 };
+    const goals =
+      year === 2025
+        ? goals2025
+        : year === 2024
+        ? { pushups: 10000, situps: 7000, jacks: 14000, stairs: 200, pullups: 600 }
+        : { pushups: 10000, situps: 3000, jacks: 6000, stairs: 200, pullups: 400 };
 
     const daysInYear = DateTime.local(year).daysInYear;
     const currentDay = year === 2025 ? DateTime.now().ordinal : daysInYear;
@@ -77,9 +80,10 @@ export function HabitTrackerTable({ initialRecords2025, initialRecords2024, init
         render: (item) => (
           <div>
             {item.date}
-            {item.date === new Date().toISOString().split('T')[0] ? (
+            {item.date === new Date().toISOString().split("T")[0] ? (
               <Badge size="xs" color="blue" ml={10}>
-                {" "}Today{" "}
+                {" "}
+                Today{" "}
               </Badge>
             ) : null}
           </div>
@@ -181,7 +185,7 @@ export function HabitTrackerTable({ initialRecords2025, initialRecords2024, init
           <Tabs.Tab value="2023">2023</Tabs.Tab>
         </Tabs.List>
         <Tabs.Panel value="2025" pt="xs">
-        <DataTable<RecordType>
+          <DataTable<RecordType>
             columns={createColumns(2025, habitRecords2025)}
             records={getSortedRecords(habitRecords2025)}
             withTableBorder
@@ -190,7 +194,7 @@ export function HabitTrackerTable({ initialRecords2025, initialRecords2024, init
             highlightOnHover
             scrollAreaProps={{ type: "never" }}
             sortStatus={sortStatus}
-            onSortStatusChange={status => setSortStatus(status)}
+            onSortStatusChange={(status) => setSortStatus(status)}
             idAccessor={"date"}
           />
         </Tabs.Panel>
@@ -204,7 +208,7 @@ export function HabitTrackerTable({ initialRecords2025, initialRecords2024, init
             highlightOnHover
             scrollAreaProps={{ type: "never" }}
             sortStatus={sortStatus}
-            onSortStatusChange={status => setSortStatus(status)}
+            onSortStatusChange={(status) => setSortStatus(status)}
             idAccessor={"date"}
           />
         </Tabs.Panel>
@@ -218,7 +222,7 @@ export function HabitTrackerTable({ initialRecords2025, initialRecords2024, init
             highlightOnHover
             scrollAreaProps={{ type: "never" }}
             sortStatus={sortStatus}
-            onSortStatusChange={status => setSortStatus(status)}
+            onSortStatusChange={(status) => setSortStatus(status)}
             idAccessor={"date"}
           />
         </Tabs.Panel>

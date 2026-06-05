@@ -22,7 +22,7 @@ const AutoClearConsole = () => {
   return <SandpackConsole key={consoleKey} className="mt-2 border w-full min-h-[100px] rounded" />;
 };
 
-const CodePlayground = React.memo( () =>  {
+const CodePlayground = React.memo(() => {
   const { activeTheme } = useTheme();
   const sandpackTheme =
     activeTheme === "dark"
@@ -108,11 +108,7 @@ body {
         <SandpackLayout>
           <SandpackCodeEditor className="w-full border rounded" />
         </SandpackLayout>
-        <SandpackPreview
-          showOpenInCodeSandbox={false}
-          className="mt-4 border w-full rounded"
-          style={{ height: 220 }}
-        />
+        <SandpackPreview showOpenInCodeSandbox={false} className="mt-4 border w-full rounded" style={{ height: 220 }} />
         <AutoClearConsole />
       </SandpackProvider>
     </div>

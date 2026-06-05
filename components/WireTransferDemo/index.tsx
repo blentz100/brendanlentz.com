@@ -57,7 +57,10 @@ function validateRoutingNumber(rtn: string): boolean {
   return sum % 10 === 0;
 }
 
-interface BankEntry { name: string; routing: string }
+interface BankEntry {
+  name: string;
+  routing: string;
+}
 const BANK_DIRECTORY: BankEntry[] = [
   { name: "Abilene Teachers FCU", routing: "076008641" },
   { name: "Academy Bank", routing: "102003154" },
@@ -632,9 +635,9 @@ const RoutingInput = styled("input", {
 
   variants: {
     validity: {
-      valid:   { borderColor: "$success" },
+      valid: { borderColor: "$success" },
       invalid: { borderColor: "$error" },
-      empty:   {},
+      empty: {},
     },
   },
 });
@@ -646,10 +649,10 @@ const ValidationFeedback = styled("span", {
 
   variants: {
     state: {
-      valid:        { color: "$success" },
+      valid: { color: "$success" },
       unrecognized: { color: "$medium" },
-      invalid:      { color: "$error" },
-      empty:        { color: "$mediumLight" },
+      invalid: { color: "$error" },
+      empty: { color: "$mediumLight" },
     },
   },
 });
@@ -1147,28 +1150,24 @@ const WireTransferDemo = () => {
     return () => clearTimeout(timer);
   }, [routingNumber, routingValid]);
 
-  const routingInputValidity = !isNineDigits
-    ? "empty"
-    : routingConfirmed
-      ? "valid"
-      : "invalid";
+  const routingInputValidity = !isNineDigits ? "empty" : routingConfirmed ? "valid" : "invalid";
 
   const routingFeedback: { state: "valid" | "unrecognized" | "invalid" | "empty"; text: string } =
     routingNumber === ""
-      ? { state: "empty",        text: "Enter a 9-digit ABA routing number" }
+      ? { state: "empty", text: "Enter a 9-digit ABA routing number" }
       : !isNineDigits
-        ? { state: "empty",        text: "A routing number should be exactly 9 digits" }
+      ? { state: "empty", text: "A routing number should be exactly 9 digits" }
       : lookupState === "found" && bankName
-        ? { state: "valid",        text: `✓ ${bankName}` }
+      ? { state: "valid", text: `✓ ${bankName}` }
       : !routingValid
-        ? { state: "invalid",      text: "We don't recognize that routing number, please double check it." }
-        : lookupState === "loading"
-          ? { state: "empty",        text: "Checking..." }
-          : lookupState === "not-found"
-            ? { state: "invalid",      text: "We don't recognize that routing number, please double check it." }
-            : lookupState === "error"
-              ? { state: "unrecognized", text: "✓ Valid — lookup unavailable" }
-              : { state: "empty",        text: "Checking..." };
+      ? { state: "invalid", text: "We don't recognize that routing number, please double check it." }
+      : lookupState === "loading"
+      ? { state: "empty", text: "Checking..." }
+      : lookupState === "not-found"
+      ? { state: "invalid", text: "We don't recognize that routing number, please double check it." }
+      : lookupState === "error"
+      ? { state: "unrecognized", text: "✓ Valid — lookup unavailable" }
+      : { state: "empty", text: "Checking..." };
 
   const openBankSearch = () => {
     setBankSearchQuery("");
@@ -1186,24 +1185,34 @@ const WireTransferDemo = () => {
     setBankSearchQuery("");
   };
 
-  const filteredBanks = BANK_DIRECTORY.filter((b) =>
-    b.name.toLowerCase().includes(bankSearchQuery.toLowerCase())
-  );
+  const filteredBanks = BANK_DIRECTORY.filter((b) => b.name.toLowerCase().includes(bankSearchQuery.toLowerCase()));
 
   useEffect(() => {
     if (!showBankSearch) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeBankSearch(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeBankSearch();
+    };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [showBankSearch]);
 
   const handleSubmit = () => {
-    const rand = (n: number) => Math.random().toString(36).toUpperCase().slice(2, 2 + n);
+    const rand = (n: number) =>
+      Math.random()
+        .toString(36)
+        .toUpperCase()
+        .slice(2, 2 + n);
     setReferenceId(`WT-${rand(4)}-${rand(4)}`);
-    setSubmittedAt(new Date().toLocaleString("en-US", {
-      month: "long", day: "numeric", year: "numeric",
-      hour: "numeric", minute: "2-digit", timeZoneName: "short",
-    }));
+    setSubmittedAt(
+      new Date().toLocaleString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        timeZoneName: "short",
+      })
+    );
     setStep("submitted");
     setExpandedItem(null);
   };
@@ -1303,14 +1312,10 @@ const WireTransferDemo = () => {
                           aria-label="ABA routing number"
                           spellCheck={false}
                         />
-                        <ValidationFeedback state={routingFeedback.state}>
-                          {routingFeedback.text}
-                        </ValidationFeedback>
+                        <ValidationFeedback state={routingFeedback.state}>{routingFeedback.text}</ValidationFeedback>
                       </RoutingInputWrapper>
                       <div style={{ marginTop: "0.35rem" }}>
-                        <SearchTriggerLink onClick={openBankSearch}>
-                          Don't know it? Search here.
-                        </SearchTriggerLink>
+                        <SearchTriggerLink onClick={openBankSearch}>Don't know it? Search here.</SearchTriggerLink>
                       </div>
                     </RoutingField>
                   </FieldGrid>
@@ -1338,15 +1343,20 @@ const WireTransferDemo = () => {
                     </Field>
                     <Field>
                       <FieldLabel>Amount</FieldLabel>
-                      <FieldValue>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: amountStr.includes(".") ? 2 : 0, maximumFractionDigits: 2 }).format(parseFloat(amountStr) || 0)}</FieldValue>
+                      <FieldValue>
+                        {new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          minimumFractionDigits: amountStr.includes(".") ? 2 : 0,
+                          maximumFractionDigits: 2,
+                        }).format(parseFloat(amountStr) || 0)}
+                      </FieldValue>
                     </Field>
                     <Field css={{ gridColumn: "1 / -1" }}>
                       <FieldLabel>Routing number</FieldLabel>
                       <FieldValue css={{ fontFamily: "$mono", letterSpacing: "0.04em" }}>
                         {routingNumber}
-                        {bankName && (
-                          <VerifiedBadge aria-label="Routing number verified">{bankName}</VerifiedBadge>
-                        )}
+                        {bankName && <VerifiedBadge aria-label="Routing number verified">{bankName}</VerifiedBadge>}
                       </FieldValue>
                     </Field>
                     <Field>
@@ -1357,7 +1367,9 @@ const WireTransferDemo = () => {
 
                   <Divider />
 
-                  <FieldLabel as="p" style={{ margin: 0 }}>Confirm before sending</FieldLabel>
+                  <FieldLabel as="p" style={{ margin: 0 }}>
+                    Confirm before sending
+                  </FieldLabel>
                   <ChecklistList>
                     <ChecklistItem>
                       <CheckCircle aria-hidden>✓</CheckCircle>
@@ -1365,25 +1377,33 @@ const WireTransferDemo = () => {
                     </ChecklistItem>
                     <ChecklistItem>
                       <CheckCircle aria-hidden>✓</CheckCircle>
-                      <span>Amount of <strong>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: amountStr.includes(".") ? 2 : 0, maximumFractionDigits: 2 }).format(parseFloat(amountStr) || 0)}</strong> is correct</span>
+                      <span>
+                        Amount of{" "}
+                        <strong>
+                          {new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                            minimumFractionDigits: amountStr.includes(".") ? 2 : 0,
+                            maximumFractionDigits: 2,
+                          }).format(parseFloat(amountStr) || 0)}
+                        </strong>{" "}
+                        is correct
+                      </span>
                     </ChecklistItem>
                     <ChecklistItem>
-                      <CheckCircle aria-hidden>✓</CheckCircle>
-                      I understand this transfer cannot be reversed once processed
+                      <CheckCircle aria-hidden>✓</CheckCircle>I understand this transfer cannot be reversed once
+                      processed
                     </ChecklistItem>
                   </ChecklistList>
 
                   <RiskNote>
-                    Wire transfers cannot be reversed once processed. Please confirm all details are correct before submitting.
+                    Wire transfers cannot be reversed once processed. Please confirm all details are correct before
+                    submitting.
                   </RiskNote>
 
                   <ButtonRow>
-                    <PrimaryButton onClick={handleSubmit}>
-                      Submit transfer
-                    </PrimaryButton>
-                    <SecondaryButton onClick={() => setStep("setup")}>
-                      ← Edit details
-                    </SecondaryButton>
+                    <PrimaryButton onClick={handleSubmit}>Submit transfer</PrimaryButton>
+                    <SecondaryButton onClick={() => setStep("setup")}>← Edit details</SecondaryButton>
                   </ButtonRow>
                 </>
               )}
@@ -1394,8 +1414,8 @@ const WireTransferDemo = () => {
                     <SuccessCircle aria-hidden>✓</SuccessCircle>
                     <SuccessTitle>Transfer request received</SuccessTitle>
                     <SuccessBody>
-                      Your transfer request has been received and is now being processed.
-                      You'll see status updates below as it moves through the banking network.
+                      Your transfer request has been received and is now being processed. You'll see status updates
+                      below as it moves through the banking network.
                     </SuccessBody>
                     <ReferenceBlock>
                       <ReferenceLabel>Reference ID</ReferenceLabel>
@@ -1424,13 +1444,9 @@ const WireTransferDemo = () => {
                               <TimelineStatusBadge status={item.status}>
                                 · {statusLabel[item.status]}
                               </TimelineStatusBadge>
-                              {expandedItem !== idx && (
-                                <ExpandHint aria-hidden>▾</ExpandHint>
-                              )}
+                              {expandedItem !== idx && <ExpandHint aria-hidden>▾</ExpandHint>}
                             </TimelineLabel>
-                            {expandedItem === idx && (
-                              <TimelineDetail>{item.detail}</TimelineDetail>
-                            )}
+                            {expandedItem === idx && <TimelineDetail>{item.detail}</TimelineDetail>}
                           </TimelineContent>
                         </TimelineEntry>
                       ))}
@@ -1447,7 +1463,8 @@ const WireTransferDemo = () => {
         </Section>
 
         <DisclaimerBox>
-          This is an independent product engineering concept built as an application artifact. It is not affiliated with any real bank.
+          This is an independent product engineering concept built as an application artifact. It is not affiliated with
+          any real bank.
         </DisclaimerBox>
       </DemoWrapper>
 
@@ -1462,7 +1479,9 @@ const WireTransferDemo = () => {
           >
             <ModalHeader>
               <ModalTitle>Search by bank name</ModalTitle>
-              <ModalCloseBtn onClick={closeBankSearch} aria-label="Close">✕</ModalCloseBtn>
+              <ModalCloseBtn onClick={closeBankSearch} aria-label="Close">
+                ✕
+              </ModalCloseBtn>
             </ModalHeader>
 
             <ModalSearchInput
@@ -1478,11 +1497,7 @@ const WireTransferDemo = () => {
             <BankList role="list">
               {filteredBanks.length > 0 ? (
                 filteredBanks.map((bank) => (
-                  <BankRow
-                    key={bank.name}
-                    onClick={() => handleSelectBank(bank.routing, bank.name)}
-                    role="listitem"
-                  >
+                  <BankRow key={bank.name} onClick={() => handleSelectBank(bank.routing, bank.name)} role="listitem">
                     <BankRowName>{bank.name}</BankRowName>
                     <BankRowRouting>{bank.routing}</BankRowRouting>
                   </BankRow>
