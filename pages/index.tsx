@@ -13,8 +13,7 @@ const H1 = styled("h1", {
     fontSize: "1.6em",
   },
 });
-
-const Paragraph = styled("p", {
+styled("p", {
   margin: "0.85em 0",
   lineHeight: 1.7,
   color: "$text",
@@ -28,7 +27,6 @@ const Paragraph = styled("p", {
     lineHeight: 1.825,
   },
 });
-
 const BlogSection = styled("div", {
   marginTop: "3rem",
 });

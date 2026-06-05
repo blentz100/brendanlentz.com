@@ -29,5 +29,5 @@ export const clientScript = () => {
     classList.remove(classNames[light], classNames[dark]);
     // ...and then FINALLY set the root class
     classList.add(classNames[newTheme]);
-  } catch (error) {}
+  } catch {}
 };

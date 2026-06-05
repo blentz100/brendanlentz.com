@@ -22,7 +22,7 @@ const AutoClearConsole = () => {
   return <SandpackConsole key={consoleKey} className="mt-2 border w-full min-h-[100px] rounded" />;
 };
 
-const CodePlayground = React.memo(() => {
+const CodePlayground = React.memo(function CodePlayground() {
   const { activeTheme } = useTheme();
   const sandpackTheme =
     activeTheme === "dark"
