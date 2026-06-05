@@ -133,6 +133,5 @@
   "cacheDirectories": [
     "node_modules",
     ".next/cache"
-  ],
-  "packageManager": "yarn@1.22.19"
+  ]
 }
