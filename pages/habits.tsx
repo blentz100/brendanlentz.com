@@ -41,7 +41,9 @@ const Habits = ({ initialRecords2025, initialRecords2024, initialRecords2023 }: 
       <PageTitle>Habit Tracker</PageTitle>
 
       <Content>
-        <Intro>A small side project: a React Native habit tracker with live charts built from my own workout data.</Intro>
+        <Intro>
+          A small side project: a React Native habit tracker with live charts built from my own workout data.
+        </Intro>
 
         <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
           <HabitLineChart

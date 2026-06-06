@@ -62,7 +62,7 @@ const VNC = ({ server }: VNCProps) => {
     try {
       rfbRef.current?.disconnect();
       setConnected(false);
-    } catch (error) {} // eslint-disable-line no-empty
+    } catch {} // eslint-disable-line no-empty
   };
 
   // prepare for possible navigation away from this page, and disconnect if/when it happens

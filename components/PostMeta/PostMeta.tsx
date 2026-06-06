@@ -105,8 +105,7 @@ const PostMeta = ({ slug, date, title, htmlTitle, tags = [] }: PostMetaProps) =>
         </MetaItem>
 
         {/* only count hits on production site */}
-        {(process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ||
-          process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" ) && (
+        {(process.env.NEXT_PUBLIC_VERCEL_ENV === "production" || process.env.NEXT_PUBLIC_VERCEL_ENV === "preview") && (
           <MetaItem
             // fix potential layout shift when number of hits loads
             css={{ minWidth: "7em", marginRight: 0 }}

@@ -60,7 +60,6 @@ const Heading = ({ level, id, divider, children, ...rest }: HeadingProps) => {
   return (
     <H as={`h${level}`} id={id} divider={divider || level === 2} {...rest}>
       {children}
-
     </H>
   );
 };

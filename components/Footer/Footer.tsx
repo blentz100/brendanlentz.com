@@ -80,7 +80,7 @@ const Footer = ({ ...rest }: FooterProps) => {
   return (
     <Wrapper {...rest}>
       <Row>
-        <NewsletterSignup/>
+        <NewsletterSignup />
         <div>
           <ViewSourceLink
             href={`https://github.com/${config.githubRepo}`}

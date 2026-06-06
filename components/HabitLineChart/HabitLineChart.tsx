@@ -77,7 +77,10 @@ export function HabitLineChart({ records, habit, habitDisplayName, goal }: Habit
   const currentYear = DateTime.now().year;
 
   for (let day = 1; day <= daysInYear; day++) {
-    const date = DateTime.local(year).startOf('year').plus({ days: day - 1 }).toFormat("yyyy-MM-dd");
+    const date = DateTime.local(year)
+      .startOf("year")
+      .plus({ days: day - 1 })
+      .toFormat("yyyy-MM-dd");
     const goalForThisDay = completeGoalLine[day];
 
     // Add actual data if we have it for this day
