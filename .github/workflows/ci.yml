@@ -16,7 +16,6 @@ jobs:
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       CONVERTKIT_FORM_ID: ${{ secrets.CONVERTKIT_FORM_ID }}
       CONVERTKIT_API_KEY: ${{ secrets.CONVERTKIT_API_KEY }}
-    }
 
     steps:
       - name: Checkout repo
