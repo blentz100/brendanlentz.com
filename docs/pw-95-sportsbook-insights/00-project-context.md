@@ -1,6 +1,6 @@
 ## Project Overview
 
-Gaming Insights Demo is a project that explores serverless application development using AWS Lambda, Node.js, TypeScript, API Gateway, and Terraform.
+Sportsbook Insights is a project that explores serverless application development using AWS Lambda, Node.js, TypeScript, API Gateway, and Terraform.
 
 The application consumes sportsbook market data from a third-party API, normalizes and aggregates that data, calculates analytics-focused metrics, and presents the results through a web interface hosted within the existing brendanlentz.com website.
 

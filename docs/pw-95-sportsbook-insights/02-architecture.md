@@ -1,12 +1,12 @@
 ## High-Level Architecture
 
-Gaming Insights Demo uses a serverless backend hosted on AWS and a frontend page hosted within the existing brendanlentz.com Next.js website.
+Sportsbook Insights uses a serverless backend hosted on AWS and a frontend page hosted within the existing brendanlentz.com Next.js website.
 
 The frontend requests aggregated game insights from an AWS API Gateway endpoint. API Gateway invokes a single AWS Lambda function written in Node.js and TypeScript. The Lambda retrieves sportsbook market data from an external API, normalizes and aggregates the response, calculates analytics-focused metrics, and returns a simplified response model to the frontend.
 
 ```text
 User
-  -> brendanlentz.com /gaming-insights
+  -> brendanlentz.com /sportsbook-insights
   -> AWS API Gateway
   -> AWS Lambda
   -> External Sportsbook Data API
@@ -18,7 +18,7 @@ User
 
 The frontend will live inside the existing brendanlentz.com Next.js application.
 
-It is responsible for presenting the Gaming Insights Demo page, loading game insights from the backend, handling loading and error states, and displaying the returned analytics data.
+It is responsible for presenting the Sportsbook Insights page, loading game insights from the backend, handling loading and error states, and displaying the returned analytics data.
 
 ### API Gateway
 
@@ -41,38 +41,38 @@ It is responsible for supplying raw market data. The application is responsible 
 
 Repository Structure
 
-Gaming Insights Demo will be developed within the existing brendanlentz.com repository.
+Sportsbook Insights will be developed within the existing brendanlentz.com repository.
 
 The project will use a monorepo-style structure that keeps the frontend, backend, infrastructure, and documentation together while maintaining clear separation between concerns.
 
 pages/
-  gaming-insights.tsx
+  sportsbook-insights.tsx
 
 components/
-  gaming-insights/
+  sportsbook-insights/
 
 lib/
-  gaming-insights/
+  sportsbook-insights/
 
 services/
-  gaming-insights-api/
+  sportsbook-insights-api/
 
 infra/
-  gaming-insights/
+  sportsbook-insights/
 
 docs/
-  pw-95-gaming-insights/
+  pw-95-sportsbook-insights/
 
 Folder Responsibilities
-- pages/gaming-insights.tsx contains the route for the demo page.
-- components/gaming-insights/ contains React components specific to the demo.
-- lib/gaming-insights/ contains frontend helper functions, API client code,
+- pages/sportsbook-insights.tsx contains the route for the demo page.
+- components/sportsbook-insights/ contains React components specific to the demo.
+- lib/sportsbook-insights/ contains frontend helper functions, API client code,
 and shared frontend types.
-- services/gaming-insights-api/ contains the Node.js and TypeScript Lambda
+- services/sportsbook-insights-api/ contains the Node.js and TypeScript Lambda
 backend.
-- infra/gaming-insights/ contains Terraform configuration for AWS
+- infra/sportsbook-insights/ contains Terraform configuration for AWS
 infrastructure.
-- docs/pw-95-gaming-insights/ contains project documentation, specifications,
+- docs/pw-95-sportsbook-insights/ contains project documentation, specifications,
 architecture notes, and implementation planning.
 
 

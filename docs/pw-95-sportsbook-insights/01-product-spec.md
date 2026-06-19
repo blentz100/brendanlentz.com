@@ -1,6 +1,6 @@
 ## User Story
 
-As a visitor to the Gaming Insights Demo, I want to explore aggregated sportsbook data so that I can understand how the application transforms raw market data into analytics-focused insights.
+As a visitor to Sportsbook Insights, I want to explore aggregated sportsbook data so that I can understand how the application transforms raw market data into analytics-focused insights.
 
 
 ## User Experience

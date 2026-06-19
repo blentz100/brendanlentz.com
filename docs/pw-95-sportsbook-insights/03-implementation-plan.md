@@ -20,7 +20,7 @@
 
 ## Phase 4 - Frontend Integration
 
-- Create the `/gaming-insights` page.
+- Create the `/sportsbook-insights` page.
 - Build the initial page layout and sport selection UI.
 - Fetch game insights from the deployed API Gateway endpoint.
 - Display loading, error, empty, and success states.
