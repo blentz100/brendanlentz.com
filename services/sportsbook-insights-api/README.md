@@ -7,4 +7,12 @@ npm install
 npm run build
 ```
 
-`src/handler.ts` currently returns a hardcoded mock response. Phase 2 will replace this with a real call to the external sportsbook data API, normalization, and consensus metric calculation.
+`src/handler.ts` calls The Odds API, normalizes the response, and calculates consensus metrics across sportsbooks. See `src/oddsApi/client.ts`, `src/normalize.ts`, and `src/consensus.ts`.
+
+Local development requires an `ODDS_API_KEY`. Copy `.env.example` to `.env` and fill in a key from https://the-odds-api.com/, then run:
+
+```sh
+npm run dev               # uses the default sport (americanfootball_nfl)
+npm run dev -- basketball_nba
+npm test                  # unit tests against fixture data, no API key needed
+```

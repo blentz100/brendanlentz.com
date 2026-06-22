@@ -1,4 +1,4 @@
-export type Sport = "americanfootball_nfl" | "basketball_nba";
+export type Sport = "americanfootball_nfl" | "basketball_nba" | "baseball_mlb";
 
 export interface SportsbookLine {
   sportsbook: { key: string; title: string };
@@ -20,11 +20,11 @@ export interface GameInsight {
   consensus: {
     moneyline: { home: number; away: number };
     impliedWinProbability: { home: number; away: number };
-    spread: {
+    spread?: {
       home: { line: number; price: number };
       away: { line: number; price: number };
     };
-    total: { points: number };
+    total?: { points: number };
   };
   sportsbookLines: SportsbookLine[];
 }
