@@ -1,9 +1,9 @@
 import { NextSeo } from "next-seo";
 import Content from "../components/Content";
 import PageTitle from "../components/PageTitle";
-import SportsbookInsightsPlaceholder from "../components/sportsbook-insights/SportsbookInsightsPlaceholder";
+import SportsbookInsights from "../components/sportsbook-insights/SportsbookInsights";
 
-const SportsbookInsights = () => {
+const SportsbookInsightsPage = () => {
   return (
     <>
       <NextSeo
@@ -17,10 +17,10 @@ const SportsbookInsights = () => {
       <PageTitle>Sportsbook Insights</PageTitle>
 
       <Content>
-        <SportsbookInsightsPlaceholder />
+        <SportsbookInsights />
       </Content>
     </>
   );
 };
 
-export default SportsbookInsights;
+export default SportsbookInsightsPage;

@@ -47,11 +47,11 @@ export function calculateConsensus(
   if (linesWithSpread.length > 0) {
     consensus.spread = {
       home: {
-        line: average(linesWithSpread.map((line) => line.spread!.home.line)),
+        line: round(average(linesWithSpread.map((line) => line.spread!.home.line)), 1),
         price: Math.round(average(linesWithSpread.map((line) => line.spread!.home.price))),
       },
       away: {
-        line: average(linesWithSpread.map((line) => line.spread!.away.line)),
+        line: round(average(linesWithSpread.map((line) => line.spread!.away.line)), 1),
         price: Math.round(average(linesWithSpread.map((line) => line.spread!.away.price))),
       },
     };
