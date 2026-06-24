@@ -1,1 +1,5 @@
-# Outputs (e.g. API Gateway invoke URL) will be added in Phase 3.
+output "api_endpoint" {
+  description = "Base invoke URL for the Sportsbook Insights API Gateway stage."
+  value       = aws_apigatewayv2_stage.default.invoke_url
+}
+
