@@ -19,5 +19,5 @@ variable "log_retention_days" {
 variable "cors_allowed_origins" {
   description = "Origins allowed to call the API Gateway endpoint via CORS."
   type        = list(string)
-  default     = ["https://brendanlentz.com", "http://localhost:3000"]
+  default     = ["https://brendanlentz.com", "https://www.brendanlentz.com", "http://localhost:3000"]
 }
