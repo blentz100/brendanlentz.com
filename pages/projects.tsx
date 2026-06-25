@@ -71,61 +71,67 @@ const Projects = ({ repos }: { repos: Repository[] }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  // https://docs.github.com/en/graphql/reference/objects#repository
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const response: any = await graphql(
-    `
-      query ($username: String!, $sort: RepositoryOrderField!, $limit: Int) {
-        user(login: $username) {
-          repositories(
-            first: $limit
-            isLocked: false
-            isFork: false
-            ownerAffiliations: OWNER
-            privacy: PUBLIC
-            orderBy: { field: $sort, direction: DESC }
-          ) {
-            edges {
-              node {
-                name
-                url
-                description
-                pushedAt
-                stargazerCount
-                forkCount
-                primaryLanguage {
+  let repos: Repository[] = [];
+
+  try {
+    // https://docs.github.com/en/graphql/reference/objects#repository
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response: any = await graphql(
+      `
+        query ($username: String!, $sort: RepositoryOrderField!, $limit: Int) {
+          user(login: $username) {
+            repositories(
+              first: $limit
+              isLocked: false
+              isFork: false
+              ownerAffiliations: OWNER
+              privacy: PUBLIC
+              orderBy: { field: $sort, direction: DESC }
+            ) {
+              edges {
+                node {
                   name
-                  color
+                  url
+                  description
+                  pushedAt
+                  stargazerCount
+                  forkCount
+                  primaryLanguage {
+                    name
+                    color
+                  }
                 }
               }
             }
           }
         }
+      `,
+      {
+        username: authorSocial.github,
+        sort: "STARGAZERS",
+        limit: 12,
+        headers: {
+          accept: "application/vnd.github.v3+json",
+          authorization: `token ${process.env.GH_PUBLIC_TOKEN}`,
+        },
       }
-    `,
-    {
-      username: authorSocial.github,
-      sort: "STARGAZERS",
-      limit: 12,
-      headers: {
-        accept: "application/vnd.github.v3+json",
-        authorization: `token ${process.env.GH_PUBLIC_TOKEN}`,
-      },
-    }
-  );
+    );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const results: Array<{ node: Record<string, any> }> = response.user.repositories.edges;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const results: Array<{ node: Record<string, any> }> = response.user.repositories.edges;
 
-  const repos = results.map<Repository>(({ node: repo }) => ({
-    name: repo.name,
-    url: repo.url,
-    description: repo.description,
-    updatedAt: repo.pushedAt,
-    stars: repo.stargazerCount,
-    forks: repo.forkCount,
-    language: repo.primaryLanguage,
-  }));
+    repos = results.map<Repository>(({ node: repo }) => ({
+      name: repo.name,
+      url: repo.url,
+      description: repo.description,
+      updatedAt: repo.pushedAt,
+      stars: repo.stargazerCount,
+      forks: repo.forkCount,
+      language: repo.primaryLanguage,
+    }));
+  } catch (err) {
+    console.error("Failed to fetch GitHub repositories:", err);
+  }
 
   return {
     props: {
