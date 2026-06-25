@@ -1,0 +1,19 @@
+{
+  "name": "sportsbook-insights-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AWS Lambda backend for the PW-95 Sportsbook Insights project.",
+  "main": "dist/handler.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx scripts/invoke-local.ts",
+    "test": "node --import tsx --test \"src/**/*.test.ts\""
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.145",
+    "@types/node": "^22.0.0",
+    "dotenv": "^16.4.5",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.4"
+  }
+}

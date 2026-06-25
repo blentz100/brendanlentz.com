@@ -7,6 +7,14 @@ import dayjsAdvancedFormat from "dayjs/plugin/advancedFormat";
 import "dayjs/locale/en";
 import { timeZone } from "../config";
 
+// bare date/time strings with no UTC offset (e.g. blog front matter's "2024-01-15") have no instant of
+// their own, so they're treated as wall-clock time in the configured zone. Anything that already names an
+// instant (an ISO string with "Z"/an offset, a Date, an epoch number) must be parsed as that instant first --
+// dayjs.tz(string, zone) otherwise discards the string's own offset and reinterprets its digits as local time
+// in the target zone, silently shifting it by the zone's UTC offset.
+const isNaiveDateString = (date?: dayjs.ConfigType): boolean =>
+  typeof date === "string" && !/Z$|[+-]\d{2}:?\d{2}$/.test(date.trim());
+
 // normalize timezone and locale across the site, both server and client side, to prevent hydration errors by returning
 // an instance of dayjs with these defaults set.
 const IsomorphicDayJs = (date?: dayjs.ConfigType): dayjs.Dayjs => {
@@ -17,7 +25,7 @@ const IsomorphicDayJs = (date?: dayjs.ConfigType): dayjs.Dayjs => {
   dayjs.extend(dayjsLocalizedFormat);
   dayjs.extend(dayjsAdvancedFormat);
 
-  return dayjs.tz(date, timeZone).locale("en");
+  return (isNaiveDateString(date) ? dayjs.tz(date, timeZone) : dayjs(date).tz(timeZone)).locale("en");
 };
 
 // simple wrapper around dayjs.format()
